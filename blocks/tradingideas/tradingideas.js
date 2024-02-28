@@ -126,7 +126,7 @@ function generateHtmlForIdeasStrike() {
 
 function generateHtmlForCompanyCard(companies) {
     return companies.map(company => {
-        return `<div class="slide slick-slide slick-current slick-active" data-slick-index="1" aria-hidden="false" style="width: 280px; height: 279px;" tabindex="0" role="tabpanel" id="slick-slide11" aria-describedby="slick-slide-control11">
+        return `<div class="slide slick-slide slick-current slick-active" data-slick-index="1" aria-hidden="false"  tabindex="0" role="tabpanel" id="slick-slide11" aria-describedby="slick-slide-control11">
       <div class="box box-theme">
           <div class="heading_wrap">
               <h4 title="${company.name}">
