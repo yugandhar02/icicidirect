@@ -1,8 +1,23 @@
-* {
-    box-sizing: border-box;
-    outline: none;
+
+
+.explore-section {
+    margin-top: 15px;
 }
 
+.explore-section .ideas-strike {
+    background: #FAE4D1;
+    font-weight: 600;
+    padding: 7px;
+    width: fit-content;
+    display: flex;
+    margin-left: auto;
+    margin-bottom: 15px;
+}
+
+.explore-section .ideas-strike img {
+    width: 20px;
+    margin: 0 10px;
+}
 
 .explore-container {
     background-color: #FCFCFC;
@@ -210,4 +225,44 @@
     background-color: #EFF6FF;
     width: 100%;
     padding: 3px 0;
+}
+
+.discover-more {
+    text-align: center;
+}
+@media (min-width: 768px) {
+    .discover-more {
+        text-align: right;
+    }
+
+}
+
+.discover-more .link-color {
+    font-size: 16px;
+}
+
+
+.discover-more .link-color .icon-up-arrow {
+    transform: rotate(90deg);
+    margin-left: 5px;
+}
+
+
+.dots-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.dot {
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.active {
+    background-color:  #E87817;
 }
