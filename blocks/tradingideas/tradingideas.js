@@ -14,13 +14,59 @@ export default function decorate(block) {
 
     const explorerHeader     = document.createElement('div');
     explorerHeader.className = 'explore-header';
-    explorerHeader.innerHTML = `<div class="row align-items-center">
-                                    <div class="col-md-6 col-4">
-                                    <h3 class="">TRADING IDEAS</h3>
-                                    </div>
-                                    <div class="dropdown">
-                                    </div>
-                                </div>`;
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'row align-items-center';
+    const colDiv = document.createElement('div');
+    colDiv.className = 'col-md-6 col-4';
+    const heading = document.createElement('h3');
+    heading.textContent = 'TRADING IDEAS';
+    colDiv.appendChild(heading);
+
+    rowDiv.appendChild(colDiv);
+
+    const dropdownsDiv = document.createElement('div');
+    dropdownsDiv.className = 'dropdowns';
+    const buyDropdown = createDropdown('Buy', ['Buy', 'Sell', 'Hold']);
+    const intradayDropdown = createDropdown('Intraday', ['Intraday', 'All']);
+
+    dropdownsDiv.appendChild(buyDropdown);
+    dropdownsDiv.appendChild(intradayDropdown);
+    rowDiv.appendChild(dropdownsDiv);
+    explorerHeader.appendChild(rowDiv);
+
+
+    // explorerHeader.innerHTML = `<div class="row align-items-center">
+    //                                 <div class="col-md-6 col-4">
+    //                                 <h3 class="">TRADING IDEAS</h3>
+    //                                 </div>
+    //                                 <div class="dropdowns">
+    //                                     <div class="dropdown-select">
+    //                                         <button class="dropdown-toggle" for="btnControl">
+    //                                                 <span class="dropdown-text">Buy</span>
+    //                                                 <span class="icon-down-arrow icon"></span>
+    //                                         </button>
+    //                                         <div class="dropdown-menu-container">
+    //                                             <ul class="dropdown-menu">
+    //                                                 <li><a><span>Buy</span></a></li>
+    //                                                 <li><a><span>Sell</span></a></li>
+    //                                                 <li><a><span>Hold</span></a></li>
+    //                                             </ul>
+    //                                         </div>
+    //                                     </div>
+    //                                     <div class="dropdown-select">
+    //                                         <button type="button" class="dropdown-toggle">
+    //                                             <span class="dropdown-text">Intraday</span>
+    //                                             <span class="icon-down-arrow icon"></span>
+    //                                         </button>
+    //                                         <div class="dropdown-menu-container">
+    //                                             <ul class="dropdown-menu">
+    //                                                 <li><a><span>Intraday</span></a></li>
+    //                                                 <li><a><span>All</span></a></li>
+    //                                             </ul>
+    //                                         </div>
+    //                                     </div>
+    //                                 </div>
+    //                             </div>`;
     explorerContainer.appendChild(explorerHeader);
 
 
@@ -66,8 +112,8 @@ export default function decorate(block) {
             dotsContainer.className = 'dots-container';
             researchSlider.appendChild(dotsContainer);
 
-            // Assuming you have 8 cards and can show 3 at a time, calculate the number of dots needed
-            const numberOfDots = Math.ceil((cards.length - 3)); // For 8 cards, this results in 6 dots
+            // Assuming you have 8 cards and can show 4 at a time, calculate the number of dots needed
+            const numberOfDots = Math.ceil((cards.length - 3)); // For 8 cards, this results in 4 dots
             const dots = []; // To keep track of all dot elements
 
             for (let i = 0; i < numberOfDots; i++) {
@@ -112,6 +158,48 @@ export default function decorate(block) {
     explorerBody.appendChild(generateDiscoverMoreElement());
 }
 
+function createDropdown(dropdownText, menuItems) {
+    const dropdownSelectDiv = document.createElement('div');
+    dropdownSelectDiv.className = 'dropdown-select';
+
+    const button = document.createElement('button');
+    button.className = 'dropdown-toggle';
+    button.innerHTML = `<span class="dropdown-text">${dropdownText}</span><span class="icon-down-arrow icon"></span>`;
+
+    const dropdownMenuContainer = document.createElement('div');
+    dropdownMenuContainer.className = 'dropdown-menu-container';
+
+    const ul = document.createElement('ul');
+    ul.className = 'dropdown-menu';
+
+    menuItems.forEach(itemText => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        const span = document.createElement('span');
+        span.textContent = itemText;
+        a.appendChild(span);
+        li.appendChild(a);
+        ul.appendChild(li);
+    });
+
+    dropdownMenuContainer.appendChild(ul);
+    dropdownSelectDiv.appendChild(button);
+    dropdownSelectDiv.appendChild(dropdownMenuContainer);
+    button.onclick = function() {
+        if (dropdownMenuContainer.style.display === 'block') {
+            dropdownMenuContainer.style.display = 'none';
+            return;
+        }
+        // Close all other dropdowns by querying them
+        document.querySelectorAll('.dropdown-menu-container').forEach(container => {
+            container.style.display = 'none';
+        });
+        // Toggle the display of this dropdownMenuContainer
+        dropdownMenuContainer.style.display = 'block';
+    };
+
+    return dropdownSelectDiv;
+}
 function generateHtmlForIdeasStrike() {
     const htmlString = `<div class="ideas-strike">
         <img src="https://www.icicidirect.com/Content/images/target.png" alt="target" loading="lazy" width="24" height="20">

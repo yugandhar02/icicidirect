@@ -48,6 +48,11 @@
   src: local('Arial');
 }
 
+@font-face {
+  font-family: "icomoon";
+  src: url("/fonts/icomoon.ttf") format("truetype");
+}
+
 @media (width >= 900px) {
   :root {
     --heading-font-size-xxl: 60px;

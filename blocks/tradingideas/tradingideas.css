@@ -266,3 +266,131 @@
 .dot.active {
     background-color:  #E87817;
 }
+
+.dropdowns {
+    text-align: right;
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+.dropdowns .dropdown-select {
+    margin-left: 10px;
+    background-color: #fff;
+    display: inline-block;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.dropdowns .dropdown-select {
+    margin-left: 10px;
+    background-color: #fff;
+    display: inline-block;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.dropdowns .icon-down-arrow {
+    right: 10px;
+    position: absolute;
+
+}
+
+.dropdowns .icon-down-arrow:before {
+    color: #E87817;
+    content: "\e905";
+    font-size: 12px;
+    font-weight: 800;
+    font-family: 'icomoon';
+
+}
+
+.dropdown-toggle {
+    float: none;
+    display: inline-block;
+    margin-left: 0px;
+    position: relative;
+    align-items: flex-end;
+    height: 30px;
+    min-width: auto;
+    min-height: auto;
+    background-color: transparent;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 0 30px 0 10px;
+    border: 1px solid #dee2e6;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    border-radius: 0px;
+    cursor: pointer;
+}
+
+.dropdown-toggle .dropdown-text {
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropdown-menu-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    overflow: hidden;
+    will-change: transform;
+    transform: translate3d(0px, 30px, 0px);
+    display: none;
+    float: left;
+    min-width: 100%;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    right: auto;
+    bottom: auto;
+}
+
+.dropdown-menu {
+    position: static;
+    float: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    font: 400 16px/20px "Poppins", sans-serif;
+    list-style-position: inside;
+}
+
+.dropdown-menu  li {
+    position: relative;
+    font-size: 13px;
+    text-transform: capitalize;
+    display: block;
+}
+
+.dropdown-menu  li a {
+    padding: 5px 10px;
+    color: #415270;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+.dropdown-menu  li a span {
+    display: inline-block;
+}
+
+#btnControl {
+    display: none;
+}
+
+#btnControl:checked + .dropdown-menu-container {
+    display: block;
+}
