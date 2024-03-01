@@ -251,9 +251,31 @@ h3 {
   margin-left: auto;
   margin-right: auto;
   align-items: center;
-  justify-content: space-around;
   flex-wrap: nowrap;
+  transition: transform 0.5s ease;
 }
+
+  /*.slick-track > * {*/
+  /*  opacity: 0;*/
+  /*}*/
+
+  /*.slick-track > :first-child {*/
+  /*  opacity: 1;*/
+  /*}*/
+
+  /*!* Tablet: first 2 children have opacity 1 *!*/
+  /*@media (min-width: 768px) { !* Adjust this value based on your definition of tablet size *!*/
+  /*  .slick-track > :nth-child(-n+2) {*/
+  /*    opacity: 1;*/
+  /*  }*/
+  /*}*/
+
+  /*!* Desktop: first 4 children have opacity 1 *!*/
+  /*@media (min-width: 1024px) { !* Adjust this value based on your definition of desktop size *!*/
+  /*  .slick-track > :nth-child(-n+4) {*/
+  /*    opacity: 1;*/
+  /*  }*/
+  /*}*/
 
 .row {
   display: flex;

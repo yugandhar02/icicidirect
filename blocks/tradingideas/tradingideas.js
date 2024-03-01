@@ -33,40 +33,6 @@ export default function decorate(block) {
     dropdownsDiv.appendChild(intradayDropdown);
     rowDiv.appendChild(dropdownsDiv);
     explorerHeader.appendChild(rowDiv);
-
-
-    // explorerHeader.innerHTML = `<div class="row align-items-center">
-    //                                 <div class="col-md-6 col-4">
-    //                                 <h3 class="">TRADING IDEAS</h3>
-    //                                 </div>
-    //                                 <div class="dropdowns">
-    //                                     <div class="dropdown-select">
-    //                                         <button class="dropdown-toggle" for="btnControl">
-    //                                                 <span class="dropdown-text">Buy</span>
-    //                                                 <span class="icon-down-arrow icon"></span>
-    //                                         </button>
-    //                                         <div class="dropdown-menu-container">
-    //                                             <ul class="dropdown-menu">
-    //                                                 <li><a><span>Buy</span></a></li>
-    //                                                 <li><a><span>Sell</span></a></li>
-    //                                                 <li><a><span>Hold</span></a></li>
-    //                                             </ul>
-    //                                         </div>
-    //                                     </div>
-    //                                     <div class="dropdown-select">
-    //                                         <button type="button" class="dropdown-toggle">
-    //                                             <span class="dropdown-text">Intraday</span>
-    //                                             <span class="icon-down-arrow icon"></span>
-    //                                         </button>
-    //                                         <div class="dropdown-menu-container">
-    //                                             <ul class="dropdown-menu">
-    //                                                 <li><a><span>Intraday</span></a></li>
-    //                                                 <li><a><span>All</span></a></li>
-    //                                             </ul>
-    //                                         </div>
-    //                                     </div>
-    //                                 </div>
-    //                             </div>`;
     explorerContainer.appendChild(explorerHeader);
 
 
@@ -97,65 +63,92 @@ export default function decorate(block) {
                 const div = document.createElement('div');
                 div.innerHTML = htmlString;
                 const element = div.firstElementChild;
-                element.style.display = 'none'; // Default all to 'none' initially
+                element.style.opacity = '0'; // Default all to 'none' initially
                 slickTrack.appendChild(element);
             });
 
-            // Initialize the carousel view with the first 3 cards
-            const cards = Array.from(slickTrack.children);
-            for (let i = 0; i < 4 && i < cards.length; i++) {
-                cards[i].style.display = 'block';
-            }
-
-            // Dot Navigation
-            const dotsContainer = document.createElement('div');
-            dotsContainer.className = 'dots-container';
-            researchSlider.appendChild(dotsContainer);
-
-            // Assuming you have 8 cards and can show 4 at a time, calculate the number of dots needed
-            const numberOfDots = Math.ceil((cards.length - 3)); // For 8 cards, this results in 4 dots
-            const dots = []; // To keep track of all dot elements
-
-            for (let i = 0; i < numberOfDots; i++) {
-                const dot = document.createElement('button');
-                dot.className = 'dot';
-                dot.dataset.index = i;
-                dotsContainer.appendChild(dot);
-                dots.push(dot);
-
-                dot.addEventListener('click', function() {
-                    updateCarouselView(parseInt(this.dataset.index));
-                    updateActiveDot(parseInt(this.dataset.index));
-                });
-            }
-
-            const updateCarouselView = (dotIndex) => {
-                // Hide all cards
-                cards.forEach(card => card.style.display = 'none');
-
-                // Calculate the range of cards to show based on dot clicked
-                const startIndex = dotIndex;
-                const endIndex = startIndex + 4 ;
-
-                // Show the cards in the range
-                for (let i = startIndex; i < endIndex && i < cards.length; i++) {
-                    cards[i].style.display = 'block';
-                }
-            };
-
-            const updateActiveDot = (activeIndex) => {
-                // Remove active class from all dots
-                dots.forEach(dot => dot.classList.remove('active'));
-                // Add active class to the currently active dot
-                dots[activeIndex].classList.add('active');
-            };
-
-            // Initialize the first dot as active
-            updateActiveDot(0);
+            setCarouselView();
         }
     });
-
     explorerBody.appendChild(generateDiscoverMoreElement());
+    window.addEventListener('resize', setCarouselView);
+
+}
+
+function setCarouselView() {
+    const slickTrack = document.querySelector('.slick-track');
+    const researchSlider = document.querySelector('.researchSlider');
+
+    const cards = Array.from(slickTrack.children);
+    cards.forEach(card => {card.style.opacity = '0';});
+    const maxWidth =slickTrack.offsetWidth;
+    let currentWidth = 0;
+    let totalCardDisplayed = 0;
+    let numberOfDots = 1;
+    for (let i = 0; i < cards.length; i++) {
+        if (currentWidth + cards[i].offsetWidth < maxWidth) {
+            currentWidth = currentWidth + cards[i].offsetWidth;
+            cards[i].style.opacity = '1';
+            totalCardDisplayed = totalCardDisplayed + 1;
+        } else {
+            numberOfDots = numberOfDots + 1;
+        }
+    }
+    // Dot Navigation
+    let dotsContainer = document.querySelector('.dots-container');
+    if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+    } else {
+        dotsContainer = document.createElement('div');
+        dotsContainer.className = 'dots-container';
+    }
+    researchSlider.appendChild(dotsContainer);
+    const dots = [];
+
+    for (let i = 0; i < numberOfDots; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.dataset.index = i;
+        dotsContainer.appendChild(dot);
+        dots.push(dot);
+
+        dot.addEventListener('click', function() {
+            updateCarouselView(parseInt(this.dataset.index), totalCardDisplayed);
+            updateActiveDot(parseInt(this.dataset.index), dots);
+        });
+    }
+    // Initialize the first dot as active
+    updateActiveDot(0, dots);
+
+}
+
+function updateCarouselView(dotIndex, cardsToShow) {
+    const slickTrack = document.querySelector('.slick-track');
+    const totalCards = slickTrack.children.length; // Total number of cards
+    const cardWidth = slickTrack.children[0].offsetWidth; // Width of a single card
+
+    // Calculate the new transform distance
+    const moveDistance = dotIndex * cardWidth; // Move one card width per dot
+
+    for (let i = 0; i < totalCards; i++) {
+        if (i >= dotIndex && i < dotIndex + cardsToShow) {
+
+            slickTrack.children[i].style.opacity = 1; // Show the cards in the current view
+        } else {
+
+            slickTrack.children[i].style.opacity = 0; // Hide other cards
+        }
+    }
+    // Apply the transform to slide
+    slickTrack.style.transform = `translateX(-${moveDistance}px)`;
+
+}
+function updateActiveDot(activeIndex, dots) {
+    // Remove active class from all dots
+    dots.forEach(dot => dot.classList.remove('active'));
+    // Add active class to the currently active dot
+    dots[activeIndex].classList.add('active');
+
 }
 
 function createDropdown(dropdownText, menuItems) {

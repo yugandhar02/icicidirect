@@ -65,10 +65,9 @@
 .slick-slide {
     float: left;
     height: 100%;
-    min-height: 1px;
-    display: none;
-    width: 302px;
-    height: 278px;
+    /*display: none;*/
+    min-width: 250px;
+    transition: opacity 0.5s ease;
 }
 
 .explore-container .explore-body .researchSlider .slick-slide {
