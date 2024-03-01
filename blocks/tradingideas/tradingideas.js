@@ -63,12 +63,13 @@ export default function decorate(block) {
                 const div = document.createElement('div');
                 div.innerHTML = htmlString;
                 const element = div.firstElementChild;
-                element.style.opacity = '0'; // Default all to 'none' initially
+             //   element.style.opacity = '0'; // Default all to 'none' initially
                 slickTrack.appendChild(element);
             });
 
             setCarouselView();
         }
+
     });
     explorerBody.appendChild(generateDiscoverMoreElement());
     window.addEventListener('resize', setCarouselView);
