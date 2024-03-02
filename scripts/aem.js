@@ -205,6 +205,7 @@ function readBlockConfig(block) {
       if (cols[1]) {
         const col = cols[1];
         const name = toClassName(cols[0].textContent);
+        col.classList.add(name);
         let value = '';
         if (col.querySelector('a')) {
           const as = [...col.querySelectorAll('a')];
@@ -227,8 +228,18 @@ function readBlockConfig(block) {
           } else {
             value = ps.map((p) => p.textContent);
           }
-        } else value = row.children[1].textContent;
-        config[name] = value;
+        } else {
+          value = row.children[1].textContent;
+        }
+        if (config[name]) {
+            if (Array.isArray(config[name])) {
+                config[name].push(value);
+            } else {
+                config[name] = [config[name], value];
+            }
+        } else {
+            config[name] = value;
+        }
       }
     }
   });

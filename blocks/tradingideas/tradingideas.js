@@ -1,13 +1,23 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import {createOptimizedPicture, readBlockConfig} from '../../scripts/aem.js';
+import {fetchRecommendations, getMarginActionUrl, mockPredicationConstant} from '../../scripts/mockapi.js';
 
 export default function decorate(block) {
+    const blockConfig = readBlockConfig(block);
+    const type = blockConfig.type;
+    const title = blockConfig.title;
+    const predicationDiv = block.querySelector('.predication');
+    const discoverLink = blockConfig.discoverlink;
+    //Array.isArray(blockConfig.dropdown) ? blockConfig.dropdown : [blockConfig.dropdown];
+    const dropdowns = !blockConfig.dropdown ? undefined : Array.isArray(blockConfig.dropdown) ? blockConfig.dropdown : [blockConfig.dropdown];
     block.textContent = '';
 
     const explorerSection = document.createElement('div');
     explorerSection.classList.add('explore-section');
     block.appendChild(explorerSection);
 
-    explorerSection.appendChild(generateHtmlForIdeasStrike());
+    if (predicationDiv) {
+        explorerSection.appendChild(generateHtmlForIdeasStrike(predicationDiv.innerHTML));
+    }
     const explorerContainer = document.createElement('div');
     explorerContainer.className = 'explore-container';
     explorerSection.appendChild(explorerContainer);
@@ -19,19 +29,21 @@ export default function decorate(block) {
     const colDiv = document.createElement('div');
     colDiv.className = 'col-md-6 col-4';
     const heading = document.createElement('h3');
-    heading.textContent = 'TRADING IDEAS';
+    heading.textContent = title;
     colDiv.appendChild(heading);
 
     rowDiv.appendChild(colDiv);
 
-    const dropdownsDiv = document.createElement('div');
-    dropdownsDiv.className = 'dropdowns';
-    const buyDropdown = createDropdown('Buy', ['Buy', 'Sell', 'Hold']);
-    const intradayDropdown = createDropdown('Intraday', ['Intraday', 'All']);
+    if (dropdowns) {
+        const dropdownsDiv = document.createElement('div');
+        dropdownsDiv.className = 'dropdowns';
+        dropdowns.forEach(dropdownValue => {
+            const dropDownEle = createDropdown(dropdownValue);
+            dropdownsDiv.appendChild(dropDownEle);
+        });
+        rowDiv.appendChild(dropdownsDiv);
+    }
 
-    dropdownsDiv.appendChild(buyDropdown);
-    dropdownsDiv.appendChild(intradayDropdown);
-    rowDiv.appendChild(dropdownsDiv);
     explorerHeader.appendChild(rowDiv);
     explorerContainer.appendChild(explorerHeader);
 
@@ -56,27 +68,27 @@ export default function decorate(block) {
     slickList.appendChild(slickTrack);
     explorerBody.appendChild(researchSlider);
 
-    fetchAndProcessCompaniesData().then(companies => {
+    fetchRecommendations(type).then(companies => {
         if (companies) {
-            const htmlElementsArray = generateHtmlForCompanyCard(companies);
-            htmlElementsArray.forEach((htmlString, index) => {
-                const div = document.createElement('div');
-                div.innerHTML = htmlString;
-                const element = div.firstElementChild;
-             //   element.style.opacity = '0'; // Default all to 'none' initially
-                slickTrack.appendChild(element);
+            const htmlElementsArray = getTradingCard(companies, type);
+            htmlElementsArray.forEach((div, index) => {
+                slickTrack.appendChild(div);
             });
-
-            setCarouselView();
+            setCarouselView(type);
         }
 
     });
-    explorerBody.appendChild(generateDiscoverMoreElement());
+    if (discoverLink) {
+        explorerBody.appendChild(generateDiscoverMoreElement(discoverLink));
+    }
+
     window.addEventListener('resize', setCarouselView);
 
 }
 
-function setCarouselView() {
+
+
+function setCarouselView(type) {
     const slickTrack = document.querySelector('.slick-track');
     const researchSlider = document.querySelector('.researchSlider');
 
@@ -86,41 +98,44 @@ function setCarouselView() {
     let currentWidth = 0;
     let totalCardDisplayed = 0;
     let numberOfDots = 1;
+    let dotContainerNeeded = false;
     for (let i = 0; i < cards.length; i++) {
         if (currentWidth + cards[i].offsetWidth < maxWidth) {
             currentWidth = currentWidth + cards[i].offsetWidth;
             cards[i].style.opacity = '1';
             totalCardDisplayed = totalCardDisplayed + 1;
         } else {
+            dotContainerNeeded = true;
             numberOfDots = numberOfDots + 1;
         }
     }
-    // Dot Navigation
-    let dotsContainer = document.querySelector('.dots-container');
-    if (dotsContainer) {
-        dotsContainer.innerHTML = '';
-    } else {
-        dotsContainer = document.createElement('div');
-        dotsContainer.className = 'dots-container';
+    if (dotContainerNeeded) {
+        let dotsContainer = researchSlider.querySelector('.dots-container');
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+        } else {
+            dotsContainer = document.createElement('div');
+            dotsContainer.className = 'dots-container';
+
+        }
+        researchSlider.appendChild(dotsContainer);
+        const dots = [];
+
+        for (let i = 0; i < numberOfDots; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'dot';
+            dot.dataset.index = i;
+            dotsContainer.appendChild(dot);
+            dots.push(dot);
+
+            dot.addEventListener('click', function() {
+                updateCarouselView(parseInt(this.dataset.index), totalCardDisplayed);
+                updateActiveDot(parseInt(this.dataset.index), dots);
+            });
+        }
+        // Initialize the first dot as active
+        updateActiveDot(0, dots);
     }
-    researchSlider.appendChild(dotsContainer);
-    const dots = [];
-
-    for (let i = 0; i < numberOfDots; i++) {
-        const dot = document.createElement('button');
-        dot.className = 'dot';
-        dot.dataset.index = i;
-        dotsContainer.appendChild(dot);
-        dots.push(dot);
-
-        dot.addEventListener('click', function() {
-            updateCarouselView(parseInt(this.dataset.index), totalCardDisplayed);
-            updateActiveDot(parseInt(this.dataset.index), dots);
-        });
-    }
-    // Initialize the first dot as active
-    updateActiveDot(0, dots);
-
 }
 
 function updateCarouselView(dotIndex, cardsToShow) {
@@ -152,7 +167,10 @@ function updateActiveDot(activeIndex, dots) {
 
 }
 
-function createDropdown(dropdownText, menuItems) {
+function createDropdown(dropdownValue) {
+    const menuItems = dropdownValue.split(', ');
+    const dropdownText = menuItems[0];
+
     const dropdownSelectDiv = document.createElement('div');
     dropdownSelectDiv.className = 'dropdown-select';
 
@@ -194,105 +212,256 @@ function createDropdown(dropdownText, menuItems) {
 
     return dropdownSelectDiv;
 }
-function generateHtmlForIdeasStrike() {
-    const htmlString = `<div class="ideas-strike">
-        <img src="https://www.icicidirect.com/Content/images/target.png" alt="target" loading="lazy" width="24" height="20">
-            <span> <p>Gladiator Stocks delivered&nbsp;<strong>79% success rate</strong></p> </span>
-            <img src="https://www.icicidirect.com/Content/images/target.png" alt="target" loading="lazy" width="24" height="20">
-
-    </div>`;
+function generateHtmlForIdeasStrike(predicationHtml) {
     const div = document.createElement('div');
-    div.innerHTML = htmlString;
-    return div.firstElementChild;
+    div.className = "ideas-strike";
+    const img = document.createElement('img');
+    img.src = '../../icons/target.png';
+    img.alt = "target";
+
+    const span = document.createElement('span');
+    const p = document.createElement('p');
+    p.innerHTML = predicationHtml;
+    span.appendChild(p);
+
+    div.appendChild(img);
+    div.appendChild(span);
+    div.appendChild(img.cloneNode(true));
+
+    return div;
 }
 
-function generateHtmlForCompanyCard(companies) {
+
+function companyCardHeader(company) {
+    const headingWrap = document.createElement('div');
+    headingWrap.className = "heading_wrap";
+
+    const h4 = document.createElement('h4');
+    h4.title = company.name;
+    h4.textContent = company.name;
+    headingWrap.appendChild(h4);
+
+    const iconWrap = document.createElement('div');
+    iconWrap.className = "icon_wrap";
+
+    createIconLink(iconWrap, "../../icons/icon-bookmark.svg");
+    createIconLink(iconWrap, "../../icons/icon-share-2.svg");
+
+    headingWrap.appendChild(iconWrap);
+    return headingWrap;
+}
+
+
+function addActionButton(boxFooter, company, type) {
+    const action = company.action;
+    const btnWrap = document.createElement('div');
+    if (type === 'trading') {
+        btnWrap.className = "btn-wrap";
+    }
+    const aSell = document.createElement('a');
+    aSell.href = getMarginActionUrl(action.toLowerCase());
+    aSell.className = `btn btn-${action.toLowerCase()}`;
+    if (company.exit){
+        aSell.classList.add('disabled');
+    }
+    aSell.target = "_blank";
+    aSell.tabIndex = 0;
+    aSell.textContent = `${action}`;
+    btnWrap.appendChild(aSell);
+    boxFooter.appendChild(btnWrap);
+}
+
+
+function addFooterLabel(boxFooter, company, type) {
+    if (type !== 'trading') {
+        return;
+    }
+    const footerLabel = document.createElement('div');
+    footerLabel.className = "footer-label";
+    if (!company.exit) {
+        footerLabel.classList.add("disable");
+    }
+    const label = document.createElement('label');
+    label.textContent = mockPredicationConstant.profitExit;
+    footerLabel.appendChild(label);
+    const span = document.createElement('span');
+    span.className = "label_value";
+    span.textContent= company.exit;
+    footerLabel.appendChild(span);
+    boxFooter.appendChild(footerLabel);
+}
+
+function addReportLink(boxFooter, company) {
+    if (company.reportLink) {
+        const reportWrap = document.createElement('div');
+        const reportLinl = document.createElement('a');
+        reportLinl.href = "https://www.icicidirect.com/mailimages/IDirect_MahindraMahindra_CoUpdate_Feb24.pdf";
+        reportLinl.className = `link-color`;
+        reportLinl.target = "_blank";
+        reportLinl.textContent = `View Report`;
+        reportWrap.appendChild(reportLinl);
+        boxFooter.appendChild(reportWrap);
+    }
+}
+
+function getRow(company, type) {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = "row";
+    if (company.recoPrice) {
+        createValueContent(rowDiv, mockPredicationConstant.recoPrice, company.recoPrice);
+    }
+    if(company.profitPotential) {
+        createProfitContent(rowDiv, mockPredicationConstant.profitPotential, company.profitPotential);
+    }
+
+    if(company.buyingRange) {
+        createValueContent(rowDiv, mockPredicationConstant.buyingRange, company.buyingRange);
+    }
+
+    if (company.returns) {
+        createReturnContent(rowDiv, mockPredicationConstant.returns, company.returns);
+    }
+    if(company.cmp) {
+        createValueContent(rowDiv, mockPredicationConstant.cmp, `<span class="icon-rupee"></span>${company.cmp}`);
+    }
+
+    if (company.minAmount) {
+        createValueContent(rowDiv, mockPredicationConstant.minAmount, `<span class="icon-rupee"></span>${company.minAmount}`);
+    }
+    if (company.targetPrice) {
+        createValueContent(rowDiv, mockPredicationConstant.targetPrice, `<span class="icon-rupee"></span>${company.targetPrice}`);
+    }
+    if (company.riskProfile) {
+        createValueContent(rowDiv, mockPredicationConstant.riskProfile, company.riskProfile);
+    }
+
+    if (company.stopLoss) {
+        createValueContent(rowDiv , mockPredicationConstant.stopLoss, `<span class="icon-rupee"></span>${company.stopLoss}`);
+    }
+    return rowDiv;
+}
+
+function getTradingCard(companies, type) {
     return companies.map(company => {
-        return `<div class="slide slick-slide slick-current slick-active" data-slick-index="1" aria-hidden="false"  tabindex="0" role="tabpanel" id="slick-slide11" aria-describedby="slick-slide-control11">
-      <div class="box box-theme">
-          <div class="heading_wrap">
-              <h4 title="${company.name}">
-                  ${company.name}
-              </h4>
-              <div class="icon_wrap">
-                  <a href="#" class="" tabindex="0">
-                      <img src="https://www.icicidirect.com/Content/images/icon-bookmark.svg" alt="">
-                  </a>
-                  <a href="#" class="" tabindex="0">
-                      <img src="https://www.icicidirect.com/Content/images/icon-share-2.svg" alt="">
-                  </a>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-sm-6 col-6">
-                  <div class="value-content">
-                      <label>Reco. Price</label>
-                      <h5 class="label_value">${company.recoPrice}</h5>
-                  </div>
-              </div>
-              <div class="col-sm-6 col-6">
-                  <div class="value-content">
-                      <label>CMP</label>
-                      <h5 class="label_value"><span class="icon-rupee"></span>${company.cmp}</h5>
-                  </div>
-              </div>
-              <div class="col-sm-6 col-6">
-                  <div class="value-content">
-                      <label>Target Price</label>
-                      <h5 class="label_value"><span class="icon-rupee"></span>${company.targetPrice}</h5>
-                  </div>
-              </div>
-              <div class="col-sm-6 col-6">
-                  <div class="value-content">
-                      <label>Stop Loss</label>
-                      <h5 class="label_value"><span class="icon-rupee"></span>${company.stopLoss}</h5>
-                  </div>
-              </div>
-          </div>
-          <div class="box-footer box-footer-theme">
-              <div class="btn-wrap">
-                  <a href="https://secure.icicidirect.com/trading/equity/marginsell" class="btn btn-sell " target="_blank" tabindex="0">SELL</a>
-              </div>
-              <div class="footer-label" style="display:none" id="showdiv">
-                  <label> </label>
-                  <span class="label_value"></span>
-              </div>
-          </div>
-      </div>
-  </div>`;
+        const slideDiv = document.createElement('div');
+        slideDiv.className = "slick-slide";
+        const boxDiv = document.createElement('div');
+        boxDiv.className = "box";
+        if (type === 'trading') {
+            boxDiv.classList.add('box-theme');
+        }
+
+        boxDiv.appendChild(companyCardHeader(company));
+
+        const rowDiv = getRow(company, type);
+        boxDiv.appendChild(rowDiv);
+
+        const boxFooter = document.createElement('div');
+        boxFooter.className = "box-footer";
+        if (type === 'trading') {
+            boxFooter.classList.add('box-footer-theme');
+        } else if (type === 'oneclickportfolio' ) {
+            boxFooter.classList.add('oneDiv');
+        }
+
+
+        addReportLink(boxFooter, company);
+        addActionButton(boxFooter, company, type);
+        addFooterLabel(boxFooter, company, type);
+
+
+        boxDiv.appendChild(boxFooter);
+
+        slideDiv.appendChild(boxDiv);
+        return slideDiv;
     })
 }
 
 
-function generateDiscoverMoreElement() {
-    const htmlString = `<div class="mt-3 text-md-right text-center discover-more">
-                            <a href="https://www.icicidirect.com/research/equity/investing-ideas" class="link-color" target="_blank">Discover More <i class="icon-up-arrow icon"></i></a>
-                        </div>`;
-    const div = document.createElement('div');
-    div.innerHTML = htmlString;
-    return div.firstElementChild;
 
+
+function createIconLink(iconWrap, src) {
+    const a = document.createElement('a');
+    a.href = "#";
+    a.tabIndex = 0;
+    const img = document.createElement('img');
+    img.src = src;
+    a.appendChild(img);
+    iconWrap.appendChild(a);
 }
 
-async function fetchAndProcessCompaniesData() {
-    const apiUrl = `${window.location.origin}/draft/anagarwa/tradingtips.json`;
-    try {
-        const response = await fetch(apiUrl);
-        console.log("response" + response);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        // Transform the API response to the desired companies array format
-        const companies = data.data.map(company => ({
-            name: company.CompanyName,
-            recoPrice: company.RecoPrice,
-            cmp: company.cmp,
-            targetPrice: company.target,
-            stopLoss: company.stoploss
-        }));
-        return companies;
-    } catch (error) {
-        console.error("Could not fetch companies data:", error);
+
+function createValueContent(row, labelText, valueText) {
+    const colDiv = document.createElement('div');
+    colDiv.className = "col-sm-6 col-6";
+    const valueContentDiv = document.createElement('div');
+    valueContentDiv.className = "value-content";
+    const label = document.createElement('label');
+    label.textContent = labelText;
+    const h5 = document.createElement('h5');
+    h5.className = "label_value";
+    h5.innerHTML = valueText; // Using innerHTML to include <span> if necessary
+    valueContentDiv.appendChild(label);
+    valueContentDiv.appendChild(h5);
+    colDiv.appendChild(valueContentDiv);
+    row.appendChild(colDiv);
+}
+
+function createProfitContent(row, labelText, valueText) {
+    const colDiv = document.createElement('div');
+    colDiv.className = "col-sm-6 col-6";
+    const valueContentDiv = document.createElement('div');
+    valueContentDiv.className = "value-content field_content";
+    const h5 = document.createElement('h5');
+    h5.className = "label_value";
+    h5.innerHTML = valueText; // Using innerHTML to include <span> if necessary
+    if (valueText.includes('-')) {
+        h5.classList.add('negative');
+    } else {
+        h5.classList.add('positive');
     }
+    const label = document.createElement('label');
+    label.textContent = labelText;
+    valueContentDiv.appendChild(h5);
+    valueContentDiv.appendChild(label);
+    colDiv.appendChild(valueContentDiv);
+    row.appendChild(colDiv);
 }
+
+function createReturnContent(row, labelText, valueText) {
+    const colDiv = document.createElement('div');
+    colDiv.className = "col-sm-6 col-6";
+    const valueContentDiv = document.createElement('div');
+    valueContentDiv.className = "value-content field_content";
+    const label = document.createElement('label');
+    label.textContent = labelText;
+    const h5 = document.createElement('h5');
+    h5.className = "label_value";
+    h5.innerHTML = valueText; // Using innerHTML to include <span> if necessary
+    if (valueText.includes('-')) {
+        h5.classList.add('negative');
+    } else {
+        h5.classList.add('positive');
+    }
+    valueContentDiv.appendChild(h5);
+    valueContentDiv.appendChild(label);
+    colDiv.appendChild(valueContentDiv);
+    row.appendChild(colDiv);
+}
+
+
+function generateDiscoverMoreElement(discoverLink) {
+    const div = document.createElement('div');
+    div.className = "mt-3 text-md-right text-center discover-more";
+    const anchor = document.createElement('a');
+    anchor.href = discoverLink; // Set the href to your discoverLink variable
+    anchor.className = "link-color";
+    anchor.target = "_blank"; // Ensures the link opens in a new tab
+    anchor.textContent = "Discover More "; // Add the text content
+    const icon = document.createElement('i');
+    icon.className = "icon-up-arrow icon";
+    anchor.appendChild(icon);
+    div.appendChild(anchor);
+    return div;
+}
+
