@@ -232,13 +232,13 @@ function readBlockConfig(block) {
           value = row.children[1].textContent;
         }
         if (config[name]) {
-            if (Array.isArray(config[name])) {
-                config[name].push(value);
-            } else {
-                config[name] = [config[name], value];
-            }
+          if (Array.isArray(config[name])) {
+            config[name].push(value);
+          } else {
+            config[name] = [config[name], value];
+          }
         } else {
-            config[name] = value;
+          config[name] = value;
         }
       }
     }
