@@ -74,7 +74,7 @@ export default function decorate(block) {
             htmlElementsArray.forEach((div, index) => {
                 slickTrack.appendChild(div);
             });
-            setCarouselView(type);
+            setCarouselView(type, researchSlider);
         }
 
     });
@@ -82,15 +82,15 @@ export default function decorate(block) {
         explorerBody.appendChild(generateDiscoverMoreElement(discoverLink));
     }
 
-    window.addEventListener('resize', setCarouselView);
+    window.addEventListener('resize', setCarouselView(type, researchSlider));
 
 }
 
 
 
-function setCarouselView(type) {
-    const slickTrack = document.querySelector('.slick-track');
-    const researchSlider = document.querySelector('.researchSlider');
+function setCarouselView(type, researchSlider) {
+    const slickTrack = researchSlider.querySelector('.slick-track');
+   // const researchSlider = document.querySelector('.researchSlider');
 
     const cards = Array.from(slickTrack.children);
     cards.forEach(card => {card.style.opacity = '0';});

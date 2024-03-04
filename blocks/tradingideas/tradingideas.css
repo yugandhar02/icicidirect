@@ -28,21 +28,46 @@
 
 .explore-container .explore-header {
     background-color: #053d6e;
-    padding: 10px 45px;
 }
+
+.explore-container .explore-header {
+    padding: 10px 15px;
+}
+
+@media (min-width: 768px) {
+    .explore-container .explore-header {
+        padding: 10px 45px;
+    }
+}
+
 
 .explore-container .explore-body {
     padding: 15px 30px;
 }
 
 .align-items-center {
-    align-items: center !important;
+    align-items: center;
 }
 
 .explore-container .explore-header h3 {
     color: #fff;
     text-transform: uppercase;
-    font-size: 24px;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+@media (min-width: 575px) {
+    .explore-container .explore-header h3 {
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+
+@media (min-width: 768px) {
+    .explore-container .explore-header h3 {
+        font-size: 24px;
+        line-height: 24px;
+    }
 }
 
 .row-left {
@@ -319,6 +344,10 @@
     margin: 12px 0 0 0;
 }
 
+.col-4 {
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%;
+}
 
 
 .explore-container .explore-body .researchSlider .box .box-footer.box-footer-theme .footer-label {
@@ -370,17 +399,27 @@
 
 .dots-container {
     text-align: center;
-    padding: 20px;
+    margin-top: 20px;
+    position: static;
+    display: block;
+    width: 100%;
 }
 
 .dot {
-    cursor: pointer;
-    height: 20px;
-    width: 20px;
-    margin: 0 5px;
-    background-color: #bbb;
-    border-radius: 50%;
+    position: relative;
     display: inline-block;
+    height: 14px;
+    width: 14px;
+    margin: 0 5px;
+    padding: 0;
+    cursor: pointer;
+    background: #D8D8D8;
+    border-radius: 50px;
+    vertical-align: baseline;
+    outline: none;
+    box-sizing: border-box;
+    border: 0;
+
 }
 
 .dot.active {
@@ -389,8 +428,12 @@
 
 .dropdowns {
     text-align: right;
-    flex: 0 0 50%;
-    max-width: 50%;
+    flex: 0 0 66.66%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+
 }
 
 .dropdowns .dropdown-select {
@@ -487,6 +530,8 @@
     box-shadow: none;
     font: 400 16px/20px "Poppins", sans-serif;
     list-style-position: inside;
+    box-sizing: border-box;
+    text-wrap: nowrap;
 }
 
 .dropdown-menu  li {
