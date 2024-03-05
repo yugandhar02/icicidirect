@@ -1,4 +1,4 @@
-import { readBlockConfig } from '../../scripts/aem.js';
+import {createOptimizedPicture, readBlockConfig} from '../../scripts/aem.js';
 import { fetchRecommendations, getMarginActionUrl, mockPredicationConstant } from '../../scripts/mockapi.js';
 
 function updateCarouselView(activeDot) {
@@ -311,18 +311,15 @@ function addPredicationsSection(explorerSection, predicationDiv) {
   if (predicationDiv) {
     const div = document.createElement('div');
     div.className = 'ideas-strike border-box';
-    const img = document.createElement('img');
-    img.src = '../../icons/target.png';
-    img.alt = 'target';
-
+    const picture = createOptimizedPicture('../../icons/target.webp', 'target', false, [{ width: '20' }]);
     const span = document.createElement('span');
     const p = document.createElement('p');
     p.innerHTML = predicationDiv.innerHTML;
     span.appendChild(p);
 
-    div.appendChild(img);
+    div.appendChild(picture);
     div.appendChild(span);
-    div.appendChild(img.cloneNode(true));
+    div.appendChild(picture.cloneNode(true));
     explorerSection.appendChild(div);
   }
 }
