@@ -311,15 +311,17 @@ function addPredicationsSection(explorerSection, predicationDiv) {
   if (predicationDiv) {
     const div = document.createElement('div');
     div.className = 'ideas-strike border-box';
-    const picture = createOptimizedPicture('../../icons/target.webp', 'target', false, [{ width: '20' }]);
+    const img = document.createElement('img');
+    img.src = '../../icons/target.webp';
+    img.alt = 'target';
     const span = document.createElement('span');
     const p = document.createElement('p');
     p.innerHTML = predicationDiv.innerHTML;
     span.appendChild(p);
 
-    div.appendChild(picture);
+    div.appendChild(img);
     div.appendChild(span);
-    div.appendChild(picture.cloneNode(true));
+    div.appendChild(img.cloneNode(true));
     explorerSection.appendChild(div);
   }
 }
