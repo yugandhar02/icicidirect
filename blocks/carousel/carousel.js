@@ -1,4 +1,4 @@
-import {createOptimizedPicture, readBlockConfig} from '../../scripts/aem.js';
+import {createOptimizedPicture, readBlockConfig, toClassName} from '../../scripts/aem.js';
 import { fetchRecommendations, getMarginActionUrl, mockPredicationConstant } from '../../scripts/mockapi.js';
 
 function updateCarouselView(activeDot) {
@@ -383,7 +383,6 @@ function addDiscoverLink(explorerBody, discoverLink) {
     explorerBody.appendChild(div);
   }
 }
-
 export default function decorate(block) {
   const blockConfig = readBlockConfig(block);
   const { type } = blockConfig;
@@ -391,8 +390,8 @@ export default function decorate(block) {
   const predicationDiv = block.querySelector('.predication');
   const discoverLink = blockConfig.discoverlink;
   // eslint-disable-next-line no-nested-ternary
-  const dropdowns = !blockConfig.dropdown ? undefined
-    : Array.isArray(blockConfig.dropdown) ? blockConfig.dropdown : [blockConfig.dropdown];
+  const dropdowns = !blockConfig.dropdowns ? undefined
+    : Array.isArray(blockConfig.dropdowns) ? blockConfig.dropdowns : [blockConfig.dropdowns];
   block.textContent = '';
 
   const explorerSection = document.createElement('div');
