@@ -1,4 +1,4 @@
-import { createOptimizedPicture, readBlockConfig, toClassName } from '../../scripts/aem.js';
+import { readBlockConfig } from '../../scripts/aem.js';
 import { fetchRecommendations, getMarginActionUrl, mockPredicationConstant } from '../../scripts/mockapi.js';
 
 function updateCarouselView(activeDot) {

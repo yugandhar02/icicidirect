@@ -51,7 +51,6 @@ async function fetchRecommendations(type) {
     }));
     return companies;
   } catch (error) {
-    console.error('Could not fetch companies data:', error);
     return [];
   }
 }
