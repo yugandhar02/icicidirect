@@ -4,21 +4,20 @@ import { fetchRecommendations, getMarginActionUrl, mockPredicationConstant } fro
 function updateCarouselView(activeDot) {
   const dotIndexStr = activeDot.dataset.index;
   const researchSlider = activeDot.closest('.research-slider');
-  const cardsToShow = researchSlider.querySelectorAll('.carousel-card-visible').length;
-  const dotIndex = parseInt(dotIndexStr, 10);
   const carouselTrack = researchSlider.querySelector('.carousel-track');
-  const totalCards = carouselTrack.children.length; // Total number of cards
-  const cardWidth = carouselTrack.children[0].offsetWidth; // Width of a single card
+  const cards = Array.from(carouselTrack.children);
+  const visibleCards = cards.filter((card) => window.getComputedStyle(card).opacity === '1');
+  const dotIndex = parseInt(dotIndexStr, 10);
+  const totalCards = cards.length;// carouselTrack.children.length; // Total number of cards
+  const cardWidth = cards[0].offsetWidth; // Width of a single card
 
   const moveDistance = dotIndex * cardWidth; // Move one card width per dot
 
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < totalCards; i++) {
-    if (i >= dotIndex && i < dotIndex + cardsToShow) {
-      carouselTrack.children[i].classList.add('carousel-card-visible');
+    if (i >= dotIndex && i < dotIndex + visibleCards.length) {
       carouselTrack.children[i].style.opacity = 1; // Show the cards in the current view
     } else {
-      carouselTrack.children[i].classList.remove('carousel-card-visible');
       carouselTrack.children[i].style.opacity = 0; // Hide other cards
     }
   }
@@ -53,33 +52,13 @@ function startUpdateCarousel(researchSlider) {
 function setCarouselView(type, researchSlider) {
   const carouselTrack = researchSlider.querySelector('.carousel-track');
   const cards = Array.from(carouselTrack.children);
-  const maxWidth = carouselTrack.offsetWidth;
-  let currentWidth = 0;
-  let numberOfDots = 1;
-  cards.forEach((card) => {
-    card.style.opacity = '0'; // Hide all cards initially
-    if (currentWidth + card.offsetWidth <= maxWidth) {
-      currentWidth += card.offsetWidth;
-      card.classList.add('carousel-card-visible');
-      card.style.opacity = '1';
-    } else {
-      numberOfDots += 1;
-    }
-  });
-
+  const visibleCards = cards.filter((card) => window.getComputedStyle(card).opacity === '1');
+  const numberOfDots = cards.length - visibleCards.length + 1;
   if (numberOfDots > 1) {
-    let dotsContainer = researchSlider.querySelector('.dots-container');
-    let activeDot = 0;
-    if (dotsContainer) {
-      activeDot = dotsContainer.querySelector('.active').getAttribute('data-index');
-      dotsContainer.innerHTML = '';
-    } else {
-      dotsContainer = document.createElement('div');
-      dotsContainer.className = 'dots-container border-box';
-    }
+    const dotsContainer = document.createElement('div');
+    dotsContainer.className = 'dots-container border-box';
     researchSlider.appendChild(dotsContainer);
     const dots = [];
-
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < numberOfDots; i++) {
       const dot = document.createElement('button');
@@ -87,12 +66,11 @@ function setCarouselView(type, researchSlider) {
       dot.dataset.index = i;
       dotsContainer.appendChild(dot);
       dots.push(dot);
-
-      dot.addEventListener('click', function () {
+      dot.addEventListener('click', function updateCarouselOnClick() {
         updateCarouselView(this);
       });
     }
-    updateCarouselView(dots[activeDot]);
+    updateCarouselView(dots[0]);
     startUpdateCarousel(researchSlider);
   }
 }
@@ -127,18 +105,17 @@ function createDropdown(dropdownValue) {
   dropdownMenuContainer.appendChild(ul);
   dropdownSelectDiv.appendChild(button);
   dropdownSelectDiv.appendChild(dropdownMenuContainer);
-  button.onclick = function () {
+  button.addEventListener('click', () => {
     if (dropdownMenuContainer.style.display === 'block') {
       dropdownMenuContainer.style.display = 'none';
       return;
     }
-    // Close all other dropdowns by querying them
     document.querySelectorAll('.dropdown-menu-container').forEach((container) => {
       container.style.display = 'none';
     });
     // Toggle the display of this dropdownMenuContainer
     dropdownMenuContainer.style.display = 'block';
-  };
+  });
 
   return dropdownSelectDiv;
 }

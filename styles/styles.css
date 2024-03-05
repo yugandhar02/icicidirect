@@ -210,3 +210,11 @@ p:last-child {
   box-sizing: border-box;
   outline: none;
 }
+
+.positive {
+  color: #259702
+}
+
+.negative {
+  color: #da0000
+}
