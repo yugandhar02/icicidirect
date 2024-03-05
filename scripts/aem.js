@@ -205,7 +205,6 @@ function readBlockConfig(block) {
       if (cols[1]) {
         const col = cols[1];
         const name = toClassName(cols[0].textContent);
-        col.classList.add(name);
         let value = '';
         if (col.querySelector('a')) {
           const as = [...col.querySelectorAll('a')];
