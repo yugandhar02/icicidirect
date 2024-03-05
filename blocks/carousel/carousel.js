@@ -1,56 +1,77 @@
 import { readBlockConfig } from '../../scripts/aem.js';
 import { fetchRecommendations, getMarginActionUrl, mockPredicationConstant } from '../../scripts/mockapi.js';
 
-function updateCarouselView(dotIndex, cardsToShow) {
-  const slickTrack = document.querySelector('.slick-track');
-  const totalCards = slickTrack.children.length; // Total number of cards
-  const cardWidth = slickTrack.children[0].offsetWidth; // Width of a single card
+function updateCarouselView(activeDot) {
+  const dotIndexStr = activeDot.dataset.index;
+  const researchSlider = activeDot.closest('.research-slider');
+  const cardsToShow = researchSlider.querySelectorAll('.carousel-card-visible').length;
+  const dotIndex = parseInt(dotIndexStr, 10);
+  const carouselTrack = researchSlider.querySelector('.carousel-track');
+  const totalCards = carouselTrack.children.length; // Total number of cards
+  const cardWidth = carouselTrack.children[0].offsetWidth; // Width of a single card
 
-  // Calculate the new transform distance
   const moveDistance = dotIndex * cardWidth; // Move one card width per dot
 
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < totalCards; i++) {
     if (i >= dotIndex && i < dotIndex + cardsToShow) {
-      slickTrack.children[i].style.opacity = 1; // Show the cards in the current view
+      carouselTrack.children[i].classList.add('carousel-card-visible');
+      carouselTrack.children[i].style.opacity = 1; // Show the cards in the current view
     } else {
-      slickTrack.children[i].style.opacity = 0; // Hide other cards
+      carouselTrack.children[i].classList.remove('carousel-card-visible');
+      carouselTrack.children[i].style.opacity = 0; // Hide other cards
     }
   }
-  // Apply the transform to slide
-  slickTrack.style.transform = `translateX(-${moveDistance}px)`;
-}
-function updateActiveDot(activeIndex, dots) {
-  // Remove active class from all dots
-  dots.forEach((dot) => dot.classList.remove('active'));
-  // Add active class to the currently active dot
-  dots[activeIndex].classList.add('active');
-}
-function setCarouselView(type, researchSlider) {
-  const slickTrack = researchSlider.querySelector('.slick-track');
-  // const researchSlider = document.querySelector('.researchSlider');
 
-  const cards = Array.from(slickTrack.children);
-  cards.forEach((card) => { card.style.opacity = '0'; });
-  const maxWidth = slickTrack.offsetWidth;
+  carouselTrack.style.transform = `translateX(-${moveDistance}px)`;
+  const dots = researchSlider.querySelectorAll('.dot');
+  dots.forEach((dot) => dot.classList.remove('active'));
+  dots[dotIndex].classList.add('active');
+}
+
+function startUpdateCarousel(researchSlider) {
+  const dotsContainer = researchSlider.querySelector('.dots-container');
+  if (!dotsContainer) return; // Exit if dotsContainer doesn't exist
+
+  const dots = dotsContainer.querySelectorAll('.dot');
+  let activeDotIndex = Array.from(dots).findIndex((dot) => dot.classList.contains('active'));
+
+  if (activeDotIndex === -1 || activeDotIndex === dots.length - 1) {
+    return;
+  }
+
+  const intervalId = setInterval(() => {
+    activeDotIndex = (activeDotIndex + 1) % dots.length; // Move to the next dot
+    const activeDot = dots[activeDotIndex];
+    updateCarouselView(activeDot);
+    if (activeDotIndex === dots.length - 1) {
+      clearInterval(intervalId);
+    }
+  }, 2000); // Update every 2 seconds
+}
+
+function setCarouselView(type, researchSlider) {
+  const carouselTrack = researchSlider.querySelector('.carousel-track');
+  const cards = Array.from(carouselTrack.children);
+  const maxWidth = carouselTrack.offsetWidth;
   let currentWidth = 0;
-  let totalCardDisplayed = 0;
   let numberOfDots = 1;
-  let dotContainerNeeded = false;
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < cards.length; i++) {
-    if (currentWidth + cards[i].offsetWidth < maxWidth) {
-      currentWidth += cards[i].offsetWidth;
-      cards[i].style.opacity = '1';
-      totalCardDisplayed += 1;
+  cards.forEach((card) => {
+    card.style.opacity = '0'; // Hide all cards initially
+    if (currentWidth + card.offsetWidth <= maxWidth) {
+      currentWidth += card.offsetWidth;
+      card.classList.add('carousel-card-visible');
+      card.style.opacity = '1';
     } else {
-      dotContainerNeeded = true;
       numberOfDots += 1;
     }
-  }
-  if (dotContainerNeeded) {
+  });
+
+  if (numberOfDots > 1) {
     let dotsContainer = researchSlider.querySelector('.dots-container');
+    let activeDot = 0;
     if (dotsContainer) {
+      activeDot = dotsContainer.querySelector('.active').getAttribute('data-index');
       dotsContainer.innerHTML = '';
     } else {
       dotsContainer = document.createElement('div');
@@ -68,12 +89,11 @@ function setCarouselView(type, researchSlider) {
       dots.push(dot);
 
       dot.addEventListener('click', function () {
-        updateCarouselView(parseInt(this.dataset.index, 10), totalCardDisplayed);
-        updateActiveDot(parseInt(this.dataset.index, 10), dots);
+        updateCarouselView(this);
       });
     }
-    // Initialize the first dot as active
-    updateActiveDot(0, dots);
+    updateCarouselView(dots[activeDot]);
+    startUpdateCarousel(researchSlider);
   }
 }
 
@@ -121,24 +141,6 @@ function createDropdown(dropdownValue) {
   };
 
   return dropdownSelectDiv;
-}
-function generateHtmlForIdeasStrike(predicationHtml) {
-  const div = document.createElement('div');
-  div.className = 'ideas-strike border-box';
-  const img = document.createElement('img');
-  img.src = '../../icons/target.png';
-  img.alt = 'target';
-
-  const span = document.createElement('span');
-  const p = document.createElement('p');
-  p.innerHTML = predicationHtml;
-  span.appendChild(p);
-
-  div.appendChild(img);
-  div.appendChild(span);
-  div.appendChild(img.cloneNode(true));
-
-  return div;
 }
 
 function createIconLink(iconWrap, src) {
@@ -222,60 +224,37 @@ function addReportLink(boxFooter, company) {
   }
 }
 
-function createValueContent(row, labelText, valueText) {
+function createValueContent(row, labelText, valueText, colType = 'value') {
   const colDiv = document.createElement('div');
+  const valueContentDiv = document.createElement('div');
+  const label = document.createElement('label');
+  const h5 = document.createElement('h5');
+
   colDiv.className = 'value-col col border-box';
-  const valueContentDiv = document.createElement('div');
   valueContentDiv.className = 'value-content border-box';
-  const label = document.createElement('label');
-  label.textContent = labelText;
-  const h5 = document.createElement('h5');
-  h5.className = 'label-value border-box';
-  h5.innerHTML = valueText; // Using innerHTML to include <span> if necessary
-  valueContentDiv.appendChild(label);
-  valueContentDiv.appendChild(h5);
-  colDiv.appendChild(valueContentDiv);
-  row.appendChild(colDiv);
-}
+  if (colType !== 'value') {
+    valueContentDiv.classList.add('field-content');
+  }
 
-function createProfitContent(row, labelText, valueText) {
-  const colDiv = document.createElement('div');
-  colDiv.className = 'col border-box';
-  const valueContentDiv = document.createElement('div');
-  valueContentDiv.className = 'value-content field-content border-box';
-  const h5 = document.createElement('h5');
+  label.textContent = labelText;
   h5.className = 'label-value border-box';
   h5.innerHTML = valueText; // Using innerHTML to include <span> if necessary
-  if (valueText.includes('-')) {
+
+  // Adding 'negative' or 'positive' class based on valueText for 'profit' and 'return'
+  if (colType !== 'value' && valueText.includes('-')) {
     h5.classList.add('negative');
-  } else {
+  } else if (colType !== 'value') {
     h5.classList.add('positive');
   }
-  const label = document.createElement('label');
-  label.textContent = labelText;
-  valueContentDiv.appendChild(h5);
-  valueContentDiv.appendChild(label);
-  colDiv.appendChild(valueContentDiv);
-  row.appendChild(colDiv);
-}
 
-function createReturnContent(row, labelText, valueText) {
-  const colDiv = document.createElement('div');
-  colDiv.className = 'col border-box';
-  const valueContentDiv = document.createElement('div');
-  valueContentDiv.className = 'value-content field-content border-box';
-  const label = document.createElement('label');
-  label.textContent = labelText;
-  const h5 = document.createElement('h5');
-  h5.className = 'label-value border-box';
-  h5.innerHTML = valueText; // Using innerHTML to include <span> if necessary
-  if (valueText.includes('-')) {
-    h5.classList.add('negative');
+  if (colType === 'profit') { // Clearing existing children
+    valueContentDiv.appendChild(h5);
+    valueContentDiv.appendChild(label);
   } else {
-    h5.classList.add('positive');
+    valueContentDiv.appendChild(label);
+    valueContentDiv.appendChild(h5);
   }
-  valueContentDiv.appendChild(h5);
-  valueContentDiv.appendChild(label);
+
   colDiv.appendChild(valueContentDiv);
   row.appendChild(colDiv);
 }
@@ -283,44 +262,32 @@ function createReturnContent(row, labelText, valueText) {
 function getRow(company) {
   const rowDiv = document.createElement('div');
   rowDiv.className = 'row border-box';
-  if (company.recoPrice) {
-    createValueContent(rowDiv, mockPredicationConstant.recoPrice, company.recoPrice);
-  }
-  if (company.profitPotential) {
-    createProfitContent(rowDiv, mockPredicationConstant.profitPotential, company.profitPotential);
-  }
 
-  if (company.buyingRange) {
-    createValueContent(rowDiv, mockPredicationConstant.buyingRange, company.buyingRange);
-  }
+  const contentData = [
+    { label: mockPredicationConstant.recoPrice, value: company.recoPrice },
+    { label: mockPredicationConstant.profitPotential, value: company.profitPotential, type: 'profit' },
+    { label: mockPredicationConstant.buyingRange, value: company.buyingRange },
+    { label: mockPredicationConstant.returns, value: company.returns, type: 'return' },
+    { label: mockPredicationConstant.cmp, value: company.cmp ? `<span class="icon-rupee"></span>${company.cmp}` : '' },
+    { label: mockPredicationConstant.minAmount, value: company.minAmount ? `<span class="icon-rupee"></span>${company.minAmount}` : '' },
+    { label: mockPredicationConstant.targetPrice, value: company.targetPrice ? `<span class="icon-rupee"></span>${company.targetPrice}` : '' },
+    { label: mockPredicationConstant.riskProfile, value: company.riskProfile },
+    { label: mockPredicationConstant.stopLoss, value: company.stopLoss ? `<span class="icon-rupee"></span>${company.stopLoss}` : '' },
+  ];
 
-  if (company.returns) {
-    createReturnContent(rowDiv, mockPredicationConstant.returns, company.returns);
-  }
-  if (company.cmp) {
-    createValueContent(rowDiv, mockPredicationConstant.cmp, `<span class="icon-rupee"></span>${company.cmp}`);
-  }
+  contentData.forEach((data) => {
+    if (data.value) {
+      createValueContent(rowDiv, data.label, data.value, data.type);
+    }
+  });
 
-  if (company.minAmount) {
-    createValueContent(rowDiv, mockPredicationConstant.minAmount, `<span class="icon-rupee"></span>${company.minAmount}`);
-  }
-  if (company.targetPrice) {
-    createValueContent(rowDiv, mockPredicationConstant.targetPrice, `<span class="icon-rupee"></span>${company.targetPrice}`);
-  }
-  if (company.riskProfile) {
-    createValueContent(rowDiv, mockPredicationConstant.riskProfile, company.riskProfile);
-  }
-
-  if (company.stopLoss) {
-    createValueContent(rowDiv, mockPredicationConstant.stopLoss, `<span class="icon-rupee"></span>${company.stopLoss}`);
-  }
   return rowDiv;
 }
 
-function getTradingCard(companies, type) {
+function getRecommendationsCard(companies, type) {
   return companies.map((company) => {
-    const slideDiv = document.createElement('div');
-    slideDiv.className = 'slick-slide border-box';
+    const cardDiv = document.createElement('div');
+    cardDiv.className = 'carousel-card border-box';
     const boxDiv = document.createElement('div');
     boxDiv.className = 'box border-box';
     if (type === 'trading') {
@@ -346,60 +313,44 @@ function getTradingCard(companies, type) {
 
     boxDiv.appendChild(boxFooter);
 
-    slideDiv.appendChild(boxDiv);
-    return slideDiv;
+    cardDiv.appendChild(boxDiv);
+    return cardDiv;
   });
 }
 
-function generateDiscoverMoreElement(discoverLink) {
-  const div = document.createElement('div');
-  div.className = 'mt-3 text-md-right text-center discover-more border-box';
-  const anchor = document.createElement('a');
-  anchor.href = discoverLink; // Set the href to your discoverLink variable
-  anchor.className = 'link-color';
-  anchor.target = '_blank'; // Ensures the link opens in a new tab
-  anchor.textContent = 'Discover More '; // Add the text content
-  const icon = document.createElement('i');
-  icon.className = 'icon-up-arrow icon ';
-  anchor.appendChild(icon);
-  div.appendChild(anchor);
-  return div;
-}
-
-async function generateCardsView(type, slickTrack, researchSlider) {
+async function generateCardsView(type, carouselTrack, researchSlider) {
   fetchRecommendations(type).then((companies) => {
     if (companies) {
-      const htmlElementsArray = getTradingCard(companies, type);
-      htmlElementsArray.forEach((div) => {
-        slickTrack.appendChild(div);
+      const recommendationsCard = getRecommendationsCard(companies, type);
+      recommendationsCard.forEach((div) => {
+        carouselTrack.appendChild(div);
       });
       setCarouselView(type, researchSlider);
     }
   });
 }
 
-export default function decorate(block) {
-  const blockConfig = readBlockConfig(block);
-  const { type } = blockConfig;
-  const { title } = blockConfig;
-  const predicationDiv = block.querySelector('.predication');
-  const discoverLink = blockConfig.discoverlink;
-  // eslint-disable-next-line no-nested-ternary
-  const dropdowns = !blockConfig.dropdown ? undefined
-    : Array.isArray(blockConfig.dropdown) ? blockConfig.dropdown : [blockConfig.dropdown];
-  block.textContent = '';
-
-  const explorerSection = document.createElement('div');
-  explorerSection.classList.add('explore-section');
-  block.appendChild(explorerSection);
-
+function addPredicationsSection(explorerSection, predicationDiv) {
   if (predicationDiv) {
-    explorerSection.appendChild(generateHtmlForIdeasStrike(predicationDiv.innerHTML));
-  }
-  const explorerContainer = document.createElement('div');
-  explorerContainer.className = 'explore-container border-box';
-  explorerSection.appendChild(explorerContainer);
+    const div = document.createElement('div');
+    div.className = 'ideas-strike border-box';
+    const img = document.createElement('img');
+    img.src = '../../icons/target.png';
+    img.alt = 'target';
 
+    const span = document.createElement('span');
+    const p = document.createElement('p');
+    p.innerHTML = predicationDiv.innerHTML;
+    span.appendChild(p);
+
+    div.appendChild(img);
+    div.appendChild(span);
+    div.appendChild(img.cloneNode(true));
+    explorerSection.appendChild(div);
+  }
+}
+
+function addCarouselHeader(explorerContainer, title, dropdowns) {
   const explorerHeader = document.createElement('div');
   explorerHeader.className = 'explore-header border-box';
   const rowDiv = document.createElement('div');
@@ -424,33 +375,66 @@ export default function decorate(block) {
 
   explorerHeader.appendChild(rowDiv);
   explorerContainer.appendChild(explorerHeader);
+}
+
+function addCarouselCards(explorerBody, type) {
+  const researchSlider = document.createElement('div');
+  researchSlider.className = 'research-slider carousel border-box';
+
+  const carouselList = document.createElement('div');
+  carouselList.classList.add('carousel-list');
+  researchSlider.appendChild(carouselList);
+  const carouselTrack = document.createElement('div');
+  carouselTrack.classList.add('carousel-track');
+  carouselList.appendChild(carouselTrack);
+  explorerBody.appendChild(researchSlider);
+  generateCardsView(type, carouselTrack, researchSlider);
+}
+
+function addDiscoverLink(explorerBody, discoverLink) {
+  if (discoverLink) {
+    const div = document.createElement('div');
+    div.className = 'text-center discover-more border-box';
+    const anchor = document.createElement('a');
+    anchor.href = discoverLink; // Set the href to your discoverLink variable
+    anchor.className = 'link-color';
+    anchor.target = '_blank'; // Ensures the link opens in a new tab
+    anchor.textContent = 'Discover More '; // Add the text content
+    const icon = document.createElement('i');
+    icon.className = 'icon-up-arrow icon ';
+    anchor.appendChild(icon);
+    div.appendChild(anchor);
+    explorerBody.appendChild(div);
+  }
+}
+
+export default function decorate(block) {
+  const blockConfig = readBlockConfig(block);
+  const { type } = blockConfig;
+  const { title } = blockConfig;
+  const predicationDiv = block.querySelector('.predication');
+  const discoverLink = blockConfig.discoverlink;
+  // eslint-disable-next-line no-nested-ternary
+  const dropdowns = !blockConfig.dropdown ? undefined
+    : Array.isArray(blockConfig.dropdown) ? blockConfig.dropdown : [blockConfig.dropdown];
+  block.textContent = '';
+
+  const explorerSection = document.createElement('div');
+  explorerSection.classList.add('explore-section');
+  block.appendChild(explorerSection);
+
+  addPredicationsSection(explorerSection, predicationDiv);
+
+  const explorerContainer = document.createElement('div');
+  explorerContainer.className = 'explore-container border-box';
+  explorerSection.appendChild(explorerContainer);
+
+  addCarouselHeader(explorerContainer, title, dropdowns);
 
   const explorerBody = document.createElement('div');
   explorerBody.className = 'explore-body border-box';
   explorerContainer.appendChild(explorerBody);
 
-  const researchSlider = document.createElement('div');
-  researchSlider.classList.add('research-slider');
-  researchSlider.classList.add('slick-initialized');
-  researchSlider.classList.add('slick-slider');
-  researchSlider.classList.add('slick-dotted');
-  researchSlider.classList.add('carousel');
-  researchSlider.classList.add('border-box');
-
-  const slickList = document.createElement('div');
-  slickList.classList.add('slick-list');
-  slickList.classList.add('draggable');
-  researchSlider.appendChild(slickList);
-  const slickTrack = document.createElement('div');
-  slickTrack.classList.add('slick-track');
-  slickList.appendChild(slickTrack);
-  explorerBody.appendChild(researchSlider);
-
-  generateCardsView(type, slickTrack, researchSlider);
-
-  if (discoverLink) {
-    explorerBody.appendChild(generateDiscoverMoreElement(discoverLink));
-  }
-
-  window.addEventListener('resize', setCarouselView(type, researchSlider));
+  addCarouselCards(explorerBody, type);
+  addDiscoverLink(explorerBody, discoverLink);
 }

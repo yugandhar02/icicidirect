@@ -1,9 +1,14 @@
-
-
-.border-box {
-    box-sizing: border-box;
-    outline: none;
-}
+/*
+ * Copyright 2024 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 .explore-section{
     margin-top: 15px;
@@ -216,11 +221,11 @@
 }
 
 
-.explore-container .explore-body .slick-slider {
+.explore-container .explore-body .carousel {
     margin-bottom: 30px;
 }
 
-.explore-container .explore-body .slick-slider .value-col {
+.explore-container .explore-body .carousel .value-col {
     flex: 0 0 50%;
     max-width: 50%;
 }
@@ -250,12 +255,12 @@
     content: "\e900";
 }
 
-.explore-section .explore-container .explore-body .research-slider .slick-track,
-.explore-section .explore-container .explore-body .research-slider .slick-list {
+.explore-section .explore-container .explore-body .research-slider .carousel-track,
+.explore-section .explore-container .explore-body .research-slider .carousel-list {
     transform: translate3d(0, 0, 0);
 }
 
-.explore-section .explore-container .explore-body .research-slider .slick-list {
+.explore-section .explore-container .explore-body .research-slider .carousel-list {
     position: relative;
     overflow: hidden;
     display: block;
@@ -263,7 +268,7 @@
     padding: 0;
 }
 
-.explore-section .explore-container .explore-body .research-slider .slick-track {
+.explore-section .explore-container .explore-body .research-slider .carousel-track {
     position: relative;
     left: 0;
     top: 0;
@@ -275,29 +280,29 @@
     transition: transform 0.5s ease;
 }
 
-.explore-section .explore-container .explore-body .research-slider .slick-track > * {
+.explore-section .explore-container .explore-body .research-slider .carousel-track > * {
     opacity: 0;
 }
 
-.explore-section .explore-container .explore-body .research-slider .slick-track > :first-child {
+.explore-section .explore-container .explore-body .research-slider .carousel-track > :first-child {
     opacity: 1;
 }
 
 /* Tablet: first 2 children have opacity 1 and divide the width equally */
 @media (width >= 768px) {
-    .explore-section .explore-container .explore-body .research-slider .slick-track > :nth-child(-n+2) {
+    .explore-section .explore-container .explore-body .research-slider .carousel-track > :nth-child(-n+2) {
         opacity: 1;
     }
 }
 
 /* Desktop: first 4 children have opacity 1 and equally divide the parent's width */
 @media (width >= 1024px) {
-    .explore-section .explore-container .explore-body .research-slider .slick-track > :nth-child(-n+4) {
+    .explore-section .explore-container .explore-body .research-slider .carousel-track > :nth-child(-n+4) {
         opacity: 1;
     }
 }
 
-.explore-section .explore-container .explore-body .research-slider .slick-slide {
+.explore-section .explore-container .explore-body .research-slider .carousel-card {
     float: left;
     height: 100%;
     transition: opacity 0.5s ease;
@@ -309,12 +314,12 @@
 
 
 @media (width <= 767px) {
-    .explore-section .explore-container .explore-body .research-slider .slick-slide {
+    .explore-section .explore-container .explore-body .research-slider .carousel-card {
         padding: 8px;
     }
 }
 
-.explore-section .explore-container .explore-body .research-slider .slick-slide img {
+.explore-section .explore-container .explore-body .research-slider .carousel-card img {
     display: block;
 }
 
@@ -549,7 +554,7 @@
 }
 
 
-.dots-container {
+.explore-container .explore-body .dots-container {
     text-align: center;
     margin-top: 20px;
     position: static;
@@ -557,7 +562,7 @@
     width: 100%;
 }
 
-.dot {
+.explore-container .explore-body .dot {
     position: relative;
     display: inline-block;
     height: 14px;
@@ -574,7 +579,7 @@
 
 }
 
-.dot.active {
+.explore-container .explore-body .dot.active {
     background-color:  #E87817;
 }
 
