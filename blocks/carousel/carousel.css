@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-.explore-section{
+.explore-section {
     margin-top: 15px;
     box-sizing: border-box;
     outline: none;
@@ -24,8 +24,6 @@
     display: flex;
     margin-left: auto;
     margin-bottom: 15px;
-    box-sizing: border-box;
-    outline: none;
 }
 
 .explore-section .ideas-strike img {
@@ -38,15 +36,11 @@
     border: 1px solid rgb(14 31 53 / 20%);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    box-sizing: border-box;
-    outline: none;
 }
 
 .explore-section .explore-header {
     background-color: #053d6e;
     padding: 10px 15px;
-    box-sizing: border-box;
-    outline: none;
 }
 
 @media (width >= 768px) {
@@ -58,8 +52,6 @@
 
 .explore-section .explore-body {
     padding: 15px 30px;
-    box-sizing: border-box;
-    outline: none;
 }
 
 
@@ -141,14 +133,7 @@
 }
 
 .explore-section .dropdowns .dropdown-toggle {
-    float: none;
-    display: inline-block;
-    margin-left: 0;
-    position: relative;
-    align-items: flex-end;
     height: 30px;
-    min-width: auto;
-    min-height: auto;
     background-color: transparent;
     font-size: 12px;
     text-transform: uppercase;
@@ -160,11 +145,7 @@
 
 .explore-section .dropdowns .dropdown-toggle .dropdown-text {
     display: inline-block;
-    width: 100%;
     overflow: hidden;
-    text-align: left;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .explore-section .dropdowns .dropdown-menu-container {
@@ -188,21 +169,13 @@
 }
 
 .explore-section .dropdowns .dropdown-menu {
-    position: static;
     float: none;
     border: 0;
     padding: 0;
     margin: 0;
-    border-radius: 0;
-    box-shadow: none;
-    font: 400 16px/20px Poppins, sans-serif;
-    list-style-position: inside;
-    box-sizing: border-box;
-    text-wrap: nowrap;
 }
 
 .explore-section .dropdowns .dropdown-menu  li {
-    position: relative;
     font-size: 13px;
     text-transform: capitalize;
     display: block;
@@ -212,12 +185,7 @@
     padding: 5px 10px;
     color: #415270;
     cursor: pointer;
-    user-select: none;
     text-decoration: none;
-}
-
-.explore-section .dropdowns .dropdown-menu  li a span {
-    display: inline-block;
 }
 
 
@@ -226,8 +194,8 @@
 }
 
 .explore-section .carousel .value-col {
-    flex: 0 0 50%;
     max-width: 50%;
+    margin: 12px 0 0;
 }
 
 .explore-section .discover-more {
@@ -261,11 +229,7 @@
 }
 
 .explore-section .research-slider .carousel-list {
-    position: relative;
     overflow: hidden;
-    display: block;
-    margin: 0;
-    padding: 0;
 }
 
 .explore-section .research-slider .carousel-track {
@@ -273,10 +237,6 @@
     left: 0;
     top: 0;
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    align-items: center;
-    flex-wrap: nowrap;
     transition: transform 0.5s ease;
 }
 
@@ -288,14 +248,12 @@
     opacity: 1;
 }
 
-/* Tablet: first 2 children have opacity 1 and divide the width equally */
 @media (width >= 768px) {
     .explore-section .research-slider .carousel-track > :nth-child(-n+2) {
         opacity: 1;
     }
 }
 
-/* Desktop: first 4 children have opacity 1 and equally divide the parent's width */
 @media (width >= 1024px) {
     .explore-section .research-slider .carousel-track > :nth-child(-n+4) {
         opacity: 1;
@@ -303,13 +261,8 @@
 }
 
 .explore-section .research-slider .carousel-card {
-    float: left;
-    height: 100%;
     transition: opacity 0.5s ease;
     padding: 8px 12px;
-    box-sizing: border-box;
-    outline: none;
-    display: block;
 }
 
 
@@ -326,14 +279,8 @@
 .explore-section .research-slider .box {
     box-shadow: 4px 4px 24px rgb(0 0 0 / 8%);
     background: #fff;
-    height: 100%;
     padding: 15px 15px 50px;
-    transition: all ease-in-out 0.3s;
-    border-radius: 10px;
     position: relative;
-    overflow: hidden;
-    box-sizing: border-box;
-    outline: none;
 }
 
 .explore-section .research-slider .box.box-theme {
@@ -342,8 +289,6 @@
 
 .explore-section .research-slider .box .heading-wrap {
     display: flex;
-    margin-bottom: 10px;
-    align-items: center;
 }
 
 .explore-section .research-slider .box .heading-wrap h4 {
@@ -355,10 +300,8 @@
 }
 
 .explore-section .research-slider .box .heading-wrap .icon-wrap {
-    margin-left: auto;
     display: flex;
     align-items: center;
-    vertical-align: bottom;
 }
 
 
@@ -383,18 +326,12 @@
 
 .explore-section .research-slider .box label {
     font-size: 11px;
-    line-height: 14px;
-    text-align: center;
-    color: #4a4a4a;
-    font-weight: 300;
-    margin-bottom: 5px;
 }
 
 .explore-section .research-slider .box .label-value {
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
-    color: #000;
     margin-block: 0 0;
 }
 
@@ -439,15 +376,11 @@
 
 .explore-section .research-slider .box .box-footer {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-wrap: wrap;
     position: absolute;
     right: 0;
     left: 0;
     bottom: 0;
-    padding: 10px 15px;
-    color: #053d6e;
 }
 
 .explore-section .research-slider .box .box-footer.box-footer-theme .btn-wrap {
@@ -506,9 +439,6 @@
     pointer-events: none;
 }
 
-
-
-
 .explore-section .research-slider .box .box-footer .link-color {
     font-size: 14px;
     line-height: 19px;
@@ -522,22 +452,13 @@
 
 .explore-section .research-slider .box .row {
     margin: 12px 0 0;
-    box-sizing: border-box;
-    outline: none;
 }
 
-.explore-section .research-slider .box .row > div {
-    margin: 12px 0 0;
-}
 
 
 .explore-section .research-slider .box .box-footer.box-footer-theme .footer-label {
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    color: #053d6e;
-    text-align: center;
     background-color: #EFF6FF;
     width: 100%;
     padding: 3px 0;
@@ -547,14 +468,9 @@
 .explore-section .dots-container {
     text-align: center;
     margin-top: 20px;
-    position: static;
-    display: block;
-    width: 100%;
 }
 
 .explore-section .dots-container .dot {
-    position: relative;
-    display: inline-block;
     height: 14px;
     width: 14px;
     margin: 0 5px;
@@ -562,11 +478,7 @@
     cursor: pointer;
     background: #D8D8D8;
     border-radius: 50px;
-    vertical-align: baseline;
-    outline: none;
-    box-sizing: border-box;
     border: 0;
-
 }
 
 .explore-section .dots-container .dot.active {

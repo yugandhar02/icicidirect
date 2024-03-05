@@ -4,18 +4,21 @@ import { fetchRecommendations, getMarginActionUrl, mockPredicationConstant } fro
 function updateCarouselView(activeDot) {
   const dotIndex = parseInt(activeDot.dataset.index, 10);
   const researchSlider = activeDot.closest('.research-slider');
+  const dots = researchSlider.querySelectorAll('.dot');
+  const currentActiveDot = researchSlider.querySelector('.dot.active');
+  if (currentActiveDot && currentActiveDot.dataset.index === activeDot.dataset.index) {
+    return;
+  }
   const carouselTrack = researchSlider.querySelector('.carousel-track');
   const cards = Array.from(carouselTrack.children);
   const visibleCardsCount = cards.filter((card) => window.getComputedStyle(card).opacity === '1').length;
   const cardWidth = cards[0].offsetWidth;
   const moveDistance = dotIndex * cardWidth;
-
   cards.forEach((card, index) => {
     card.style.opacity = (index >= dotIndex && index < dotIndex + visibleCardsCount) ? '1' : '0';
   });
 
   carouselTrack.style.transform = `translateX(-${moveDistance}px)`;
-  const dots = researchSlider.querySelectorAll('.dot');
   dots.forEach((dot) => dot.classList.remove('active'));
   dots[dotIndex].classList.add('active');
 }
@@ -55,13 +58,11 @@ function setCarouselView(type, researchSlider) {
       dot.className = 'dot border-box';
       dot.dataset.index = i;
       dotsContainer.appendChild(dot);
+      dot.addEventListener('click', function updateCarouselOnClick() {
+        updateCarouselView(this);
+      });
     }
 
-    dotsContainer.addEventListener('click', (event) => {
-      if (event.target.className.includes('dot')) {
-        updateCarouselView(event.target);
-      }
-    });
     researchSlider.appendChild(dotsContainer);
     updateCarouselView(dotsContainer.firstChild);
     startUpdateCarousel(researchSlider);
