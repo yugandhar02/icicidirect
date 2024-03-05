@@ -245,11 +245,11 @@ function getRow(company) {
     { label: mockPredicationConstant.profitPotential, value: company.profitPotential, type: 'profit' },
     { label: mockPredicationConstant.buyingRange, value: company.buyingRange },
     { label: mockPredicationConstant.returns, value: company.returns, type: 'return' },
-    { label: mockPredicationConstant.cmp, value: company.cmp ? `<span class="icon-rupee"></span>${company.cmp}` : '' },
-    { label: mockPredicationConstant.minAmount, value: company.minAmount ? `<span class="icon-rupee"></span>${company.minAmount}` : '' },
-    { label: mockPredicationConstant.targetPrice, value: company.targetPrice ? `<span class="icon-rupee"></span>${company.targetPrice}` : '' },
+    { label: mockPredicationConstant.cmp, value: company.cmp ? `<span class="icon icon-rupee"></span>${company.cmp}` : '' },
+    { label: mockPredicationConstant.minAmount, value: company.minAmount ? `<span class="icon icon-rupee"></span>${company.minAmount}` : '' },
+    { label: mockPredicationConstant.targetPrice, value: company.targetPrice ? `<span class="icon icon-rupee"></span>${company.targetPrice}` : '' },
     { label: mockPredicationConstant.riskProfile, value: company.riskProfile },
-    { label: mockPredicationConstant.stopLoss, value: company.stopLoss ? `<span class="icon-rupee"></span>${company.stopLoss}` : '' },
+    { label: mockPredicationConstant.stopLoss, value: company.stopLoss ? `<span class="icon icon-rupee"></span>${company.stopLoss}` : '' },
   ];
 
   contentData.forEach((data) => {
