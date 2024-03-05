@@ -2,25 +2,17 @@ import { readBlockConfig } from '../../scripts/aem.js';
 import { fetchRecommendations, getMarginActionUrl, mockPredicationConstant } from '../../scripts/mockapi.js';
 
 function updateCarouselView(activeDot) {
-  const dotIndexStr = activeDot.dataset.index;
+  const dotIndex = parseInt(activeDot.dataset.index, 10);
   const researchSlider = activeDot.closest('.research-slider');
   const carouselTrack = researchSlider.querySelector('.carousel-track');
   const cards = Array.from(carouselTrack.children);
-  const visibleCards = cards.filter((card) => window.getComputedStyle(card).opacity === '1');
-  const dotIndex = parseInt(dotIndexStr, 10);
-  const totalCards = cards.length;// carouselTrack.children.length; // Total number of cards
-  const cardWidth = cards[0].offsetWidth; // Width of a single card
+  const visibleCardsCount = cards.filter((card) => window.getComputedStyle(card).opacity === '1').length;
+  const cardWidth = cards[0].offsetWidth;
+  const moveDistance = dotIndex * cardWidth;
 
-  const moveDistance = dotIndex * cardWidth; // Move one card width per dot
-
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < totalCards; i++) {
-    if (i >= dotIndex && i < dotIndex + visibleCards.length) {
-      carouselTrack.children[i].style.opacity = 1; // Show the cards in the current view
-    } else {
-      carouselTrack.children[i].style.opacity = 0; // Hide other cards
-    }
-  }
+  cards.forEach((card, index) => {
+    card.style.opacity = (index >= dotIndex && index < dotIndex + visibleCardsCount) ? '1' : '0';
+  });
 
   carouselTrack.style.transform = `translateX(-${moveDistance}px)`;
   const dots = researchSlider.querySelectorAll('.dot');
@@ -57,20 +49,21 @@ function setCarouselView(type, researchSlider) {
   if (numberOfDots > 1) {
     const dotsContainer = document.createElement('div');
     dotsContainer.className = 'dots-container border-box';
-    researchSlider.appendChild(dotsContainer);
-    const dots = [];
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < numberOfDots; i++) {
       const dot = document.createElement('button');
       dot.className = 'dot border-box';
       dot.dataset.index = i;
       dotsContainer.appendChild(dot);
-      dots.push(dot);
-      dot.addEventListener('click', function updateCarouselOnClick() {
-        updateCarouselView(this);
-      });
     }
-    updateCarouselView(dots[0]);
+
+    dotsContainer.addEventListener('click', (event) => {
+      if (event.target.className.includes('dot')) {
+        updateCarouselView(event.target);
+      }
+    });
+    researchSlider.appendChild(dotsContainer);
+    updateCarouselView(dotsContainer.firstChild);
     startUpdateCarousel(researchSlider);
   }
 }
@@ -394,9 +387,8 @@ export default function decorate(block) {
   const { title } = blockConfig;
   const predicationDiv = getPredicationDiv(block);
   const discoverLink = blockConfig.discoverlink;
-  // eslint-disable-next-line no-nested-ternary
-  const dropdowns = !blockConfig.dropdowns ? undefined
-    : Array.isArray(blockConfig.dropdowns) ? blockConfig.dropdowns : [blockConfig.dropdowns];
+  const dropdowns = Array.isArray(blockConfig.dropdowns)
+    ? blockConfig.dropdowns : [blockConfig.dropdowns].filter(Boolean);
   block.textContent = '';
 
   const explorerSection = document.createElement('div');
