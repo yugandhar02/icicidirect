@@ -96,7 +96,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -118,7 +118,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -140,7 +140,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   src: local('Arial');
   ascent-override: 91.82%;
   descent-override: 30.61%;
@@ -162,7 +162,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -184,7 +184,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -207,7 +207,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   src: local('Arial');
   ascent-override: 89.77%;
   descent-override: 29.92%;
