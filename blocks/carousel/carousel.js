@@ -1,6 +1,18 @@
 import { readBlockConfig } from '../../scripts/aem.js';
 import { fetchRecommendations, getMarginActionUrl, mockPredicationConstant } from '../../scripts/mockapi.js';
+import { Viewport } from '../../scripts/blocks-utils.js';
 
+function allowedCardsCount() {
+  const deviceType = Viewport.getDeviceType();
+  switch (deviceType) {
+    case 'Desktop':
+      return 4;
+    case 'Tablet':
+      return 2;
+    default:
+      return 1;
+  }
+}
 function updateCarouselView(activeDot) {
   const dotIndex = parseInt(activeDot.dataset.index, 10);
   const researchSlider = activeDot.closest('.research-slider');
@@ -11,11 +23,15 @@ function updateCarouselView(activeDot) {
   }
   const carouselTrack = researchSlider.querySelector('.carousel-track');
   const cards = Array.from(carouselTrack.children);
-  const visibleCardsCount = cards.filter((card) => window.getComputedStyle(card).opacity === '1').length;
   const cardWidth = cards[0].offsetWidth;
   const moveDistance = dotIndex * cardWidth;
+  const allowedCards = allowedCardsCount();
   cards.forEach((card, index) => {
-    card.style.opacity = (index >= dotIndex && index < dotIndex + visibleCardsCount) ? '1' : '0';
+    if (index >= dotIndex && index < dotIndex + allowedCards) {
+      card.style.opacity = 1;
+    } else {
+      card.style.opacity = 0;
+    }
   });
 
   carouselTrack.style.transform = `translateX(-${moveDistance}px)`;
@@ -64,7 +80,7 @@ function setCarouselView(type, researchSlider) {
     }
 
     researchSlider.appendChild(dotsContainer);
-    updateCarouselView(dotsContainer.firstChild);
+    dotsContainer.firstChild.classList.add('active');
     startUpdateCarousel(researchSlider);
   }
 }
