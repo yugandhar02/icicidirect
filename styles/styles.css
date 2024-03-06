@@ -20,7 +20,7 @@
   --text-color: black;
 
   /* fonts */
-  --body-font-family: "Poppins", roboto-fallback;
+  --body-font-family: "Poppins", "Poppins Fallback";
   --heading-font-family: var(--body-font-family);
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
