@@ -164,15 +164,15 @@ a {
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+  margin-right: -0.9rem;
+  margin-left: -0.9rem;
 }
 
 .col {
   position: relative;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0.9rem;
+  padding-left: 0.9rem;
 }
 
 .icon {
@@ -192,7 +192,7 @@ a {
 p {
   font: 400 16px/24px Poppins, sans-serif;
   color: #4a4a4a;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 p:last-child {
@@ -200,8 +200,8 @@ p:last-child {
 }
 
 .link-color {
-  font-size: 21px;
-  line-height: 24px;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
   font-weight: 700;
   color: #E87817 !important;
 }
