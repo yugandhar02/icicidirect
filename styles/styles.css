@@ -39,6 +39,14 @@
 
   /* nav height */
   --nav-height: 64px;
+
+  /* Font Weight */
+  --font-weight-small: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-bolder: 800;
 }
 
 @font-face {
@@ -179,7 +187,7 @@ a {
   font-family: icomoon, sans-serif;
   speak: none;
   font-style: normal;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-variant: normal;
   text-transform: none;
   line-height: 1;

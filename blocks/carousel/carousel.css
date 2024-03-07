@@ -18,7 +18,7 @@
 
 .explore-section .ideas-strike {
     background: #FAE4D1;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     padding: 0.5rem;
     width: fit-content;
     display: flex;
@@ -127,7 +127,7 @@
     color: #E87817;
     content: "\e905";
     font-size: 0.8rem;
-    font-weight: 800;
+    font-weight: var(--font-weight-bolder);
     font-family: icomoon, sans-serif;
 
 }
@@ -295,7 +295,7 @@
     font-size: 0.8rem;
     line-height: 1rem;
     color: #053d6e;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     width:11rem;
 }
 
@@ -329,7 +329,7 @@
 }
 
 .explore-section .research-slider .box .label-value {
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     font-size: 1rem;
     line-height: 1.3rem;
     margin-block: 0 0;
@@ -352,12 +352,12 @@
 }
 
 .explore-section .research-slider .box .value-content.field-content .label-value {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 .explore-section .research-slider .box .label-value .icon-rupee {
     font-size: 72%;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .explore-section .research-slider .box .label-value .icon-rupee::before {
@@ -401,7 +401,7 @@
 }
 
 .explore-section .research-slider .box .box-footer.box-footer-theme .footer-label .label-value {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     font-size: 1rem;
     line-height: 1.5rem;
     color: #043C6D;
@@ -417,7 +417,7 @@
     min-height: 1.9rem;
     line-height: 1.8rem;
     text-align: center;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     vertical-align: middle;
     background: #E87817;
     border-radius: 1.9rem;
@@ -444,7 +444,7 @@
 .explore-section .research-slider .box .box-footer .link-color {
     font-size: 0.9rem;
     line-height: 1.2rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
 }
 
 
