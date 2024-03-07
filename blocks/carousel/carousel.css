@@ -16,7 +16,7 @@
     outline: none;
 }
 
-.carousel-section .ideas-strike {
+.carousel-section .carousel-highlight {
     background: #FAE4D1;
     font-weight: var(--font-weight-semibold);
     padding: 0.5rem;
@@ -26,7 +26,7 @@
     margin-bottom: 0.9rem;
 }
 
-.carousel-section .ideas-strike img {
+.carousel-section .carousel-highlight img {
     margin: 0 0.6rem;
     width: 1.3rem;
 }

@@ -337,7 +337,7 @@ async function generateCardsView(type, carouselTrack, carouselSlider) {
 function addPredicationsSection(carouselSection, predicationDiv) {
   if (predicationDiv) {
     const div = document.createElement('div');
-    div.className = 'ideas-strike border-box';
+    div.className = 'carousel-highlight border-box';
     const img = document.createElement('img');
     img.src = '../../icons/target.webp';
     img.alt = 'target';
