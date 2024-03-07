@@ -15,13 +15,13 @@ function allowedCardsCount() {
 }
 function updateCarouselView(activeDot) {
   const dotIndex = parseInt(activeDot.dataset.index, 10);
-  const researchSlider = activeDot.closest('.research-slider');
-  const dots = researchSlider.querySelectorAll('.dot');
-  const currentActiveDot = researchSlider.querySelector('.dot.active');
+  const carouselSlider = activeDot.closest('.carousel-slider');
+  const dots = carouselSlider.querySelectorAll('.dot');
+  const currentActiveDot = carouselSlider.querySelector('.dot.active');
   if (currentActiveDot && currentActiveDot.dataset.index === activeDot.dataset.index) {
     return;
   }
-  const carouselTrack = researchSlider.querySelector('.carousel-track');
+  const carouselTrack = carouselSlider.querySelector('.carousel-track');
   const widthAvailable = carouselTrack.offsetWidth;
   const allowedCards = allowedCardsCount();
   const cardWidth = widthAvailable / allowedCards;
@@ -40,8 +40,8 @@ function updateCarouselView(activeDot) {
   dots[dotIndex].classList.add('active');
 }
 
-function startUpdateCarousel(researchSlider) {
-  const dotsContainer = researchSlider.querySelector('.dots-container');
+function startUpdateCarousel(carouselSlider) {
+  const dotsContainer = carouselSlider.querySelector('.dots-container');
   if (!dotsContainer) return; // Exit if dotsContainer doesn't exist
 
   const dots = dotsContainer.querySelectorAll('.dot');
@@ -77,8 +77,8 @@ function startUpdateCarousel(researchSlider) {
   }, 2000);
 }
 
-function setCarouselView(type, researchSlider) {
-  const carouselTrack = researchSlider.querySelector('.carousel-track');
+function setCarouselView(type, carouselSlider) {
+  const carouselTrack = carouselSlider.querySelector('.carousel-track');
   const cards = Array.from(carouselTrack.children);
   const visibleCards = allowedCardsCount();
   const numberOfDots = cards.length - visibleCards + 1;
@@ -96,9 +96,9 @@ function setCarouselView(type, researchSlider) {
       });
     }
 
-    researchSlider.appendChild(dotsContainer);
+    carouselSlider.appendChild(dotsContainer);
     updateCarouselView(dotsContainer.firstChild);
-    startUpdateCarousel(researchSlider);
+    startUpdateCarousel(carouselSlider);
   }
 }
 
@@ -322,14 +322,14 @@ function getRecommendationsCard(companies, type) {
   });
 }
 
-async function generateCardsView(type, carouselTrack, researchSlider) {
+async function generateCardsView(type, carouselTrack, carouselSlider) {
   fetchRecommendations(type).then((companies) => {
     if (companies) {
       const recommendationsCard = getRecommendationsCard(companies, type);
       recommendationsCard.forEach((div) => {
         carouselTrack.appendChild(div);
       });
-      setCarouselView(type, researchSlider);
+      setCarouselView(type, carouselSlider);
     }
   });
 }
@@ -381,17 +381,17 @@ function addCarouselHeader(carouselContainer, title, dropdowns) {
 }
 
 function addCarouselCards(carouselBody, type) {
-  const researchSlider = document.createElement('div');
-  researchSlider.className = 'research-slider carousel border-box';
+  const carouselSlider = document.createElement('div');
+  carouselSlider.className = 'carousel-slider carousel border-box';
 
   const carouselList = document.createElement('div');
   carouselList.classList.add('carousel-list');
-  researchSlider.appendChild(carouselList);
+  carouselSlider.appendChild(carouselList);
   const carouselTrack = document.createElement('div');
   carouselTrack.classList.add('carousel-track');
   carouselList.appendChild(carouselTrack);
-  carouselBody.appendChild(researchSlider);
-  generateCardsView(type, carouselTrack, researchSlider);
+  carouselBody.appendChild(carouselSlider);
+  generateCardsView(type, carouselTrack, carouselSlider);
 }
 
 function addDiscoverLink(carouselBody, discoverLink) {
