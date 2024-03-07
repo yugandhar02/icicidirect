@@ -218,12 +218,12 @@ function addReportLink(boxFooter, company) {
   if (company.reportLink) {
     const reportWrap = document.createElement('div');
     reportWrap.classList.add('border-box');
-    const reportLinl = document.createElement('a');
-    reportLinl.href = 'https://www.icicidirect.com/mailimages/IDirect_MahindraMahindra_CoUpdate_Feb24.pdf';
-    reportLinl.className = 'link-color';
-    reportLinl.target = '_blank';
-    reportLinl.textContent = 'View Report';
-    reportWrap.appendChild(reportLinl);
+    const reportLink = document.createElement('a');
+    reportLink.href = company.reportLink;
+    reportLink.className = 'link-color';
+    reportLink.target = '_blank';
+    reportLink.textContent = 'View Report';
+    reportWrap.appendChild(reportLink);
     boxFooter.appendChild(reportWrap);
   }
 }
@@ -334,21 +334,21 @@ async function generateCardsView(type, carouselTrack, carouselSlider) {
   });
 }
 
-function addPredicationsSection(carouselSection, predicationDiv) {
-  if (predicationDiv) {
+function addHighLightSection(carouselSection, highLightDiv, highLightIcon) {
+  if (highLightDiv) {
     const div = document.createElement('div');
     div.className = 'carousel-highlight border-box';
-    const img = document.createElement('img');
-    img.src = '../../icons/target.webp';
-    img.alt = 'target';
     const span = document.createElement('span');
     const p = document.createElement('p');
-    p.innerHTML = predicationDiv.innerHTML;
+    p.innerHTML = highLightDiv.innerHTML;
     span.appendChild(p);
-
-    div.appendChild(img);
-    div.appendChild(span);
-    div.appendChild(img.cloneNode(true));
+    if (highLightIcon) {
+      div.appendChild(highLightIcon);
+      div.appendChild(span);
+      div.appendChild(highLightIcon.cloneNode(true));
+    } else {
+      div.appendChild(span);
+    }
     carouselSection.appendChild(div);
   }
 }
@@ -411,15 +411,21 @@ function addDiscoverLink(carouselBody, discoverLink) {
   }
 }
 
-function getPredicationDiv(block) {
+function getHighlightDiv(block) {
   const predicationDiv = block.querySelectorAll(':scope > div')[2].children[1];
   return predicationDiv;
+}
+
+function getHighlightIcon(block) {
+  const iconElement = block.querySelector('picture');
+  return iconElement;
 }
 export default function decorate(block) {
   const blockConfig = readBlockConfig(block);
   const { type } = blockConfig;
   const { title } = blockConfig;
-  const predicationDiv = getPredicationDiv(block);
+  const highlightDiv = getHighlightDiv(block);
+  const highlightIcon = getHighlightIcon(block);
   const discoverLink = blockConfig.discoverlink;
   const dropdowns = Array.isArray(blockConfig.dropdowns)
     ? blockConfig.dropdowns : [blockConfig.dropdowns].filter(Boolean);
@@ -429,7 +435,7 @@ export default function decorate(block) {
   carouselSection.classList.add('carousel-section');
   block.appendChild(carouselSection);
 
-  addPredicationsSection(carouselSection, predicationDiv);
+  addHighLightSection(carouselSection, highlightDiv, highlightIcon);
 
   const carouselContainer = document.createElement('div');
   carouselContainer.className = 'carousel-container border-box';

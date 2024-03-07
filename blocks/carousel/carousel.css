@@ -29,7 +29,18 @@
 .carousel-section .carousel-highlight img {
     margin: 0 0.6rem;
     width: 1.3rem;
+    height: 1.3rem;
 }
+
+.carousel-section .carousel-highlight picture {
+    margin: 0 0.6rem;
+    width: 1.3rem;
+    height: 1.3rem;
+}
+.carousel-section .carousel-highlight p {
+    margin-left:0.5rem;
+}
+
 
 .carousel-section .carousel-container {
     background-color: var(--background-color-light-grey);

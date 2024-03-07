@@ -328,7 +328,7 @@ p:last-child {
 .link-color {
   font-size: 1.3rem;
   line-height: 1.5rem;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--color-orange);
 }
 
