@@ -353,9 +353,9 @@ function addPredicationsSection(carouselSection, predicationDiv) {
   }
 }
 
-function addCarouselHeader(explorerContainer, title, dropdowns) {
-  const explorerHeader = document.createElement('div');
-  explorerHeader.className = 'explore-header border-box';
+function addCarouselHeader(carouselContainer, title, dropdowns) {
+  const carouselHeader = document.createElement('div');
+  carouselHeader.className = 'carousel-header border-box';
   const rowDiv = document.createElement('div');
   rowDiv.className = 'row align-items-center border-box';
   const colDiv = document.createElement('div');
@@ -376,11 +376,11 @@ function addCarouselHeader(explorerContainer, title, dropdowns) {
     rowDiv.appendChild(dropdownsDiv);
   }
 
-  explorerHeader.appendChild(rowDiv);
-  explorerContainer.appendChild(explorerHeader);
+  carouselHeader.appendChild(rowDiv);
+  carouselContainer.appendChild(carouselHeader);
 }
 
-function addCarouselCards(explorerBody, type) {
+function addCarouselCards(carouselBody, type) {
   const researchSlider = document.createElement('div');
   researchSlider.className = 'research-slider carousel border-box';
 
@@ -390,11 +390,11 @@ function addCarouselCards(explorerBody, type) {
   const carouselTrack = document.createElement('div');
   carouselTrack.classList.add('carousel-track');
   carouselList.appendChild(carouselTrack);
-  explorerBody.appendChild(researchSlider);
+  carouselBody.appendChild(researchSlider);
   generateCardsView(type, carouselTrack, researchSlider);
 }
 
-function addDiscoverLink(explorerBody, discoverLink) {
+function addDiscoverLink(carouselBody, discoverLink) {
   if (discoverLink) {
     const div = document.createElement('div');
     div.className = 'text-center discover-more border-box';
@@ -407,7 +407,7 @@ function addDiscoverLink(explorerBody, discoverLink) {
     icon.className = 'icon-up-arrow icon ';
     anchor.appendChild(icon);
     div.appendChild(anchor);
-    explorerBody.appendChild(div);
+    carouselBody.appendChild(div);
   }
 }
 
@@ -431,16 +431,16 @@ export default function decorate(block) {
 
   addPredicationsSection(carouselSection, predicationDiv);
 
-  const explorerContainer = document.createElement('div');
-  explorerContainer.className = 'explore-container border-box';
-  carouselSection.appendChild(explorerContainer);
+  const carouselContainer = document.createElement('div');
+  carouselContainer.className = 'carousel-container border-box';
+  carouselSection.appendChild(carouselContainer);
 
-  addCarouselHeader(explorerContainer, title, dropdowns);
+  addCarouselHeader(carouselContainer, title, dropdowns);
 
-  const explorerBody = document.createElement('div');
-  explorerBody.className = 'explore-body border-box';
-  explorerContainer.appendChild(explorerBody);
+  const carouselBody = document.createElement('div');
+  carouselBody.className = 'carousel-body border-box';
+  carouselContainer.appendChild(carouselBody);
 
-  addCarouselCards(explorerBody, type);
-  addDiscoverLink(explorerBody, discoverLink);
+  addCarouselCards(carouselBody, type);
+  addDiscoverLink(carouselBody, discoverLink);
 }
