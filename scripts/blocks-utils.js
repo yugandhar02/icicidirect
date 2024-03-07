@@ -27,8 +27,22 @@ const Viewport = (function initializeViewport() {
     }
     return deviceType;
   }
+
+  function isDesktop() {
+    return deviceType === 'Desktop';
+  }
+
+  function isMobile() {
+    return deviceType === 'Mobile';
+  }
+  function isTablet() {
+    return deviceType === 'Tablet';
+  }
   return {
     getDeviceType,
+    isDesktop,
+    isMobile,
+    isTablet,
   };
 }());
 

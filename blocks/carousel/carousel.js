@@ -22,18 +22,19 @@ function updateCarouselView(activeDot) {
     return;
   }
   const carouselTrack = researchSlider.querySelector('.carousel-track');
-  const cards = Array.from(carouselTrack.children);
-  const cardWidth = cards[0].offsetWidth;
-  const moveDistance = dotIndex * cardWidth;
+  const widthAvailable = carouselTrack.offsetWidth;
   const allowedCards = allowedCardsCount();
+  const cardWidth = widthAvailable / allowedCards;
+  const cards = Array.from(carouselTrack.children);
   cards.forEach((card, index) => {
     if (index >= dotIndex && index < dotIndex + allowedCards) {
       card.style.opacity = 1;
     } else {
       card.style.opacity = 0;
     }
+    card.style.width = `${cardWidth}px`;
   });
-
+  const moveDistance = dotIndex * cards[0].offsetWidth;
   carouselTrack.style.transform = `translateX(-${moveDistance}px)`;
   dots.forEach((dot) => dot.classList.remove('active'));
   dots[dotIndex].classList.add('active');
@@ -46,25 +47,41 @@ function startUpdateCarousel(researchSlider) {
   const dots = dotsContainer.querySelectorAll('.dot');
   let activeDotIndex = Array.from(dots).findIndex((dot) => dot.classList.contains('active'));
 
-  if (activeDotIndex === -1 || activeDotIndex === dots.length - 1) {
+  if (activeDotIndex === -1) {
     return;
   }
 
+  const isDesktop = Viewport.isDesktop();
+  let movingForward = true;
+
   const intervalId = setInterval(() => {
-    activeDotIndex = (activeDotIndex + 1) % dots.length; // Move to the next dot
+    if (isDesktop) {
+      if (activeDotIndex === dots.length - 1) {
+        clearInterval(intervalId); // Stop if it's desktop and reaches the last dot
+        return;
+      }
+      activeDotIndex = (activeDotIndex + 1) % dots.length; // Move to the next dot
+    } else {
+      if (activeDotIndex === 0) {
+        movingForward = true; // Switch to moving forward
+      } else if (activeDotIndex === dots.length - 1) {
+        movingForward = false; // Switch to moving in reverse
+      }
+      activeDotIndex = movingForward ? (activeDotIndex + 1) % dots.length : activeDotIndex - 1;
+      if (activeDotIndex < 0) {
+        activeDotIndex = dots.length - 1;
+      }
+    }
     const activeDot = dots[activeDotIndex];
     updateCarouselView(activeDot);
-    if (activeDotIndex === dots.length - 1) {
-      clearInterval(intervalId);
-    }
-  }, 2000); // Update every 2 seconds
+  }, 2000);
 }
 
 function setCarouselView(type, researchSlider) {
   const carouselTrack = researchSlider.querySelector('.carousel-track');
   const cards = Array.from(carouselTrack.children);
-  const visibleCards = cards.filter((card) => window.getComputedStyle(card).opacity === '1');
-  const numberOfDots = cards.length - visibleCards.length + 1;
+  const visibleCards = allowedCardsCount();
+  const numberOfDots = cards.length - visibleCards + 1;
   if (numberOfDots > 1) {
     const dotsContainer = document.createElement('div');
     dotsContainer.className = 'dots-container border-box';
@@ -80,7 +97,7 @@ function setCarouselView(type, researchSlider) {
     }
 
     researchSlider.appendChild(dotsContainer);
-    dotsContainer.firstChild.classList.add('active');
+    updateCarouselView(dotsContainer.firstChild);
     startUpdateCarousel(researchSlider);
   }
 }
