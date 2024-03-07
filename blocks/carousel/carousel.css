@@ -17,7 +17,7 @@
 }
 
 .carousel-section .carousel-highlight {
-    background: #FAE4D1;
+    background: var(--background-color-light-orange);
     font-weight: var(--font-weight-semibold);
     padding: 0.5rem;
     width: fit-content;
@@ -32,14 +32,14 @@
 }
 
 .carousel-section .carousel-container {
-    background-color: #FCFCFC;
+    background-color: var(--background-color-light-grey);
     border: 0.06rem solid rgb(14 31 53 / 20%);
     border-bottom-left-radius: 0.9rem;
     border-bottom-right-radius: 0.9rem;
 }
 
 .carousel-section .carousel-header {
-    background-color: #053d6e;
+    background-color: var(--color-blue);
     padding: 0.6rem 0.9rem;
 }
 
@@ -56,7 +56,7 @@
 
 
 .carousel-section .carousel-header h3 {
-    color: #fff;
+    color: var(--color-white);
     text-transform: uppercase;
     font-size: 0.9rem;
     line-height: 1.3rem;
@@ -111,7 +111,7 @@
 
 .carousel-section .dropdowns .dropdown-select {
     margin-left: 0.6rem;
-    background-color: #fff;
+    background-color: var(--color-white);
     display: inline-block;
     margin-bottom: 0.3rem;
     position: relative;
@@ -124,7 +124,7 @@
 }
 
 .carousel-section .dropdowns .icon-down-arrow::before {
-    color: #E87817;
+    color: var(--color-orange);
     content: "\e905";
     font-size: 0.8rem;
     font-weight: var(--font-weight-bolder);
@@ -134,7 +134,7 @@
 
 .carousel-section .dropdowns .dropdown-toggle {
     height: 1.9rem;
-    background-color: transparent;
+    background-color: var(--background-color-transparent);
     font-size: 0.8rem;
     text-transform: uppercase;
     padding: 0 1.9rem 0 0.6rem;
@@ -161,10 +161,10 @@
     padding: 0.5rem 0;
     margin: 0.125rem 0 0;
     font-size: 1rem;
-    color: #212529;
+    color: var(--text-color-normal);
     text-align: left;
     list-style: none;
-    background-color: #fff;
+    background-color: var(--color-white);
     background-clip: padding-box;
 }
 
@@ -183,7 +183,7 @@
 
 .carousel-section .dropdowns .dropdown-menu  li a {
     padding: 0.3rem 0.6rem;
-    color: #415270;
+    color: var(--link-color-dark-blue);
     cursor: pointer;
     text-decoration: none;
 }
@@ -278,7 +278,7 @@
 
 .carousel-section .carousel-slider .box {
     box-shadow: 0.3rem 0.3rem 1.5rem rgb(0 0 0 / 8%);
-    background: #fff;
+    background: var(--color-white);
     padding: 0.9rem 0.9rem 3rem;
     position: relative;
 }
@@ -294,7 +294,7 @@
 .carousel-section .carousel-slider .box .heading-wrap h4 {
     font-size: 0.8rem;
     line-height: 1rem;
-    color: #053d6e;
+    color: var(--color-blue);
     font-weight: var(--font-weight-medium);
     width:11rem;
 }
@@ -315,7 +315,7 @@
 }
 
 .carousel-section .carousel-slider .box .value-content.field-content {
-    background-color: #EFF6FF;
+    background-color: var(--background-color-light-blue);
     padding: 0.3rem 0.8rem;
     max-width: max-content;
     width: 100%;
@@ -336,17 +336,17 @@
 }
 
 .carousel-section .carousel-slider .box .label-value.positive {
-    color: #259702
+    color: var(--color-green)
 }
 
 .carousel-section .carousel-slider .box .label-value.negative {
-    color: #da0000
+    color: var(--color-red)
 }
 
 .carousel-section .carousel-slider .box .value-content.field-content label {
     font-size: 0.6rem;
     line-height: 0.8rem;
-    color: #4a4a4a;
+    color: var(--text-color-light);
     margin-bottom: 0;
     white-space: nowrap;
 }
@@ -396,7 +396,7 @@
 .carousel-section .carousel-slider .box .box-footer.box-footer-theme .footer-label label {
     font-size: 0.7rem;
     line-height: 1.5rem;
-    color: #4A4A4A;
+    color: var(--text-color-light);
     margin-bottom: 0;
 }
 
@@ -404,12 +404,12 @@
     font-weight: var(--font-weight-bold);
     font-size: 1rem;
     line-height: 1.5rem;
-    color: #043C6D;
+    color: var(--text-color-blue);
     margin-left: 0.6rem;
 }
 
 .carousel-section .carousel-slider .box .box-footer .btn {
-    color: #fff;
+    color: var(--color-white);
     min-width: 4rem;
     font-size: 0.8rem;
     text-transform: inherit;
@@ -419,7 +419,7 @@
     text-align: center;
     font-weight: var(--font-weight-semibold);
     vertical-align: middle;
-    background: #E87817;
+    background: var(--color-orange);
     border-radius: 1.9rem;
     border: 0.06rem solid transparent;
     box-shadow: 0 0.6rem 1rem 0.3rem #050e3517;
@@ -427,16 +427,16 @@
 }
 
 .carousel-section .carousel-slider .box .box-footer .btn.btn-sell{
-    background-color: #da0000;
+    background-color: var(--color-red);
 }
 
 .carousel-section .carousel-slider .box .box-footer .btn.btn-buy {
-    background-color: #259702;
+    background-color: var(--color-green);
 }
 
 .carousel-section .carousel-slider .box .box-footer .btn.disabled {
-    background: #D1D1D1;
-    border-color: #D1D1D1;
+    background: var(--color-diable-element);
+    border-color: var(--color-diable-element);
     opacity: 1;
     pointer-events: none;
 }
@@ -457,7 +457,7 @@
 .carousel-section .carousel-slider .box .box-footer.box-footer-theme .footer-label {
     display: flex;
     justify-content: center;
-    background-color: #EFF6FF;
+    background-color: var(--background-color-light-blue);
     width: 100%;
     padding: 0.19rem 0;
 }
@@ -474,13 +474,13 @@
     margin: 0 0.3rem;
     padding: 0;
     cursor: pointer;
-    background: #D8D8D8;
+    background: var(--background-color-dark-grey);
     border-radius: 3rem;
     border: 0;
 }
 
 .carousel-section .dots-container .dot.active {
-    background-color:  #E87817;
+    background-color: var(--color-orange);
 }
 
 
