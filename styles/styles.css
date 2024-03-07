@@ -12,12 +12,16 @@
 
 :root {
   /* colors */
-  --link-color: #035fe6;
-  --link-hover-color: #136ff6;
-  --background-color: white;
+  --background-color: #fff;
+  --background-color-transparent: transparent;
   --light-color: #eee;
   --dark-color: #ccc;
-  --text-color: black;
+  --text-color: #212529;
+  --text-color-light: #4a4a4a;
+  --text-color-green: #259702;
+  --text-color-red: #da0000;
+  --link-color-orange: #E87817;
+  --link-color-blue: #4b9dff;
 
   /* fonts */
   --body-font-family: "Poppins", "Poppins Fallback";
@@ -57,14 +61,9 @@
 }
 
 @font-face {
-  font-family: icomoon;
-  src: url("/fonts/icomoon.ttf") format("truetype");
-}
-
-@font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -76,7 +75,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -88,7 +87,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   src: local('Arial');
   ascent-override: 92.83%;
   descent-override: 30.94%;
@@ -100,7 +99,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -112,7 +111,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -124,7 +123,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   src: local('Arial');
   ascent-override: 91.82%;
   descent-override: 30.61%;
@@ -136,7 +135,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -148,7 +147,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   src: local('Arial');
   ascent-override: 105.00%;
   descent-override: 35.00%;
@@ -160,7 +159,7 @@
 @font-face {
   font-family: 'Poppins Fallback';
   font-style: normal;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   src: local('Arial');
   ascent-override: 89.77%;
   descent-override: 29.92%;
@@ -182,12 +181,12 @@
 
 body {
   margin: 0;
-  font: 400 14px Poppins, sans-serif;
-  color: #212529;
+  font: var(--font-weight-regular) 0.9rem Poppins, "Poppins Fallback";
+  color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   position: relative;
   min-height: 100vh;
-  background-color: #fff;
+  background-color: var(--background-color);
   text-align: left;
   line-height: 1.5;
 }
@@ -256,7 +255,7 @@ div, span, strong, p, a, i {
 }
 
 h3 {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   margin: 0;
   padding: 0;
   border: 0;
@@ -266,11 +265,11 @@ h3 {
 }
 
 a {
-  color: #4b9dff;
+  color: var(--link-color-blue);
   text-decoration: none;
   display: inline-block;
   transition: 0.3s;
-  background-color: transparent;
+  background-color: var(--background-color-transparent);
 }
 
 .align-items-center {
@@ -306,8 +305,8 @@ a {
 }
 
 p {
-  font: 400 16px/24px Poppins, sans-serif;
-  color: #4a4a4a;
+  font: var(--font-weight-regular) 1rem/1.5rem Poppins, "Poppins Fallback";
+  color: var(--text-color-light);
   margin-bottom: 1.25rem;
 }
 
@@ -319,7 +318,7 @@ p:last-child {
   font-size: 1.3rem;
   line-height: 1.5rem;
   font-weight: 700;
-  color: #E87817 !important;
+  color: var(--link-color-orange);
 }
 
 .border-box {
@@ -328,9 +327,9 @@ p:last-child {
 }
 
 .positive {
-  color: #259702
+  color: var(--text-color-green);
 }
 
 .negative {
-  color: #da0000
+  color: var(--text-color-red);
 }
