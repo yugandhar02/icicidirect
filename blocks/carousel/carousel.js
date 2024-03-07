@@ -334,7 +334,7 @@ async function generateCardsView(type, carouselTrack, researchSlider) {
   });
 }
 
-function addPredicationsSection(explorerSection, predicationDiv) {
+function addPredicationsSection(carouselSection, predicationDiv) {
   if (predicationDiv) {
     const div = document.createElement('div');
     div.className = 'ideas-strike border-box';
@@ -349,7 +349,7 @@ function addPredicationsSection(explorerSection, predicationDiv) {
     div.appendChild(img);
     div.appendChild(span);
     div.appendChild(img.cloneNode(true));
-    explorerSection.appendChild(div);
+    carouselSection.appendChild(div);
   }
 }
 
@@ -425,15 +425,15 @@ export default function decorate(block) {
     ? blockConfig.dropdowns : [blockConfig.dropdowns].filter(Boolean);
   block.textContent = '';
 
-  const explorerSection = document.createElement('div');
-  explorerSection.classList.add('explore-section');
-  block.appendChild(explorerSection);
+  const carouselSection = document.createElement('div');
+  carouselSection.classList.add('carousel-section');
+  block.appendChild(carouselSection);
 
-  addPredicationsSection(explorerSection, predicationDiv);
+  addPredicationsSection(carouselSection, predicationDiv);
 
   const explorerContainer = document.createElement('div');
   explorerContainer.className = 'explore-container border-box';
-  explorerSection.appendChild(explorerContainer);
+  carouselSection.appendChild(explorerContainer);
 
   addCarouselHeader(explorerContainer, title, dropdowns);
 
