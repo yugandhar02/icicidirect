@@ -223,6 +223,7 @@
     background: var(--color-white);
     padding: 0.9rem 0.9rem 3rem;
     position: relative;
+    height: 100%;
 }
 
 .carousel-section .carousel-slider .box.box-theme {
