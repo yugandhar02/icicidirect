@@ -28,6 +28,7 @@ const apiEndPoints = {
 async function fetchRecommendations(type) {
   let hostUrl = window.location.origin;
   if (!hostUrl || hostUrl === 'null') {
+    // eslint-disable-next-line prefer-destructuring
     hostUrl = window.location.ancestorOrigins[0];
   }
   const apiUrl = `${hostUrl}${apiEndPoints[type]}`;
