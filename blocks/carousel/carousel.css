@@ -136,6 +136,10 @@
     background-clip: padding-box;
 }
 
+.block.carousel-section .dropdowns .dropdown-menu-container.visible {
+    display: block;
+}
+
 .block.carousel-section .dropdowns .dropdown-menu {
     float: none;
     border: 0;

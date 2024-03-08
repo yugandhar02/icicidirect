@@ -91,8 +91,8 @@ function setCarouselView(type, carouselSlider) {
       dot.className = 'dot border-box';
       dot.dataset.index = i;
       dotsContainer.appendChild(dot);
-      dot.addEventListener('click', function updateCarouselOnClick() {
-        updateCarouselView(this);
+      dot.addEventListener('click', (event) => {
+        updateCarouselView(event.currentTarget);
       });
     }
 
@@ -100,6 +100,20 @@ function setCarouselView(type, carouselSlider) {
     updateCarouselView(dotsContainer.firstChild);
     startUpdateCarousel(carouselSlider);
   }
+}
+
+function updateRecommedations(selectedDropDownItem) {
+  const dropdown = selectedDropDownItem.closest('.dropdown-select');
+  dropdown.querySelector('.dropdown-text').textContent = selectedDropDownItem.textContent;
+  dropdown.querySelector('.dropdown-menu-container').classList.remove('visible');
+}
+
+function closeAllDropDowns(clickedElement) {
+  document.querySelectorAll('.dropdown-select').forEach((container) => {
+    if (!container.contains(clickedElement)) {
+      container.querySelector('.dropdown-menu-container').classList.remove('visible');
+    }
+  });
 }
 
 function createDropdown(dropdownValue) {
@@ -126,6 +140,9 @@ function createDropdown(dropdownValue) {
     span.textContent = itemText;
     a.appendChild(span);
     li.appendChild(a);
+    li.addEventListener('click', function () {
+      updateRecommedations(this);
+    });
     ul.appendChild(li);
   });
 
@@ -133,15 +150,7 @@ function createDropdown(dropdownValue) {
   dropdownSelectDiv.appendChild(button);
   dropdownSelectDiv.appendChild(dropdownMenuContainer);
   button.addEventListener('click', () => {
-    if (dropdownMenuContainer.style.display === 'block') {
-      dropdownMenuContainer.style.display = 'none';
-      return;
-    }
-    document.querySelectorAll('.dropdown-menu-container').forEach((container) => {
-      container.style.display = 'none';
-    });
-    // Toggle the display of this dropdownMenuContainer
-    dropdownMenuContainer.style.display = 'block';
+    dropdownMenuContainer.classList.toggle('visible');
   });
 
   return dropdownSelectDiv;
@@ -374,6 +383,9 @@ function addCarouselHeader(carouselContainer, title, dropdowns) {
       dropdownsDiv.appendChild(dropDownEle);
     });
     rowDiv.appendChild(dropdownsDiv);
+    document.addEventListener('click', (event) => {
+      closeAllDropDowns(event.target);
+    });
   }
 
   carouselHeader.appendChild(rowDiv);
