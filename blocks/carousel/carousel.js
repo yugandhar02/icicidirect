@@ -430,16 +430,12 @@ export default function decorate(block) {
   const dropdowns = Array.isArray(blockConfig.dropdowns)
     ? blockConfig.dropdowns : [blockConfig.dropdowns].filter(Boolean);
   block.textContent = '';
-
-  const carouselSection = document.createElement('div');
-  carouselSection.classList.add('carousel-section');
-  block.appendChild(carouselSection);
-
-  addHighLightSection(carouselSection, highlightDiv, highlightIcon);
+  block.classList.add('carousel-section');
+  addHighLightSection(block, highlightDiv, highlightIcon);
 
   const carouselContainer = document.createElement('div');
   carouselContainer.className = 'carousel-container border-box';
-  carouselSection.appendChild(carouselContainer);
+  block.appendChild(carouselContainer);
 
   addCarouselHeader(carouselContainer, title, dropdowns);
 
