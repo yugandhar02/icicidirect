@@ -140,8 +140,8 @@ function createDropdown(dropdownValue) {
     span.textContent = itemText;
     a.appendChild(span);
     li.appendChild(a);
-    li.addEventListener('click', function () {
-      updateRecommedations(this);
+    li.addEventListener('click', (event) => {
+      updateRecommedations(event.currentTarget);
     });
     ul.appendChild(li);
   });
