@@ -157,11 +157,11 @@
 }
 
 
-.carousel-section .carousel {
+.carousel-section .carousel-slider {
     margin-bottom: 1.9rem;
 }
 
-.carousel-section .carousel .value-col {
+.carousel-section .carousel-slider .value-col {
     max-width: 50%;
     margin: 0.8rem 0 0;
 }

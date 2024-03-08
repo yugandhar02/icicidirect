@@ -382,7 +382,7 @@ function addCarouselHeader(carouselContainer, title, dropdowns) {
 
 function addCarouselCards(carouselBody, type) {
   const carouselSlider = document.createElement('div');
-  carouselSlider.className = 'carousel-slider carousel border-box';
+  carouselSlider.className = 'carousel-slider border-box';
 
   const carouselList = document.createElement('div');
   carouselList.classList.add('carousel-list');
