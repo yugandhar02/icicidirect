@@ -42,8 +42,9 @@
 .block.carousel-section .carousel-highlight p {
     margin-left: 0.5rem;
 }
+
 .block.carousel-section .carousel-highlight p:last-child {
-    margin-bottom: 0rem;
+    margin-bottom: 0;
 }
 
 .block.carousel-section .row {
@@ -93,9 +94,7 @@
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
     vertical-align: baseline;
-    line-height: 1.2;
 }
 
 .block.carousel-section .carousel-title {
@@ -528,7 +527,6 @@
 }
 
 @media (width >= 64rem) {
-
     .carousel-wrapper {
         max-width: 75rem;
         margin: auto;
@@ -537,7 +535,4 @@
     .block.carousel-section .carousel-slider .carousel-track > :nth-child(-n+4) {
         opacity: 1;
     }
-
-    .
-
 }
