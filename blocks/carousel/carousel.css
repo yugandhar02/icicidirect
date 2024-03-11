@@ -215,6 +215,9 @@
 
 .block.carousel-section .discover-more .link-color {
     font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--link-color-orange);
 }
 
 
@@ -280,9 +283,10 @@
 .block.carousel-section .carousel-slider .box .heading-wrap h4 {
     font-size: 0.8rem;
     line-height: 1rem;
-    color: var(--color-blue);
+    color: var(--primary);
     font-weight: var(--font-weight-medium);
     width: 11rem;
+    margin-top: 1rem;
 }
 
 .block.carousel-section .carousel-slider .box .heading-wrap .icon-wrap {
@@ -318,6 +322,7 @@
     font-size: 1rem;
     line-height: 1.3rem;
     margin-block: 0 0;
+    color: var(--text-color-normal);
 }
 
 .block.carousel-section .carousel-slider .box .label-value.positive {
@@ -338,6 +343,20 @@
 
 .block.carousel-section .carousel-slider .box .value-content.field-content .label-value {
     font-weight: var(--font-weight-bold);
+}
+
+.block.carousel-section .carousel-slider .box .label-value .icon {
+    font-family: icomoon, sans-serif;
+    speak: none;
+    font-style: normal;
+    font-weight: var(--font-weight-medium);
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .block.carousel-section .carousel-slider .box .label-value .icon-rupee {
@@ -408,6 +427,7 @@
     border-radius: 1.9rem;
     border: 0.06rem solid transparent;
     box-shadow: 0 0.6rem 1rem 0.3rem #050e3517;
+    display: inline-block
 
 }
 
