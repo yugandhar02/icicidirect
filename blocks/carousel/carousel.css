@@ -3,6 +3,18 @@
     margin-top: 0.9rem;
     box-sizing: border-box;
     outline: none;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+.block.carousel-section div, span, strong, p, a , i {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
 }
 
 .block.carousel-section .carousel-highlight {
@@ -28,9 +40,30 @@
 }
 
 .block.carousel-section .carousel-highlight p {
-    margin-left:0.5rem;
+    margin-left: 0.5rem;
 }
 
+.block.carousel-section .carousel-highlight p:last-child {
+    margin-bottom: 0;
+}
+
+.block.carousel-section .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.9rem;
+    margin-left: -0.9rem;
+}
+
+.block.carousel-section .col {
+    position: relative;
+    width: 100%;
+    padding-right: 0.9rem;
+    padding-left: 0.9rem;
+}
+
+.block.carousel-section .align-items-center {
+    align-items: center;
+}
 
 .block.carousel-section .carousel-container {
     background-color: var(--background-color-light-grey);
@@ -40,7 +73,7 @@
 }
 
 .block.carousel-section .carousel-header {
-    background-color: var(--color-blue);
+    background-color: var(--primary);
     padding: 0.6rem 0.9rem;
 }
 
@@ -57,6 +90,11 @@
     line-height: 1.3rem;
     box-sizing: border-box;
     outline: none;
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
 }
 
 .block.carousel-section .carousel-title {
@@ -147,13 +185,13 @@
     margin: 0;
 }
 
-.block.carousel-section .dropdowns .dropdown-menu  li {
+.block.carousel-section .dropdowns .dropdown-menu li {
     font-size: 0.8rem;
     text-transform: capitalize;
     display: block;
 }
 
-.block.carousel-section .dropdowns .dropdown-menu  li a {
+.block.carousel-section .dropdowns .dropdown-menu li a {
     padding: 0.3rem 0.6rem;
     color: var(--link-color-dark-blue);
     cursor: pointer;
@@ -176,6 +214,9 @@
 
 .block.carousel-section .discover-more .link-color {
     font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--link-color-orange);
 }
 
 
@@ -195,6 +236,7 @@
 
 .block.carousel-section .carousel-slider .carousel-list {
     overflow: hidden;
+    margin-left: 2rem;
 }
 
 .block.carousel-section .carousel-slider .carousel-track {
@@ -241,16 +283,16 @@
 .block.carousel-section .carousel-slider .box .heading-wrap h4 {
     font-size: 0.8rem;
     line-height: 1rem;
-    color: var(--color-blue);
+    color: var(--primary);
     font-weight: var(--font-weight-medium);
-    width:11rem;
+    width: 11rem;
+    margin-top: 1rem;
 }
 
 .block.carousel-section .carousel-slider .box .heading-wrap .icon-wrap {
     display: flex;
     align-items: center;
 }
-
 
 
 .block.carousel-section .carousel-slider .box .heading-wrap .icon-wrap a + a {
@@ -280,6 +322,7 @@
     font-size: 1rem;
     line-height: 1.3rem;
     margin-block: 0 0;
+    color: var(--text-color-normal);
 }
 
 .block.carousel-section .carousel-slider .box .label-value.positive {
@@ -300,6 +343,20 @@
 
 .block.carousel-section .carousel-slider .box .value-content.field-content .label-value {
     font-weight: var(--font-weight-bold);
+}
+
+.block.carousel-section .carousel-slider .box .label-value .icon {
+    font-family: icomoon, sans-serif;
+    speak: none;
+    font-style: normal;
+    font-weight: var(--font-weight-medium);
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .block.carousel-section .carousel-slider .box .label-value .icon-rupee {
@@ -370,10 +427,11 @@
     border-radius: 1.9rem;
     border: 0.06rem solid transparent;
     box-shadow: 0 0.6rem 1rem 0.3rem #050e3517;
+    display: inline-block
 
 }
 
-.block.carousel-section .carousel-slider .box .box-footer .btn.btn-sell{
+.block.carousel-section .carousel-slider .box .box-footer .btn.btn-sell {
     background-color: var(--color-red);
 }
 
@@ -398,7 +456,6 @@
 .block.carousel-section .carousel-slider .box .heading-wrap .icon-wrap img {
     max-width: 1rem;
 }
-
 
 
 .block.carousel-section .carousel-slider .box .box-footer.box-footer-theme .footer-label {

@@ -32,7 +32,7 @@
   --color-indigo: #6610f2;
   --color-purple: #6f42c1;
   --color-pink: #e83e8c;
-  --color-red: #dc3545;
+  --color-red: #da0000;
   --color-yellow: #ffc107;
   --color-teal: #20c997;
   --color-cyan: #17a2b8;
@@ -42,6 +42,7 @@
   --color-danger: #dc3545;
   --color-light: #f8f9fa;
   --link-color: var(--color-blue);
+  --link-color-orange:#E87817;
   --link-hover-color: #0056b3;
   --text-color-normal: #212529;
   --text-color-light: #4a4a4a;
@@ -58,6 +59,8 @@
   --background-color-light-blue: #EFF6FF;
   --border-color-light-gray: #E1E8EE;
   --border-color-gray: #D1D1D1;
+  --color-diable-element: #D1D1D1;
+  --color-disable-dot: #D1D1D1;
   
   
   /* fonts */
@@ -343,13 +346,6 @@ a:not([href]) {
 a:not([href]):hover {
   color: inherit;
   text-decoration: none;
-}
-
-.link-color {
-  font-size: 1.3rem;
-  line-height: 1.5rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-orange);
 }
 
 main img {
