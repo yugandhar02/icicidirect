@@ -236,6 +236,7 @@
 
 .block.carousel-section .carousel-slider .carousel-list {
     overflow: hidden;
+    margin-left: 2rem;
 }
 
 .block.carousel-section .carousel-slider .carousel-track {
@@ -527,11 +528,6 @@
 }
 
 @media (width >= 64rem) {
-    .carousel-wrapper {
-        max-width: 75rem;
-        margin: auto;
-    }
-
     .block.carousel-section .carousel-slider .carousel-track > :nth-child(-n+4) {
         opacity: 1;
     }
