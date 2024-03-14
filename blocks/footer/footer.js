@@ -1,6 +1,7 @@
 import {
   decorateSections,
   updateSectionsStatus,
+  loadScript,
 } from '../../scripts/aem.js';
 
 function decorateFooterTop(block) {
@@ -80,6 +81,42 @@ function decorateFooterLinks(block) {
   }
   defaultWrapper.appendChild(row);
 }
+
+function decorateDisclaimer(block) {
+  const disclaimer = block.querySelector('.footer-disclaimer');
+  const defaultWrapper = disclaimer.querySelector('.default-content-wrapper');
+  const children = [...disclaimer.querySelector('.default-content-wrapper').children];
+  defaultWrapper.innerHTML = '';
+
+  const headerDiv = document.createElement('div');
+  headerDiv.classList.add('panel-header');
+  const icon = document.createElement('icon');
+  icon.classList.add('toggle-icon');
+  icon.setAttribute('onclick', 'onClick()');
+  icon.textContent = '+';
+  const disclaimerHeading = document.createElement('strong');
+  disclaimerHeading.textContent = children[0].textContent;
+  children[0].textContent = ' ';
+  const panelBody = document.createElement('div');
+  panelBody.classList.add('panel-body');
+  panelBody.classList.add('slide-up');
+  children.forEach((childElement) => {
+    if (childElement.tagName === 'H3') {
+      const span = document.createElement('span');
+      span.textContent = childElement.textContent;
+      const paragraph = document.createElement('p');
+      paragraph.appendChild(span);
+      panelBody.appendChild(paragraph);
+    } else {
+      panelBody.appendChild(childElement);
+    }
+  });
+  headerDiv.appendChild(disclaimerHeading);
+  headerDiv.appendChild(icon);
+  defaultWrapper.appendChild(headerDiv);
+  defaultWrapper.appendChild(panelBody);
+}
+
 /**
  * loads and decorates the footer
  * @param {Element} block The footer block element
@@ -99,5 +136,7 @@ export default async function decorate(block) {
     block.append(footer);
     decorateFooterTop(block);
     decorateFooterLinks(block);
+    decorateDisclaimer(block);
   }
 }
+loadScript('/blocks/footer/hide-show-disclaimer.js');
