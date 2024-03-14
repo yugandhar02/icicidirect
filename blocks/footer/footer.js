@@ -124,7 +124,7 @@ function decorateDisclaimer(block) {
 export default async function decorate(block) {
   block.textContent = '';
   // fetch footer content
-  const footerPath = '/draft/ravverma/footer';
+  const footerPath = '/footer';
   const resp = await fetch(`${footerPath}.plain.html`, window.location.pathname.endsWith('/footer') ? { cache: 'reload' } : {});
   if (resp.ok) {
     const html = await resp.text();
