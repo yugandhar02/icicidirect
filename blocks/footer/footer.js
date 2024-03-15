@@ -56,41 +56,42 @@ function decorateFooterTop(block) {
   rowElement.classList.add('footer-top', 'row');
 }
 
+function customTrim(str) {
+  return str.replace(/^["'\s]+|["'\s]+$/g, '');
+}
+
+function traverseAndPrint(element, level, columnDiv) {
+  if (element.tagName.toLowerCase() === 'li') {
+    if (level === 3) {
+      const title = document.createElement('p');
+      title.classList.add('links-title');
+      title.textContent = customTrim(element.childNodes[0].textContent);
+      columnDiv.appendChild(title);
+    } else if (level === 5) {
+      columnDiv.appendChild(element.children[0]);
+    }
+  }
+  if (element.children.length > 0) {
+    for (let i = 0; i < element.children.length; i += 1) {
+      traverseAndPrint(element.children[i], level + 1, columnDiv);
+    }
+  }
+}
+
 function decorateFooterLinks(block) {
   const footerTop = block.querySelector('.footer-links');
   const defaultWrapper = footerTop.querySelector('.default-content-wrapper');
-  const children = [...footerTop.querySelector('.default-content-wrapper').children];
-  let index = 0;
-  defaultWrapper.innerHTML = '';
   const row = document.createElement('div');
   row.classList.add('row');
-  while (index < children.length) {
-    if (children[index].tagName === 'OL' && children[index + 1].tagName === 'H3' && children[index + 2].tagName === 'UL') {
-      const columnDiv = document.createElement('div');
-      columnDiv.classList.add('links-column');
-      columnDiv.appendChild(children[index + 1]).classList.add('links-title');
-      index += 2;
-      while (index < children.length && children[index].tagName !== 'OL') {
-        if (children[index].tagName !== 'H3') {
-          if (children[index].tagName === 'UL') {
-            const footerMenuLinks = document.createElement('div');
-            let linksLenght = 0;
-            const ulList = children[index];
-            while (linksLenght < ulList.childElementCount) {
-              footerMenuLinks.appendChild(ulList.children[linksLenght].children[0]);
-              linksLenght += 1;
-            }
-            columnDiv.appendChild(footerMenuLinks);
-          }
-        } else {
-          columnDiv.appendChild(children[index]).classList.add('links-title');
-        }
-        index += 1;
-      }
-      row.appendChild(columnDiv);
-    } else {
-      index += 1;
-    }
+  const children = defaultWrapper.children[0];
+  defaultWrapper.innerHTML = '';
+  let index = 0;
+  while (index < children.children.length) {
+    const columnDiv = document.createElement('div');
+    columnDiv.classList.add('links-column');
+    traverseAndPrint(children.children[index], 1, columnDiv);
+    index += 1;
+    row.appendChild(columnDiv);
   }
   defaultWrapper.appendChild(row);
 }
