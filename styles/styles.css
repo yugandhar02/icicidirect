@@ -26,6 +26,7 @@
   --color-blue-dark: #053C6D;
   --color-deep-purple: #1A0D7C;
   --color-white: #FFF;
+  --color-off-white: #fff;
   --color-green: #259702;
   --color-transparent-orange: #ffe3ce;
   --color-text-orange: #D4622C;
@@ -49,6 +50,7 @@
   --text-color-blue: #043C6D;
   --link-color-blue: #4b9dff;
   --link-color-dark-blue: #415270;
+  --link-color-dark-gray : #3d3d3d;
   --button-color-orange: #E87817;
   --background-color-light-grey: #FCFCFC;
   --background-color-transparent: transparent;
@@ -61,6 +63,12 @@
   --border-color-gray: #D1D1D1;
   --color-diable-element: #D1D1D1;
   --color-disable-dot: #D1D1D1;
+  --color-footer-top-note-blue: #0e1f35;
+  --color-footer-top-number-blue: #004c84;
+  --color-footer-gray: #a3a3a3;
+  --box-shadow-footer-top-gray: #0e1f354d;
+  --veritcal-line-footer-top-gray: #9797974d;
+  --horizontal-footer-dash-gray: #979797;
   
   
   /* fonts */
