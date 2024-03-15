@@ -65,12 +65,12 @@ function decorateFooterLinks(block) {
   const row = document.createElement('div');
   row.classList.add('row');
   while (index < children.length) {
-    if (children[index].tagName === 'H2' && children[index + 1].tagName === 'H3' && children[index + 2].tagName === 'UL') {
+    if (children[index].tagName === 'OL' && children[index + 1].tagName === 'H3' && children[index + 2].tagName === 'UL') {
       const columnDiv = document.createElement('div');
       columnDiv.classList.add('links-column');
       columnDiv.appendChild(children[index + 1]).classList.add('links-title');
       index += 2;
-      while (index < children.length && children[index].tagName !== 'H2') {
+      while (index < children.length && children[index].tagName !== 'OL') {
         if (children[index].tagName !== 'H3') {
           if (children[index].tagName === 'UL') {
             const footerMenuLinks = document.createElement('div');
