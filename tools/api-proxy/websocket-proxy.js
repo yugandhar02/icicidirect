@@ -17,11 +17,28 @@ async function handleRequest(request) {
 
   server.accept();
 
-  server.addEventListener('message', (event) => {
-    console.log(event.data); // Log the received message
-    // Respond with the current timestamp
-    const currentTime = new Date().toLocaleString(); // Human-readable timestamp
-    server.send(`Message received; current timestamp is: ${currentTime}`);
+  const niftyValues = [10000, 10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900];
+  const sensexValues = [35000, 35200, 35400, 35600, 35800, 36000, 36200, 36400, 36600, 36800];
+
+  // Counter to track the current index of the values to send
+  let currentIndex = 0;
+
+  server.addEventListener('message', () => {
+    // Get the current Nifty and Sensex values
+    const currentNifty = niftyValues[currentIndex];
+    const currentSensex = sensexValues[currentIndex];
+
+    // Prepare the response data
+    const responseData = {
+      nifty: currentNifty,
+      sensex: currentSensex,
+    };
+
+    // Send the data as a JSON string
+    server.send(JSON.stringify(responseData));
+
+    // Increment the index, reset if it reaches the end of the array
+    currentIndex = (currentIndex + 1) % niftyValues.length;
   });
 
   return new Response(null, {
