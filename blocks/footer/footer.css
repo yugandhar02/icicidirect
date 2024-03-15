@@ -256,9 +256,9 @@ footer .section.footer-top-note {
 
 .footer-disclaimer .section-container .default-content-wrapper > div {
   overflow: hidden;
-  max-height: 125rem;
+  max-height: 200rem;
   opacity: 1;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
 }
 
 .footer-disclaimer .panel-body.slide-up {

@@ -1,8 +1,21 @@
 import {
   decorateSections,
   updateSectionsStatus,
-  loadScript,
 } from '../../scripts/aem.js';
+
+function onClick() {
+  const disclaimerDiv = document.querySelector('.panel-body');
+  const iconDiv = document.querySelector('.toggle-icon');
+  if (disclaimerDiv.classList.contains('slide-up')) {
+    // If the content is currently hidden, slide it down
+    disclaimerDiv.classList.remove('slide-up');
+    iconDiv.textContent = '-';
+  } else {
+    // If the content is currently visible, slide it up
+    disclaimerDiv.classList.add('slide-up');
+    iconDiv.textContent = '+';
+  }
+}
 
 function decorateFooterTop(block) {
   const footerTop = block.querySelector('.footer-top');
@@ -92,7 +105,7 @@ function decorateDisclaimer(block) {
   headerDiv.classList.add('panel-header');
   const icon = document.createElement('icon');
   icon.classList.add('toggle-icon');
-  icon.setAttribute('onclick', 'onClick()');
+  icon.onclick = onClick;
   icon.textContent = '+';
   const disclaimerHeading = document.createElement('strong');
   disclaimerHeading.textContent = children[0].textContent;
@@ -139,4 +152,3 @@ export default async function decorate(block) {
     decorateDisclaimer(block);
   }
 }
-loadScript('/blocks/footer/hide-show-disclaimer.js');
