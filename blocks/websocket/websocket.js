@@ -19,6 +19,7 @@ function connectWebSocket(block) {
     //  console.log('Message from server:', event.data);
   });
 
+  // eslint-disable-next-line no-unused-vars
   websocket.addEventListener('close', (event) => {
     console.log('WebSocket connection closed, attempting to reconnect...');
     setTimeout(connectWebSocket, 1000); // Attempt to reconnect after 1 second
