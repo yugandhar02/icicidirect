@@ -17,28 +17,44 @@ async function handleRequest(request) {
 
   server.accept();
 
-  const niftyValues = [10000, 10100, 10200, 10300, 10400, 10500, 10600, 10700, 10800, 10900];
-  const sensexValues = [35000, 35200, 35400, 35600, 35800, 36000, 36200, 36400, 36600, 36800];
-
-  // Counter to track the current index of the values to send
-  let currentIndex = 0;
+  const niftyValues = [11200, 11250, 11300, 11350, 11400, 11450, 11500, 11550, 11600, 11650];
+  const sensexValues = [38000, 38100, 38200, 38300, 38400, 38500, 38600, 38700, 38800, 38900];
+  let currentIndex = -1; // To keep track of the current index
+  let lastNifty = niftyValues[0];
+  let lastSensex = sensexValues[0];
 
   server.addEventListener('message', () => {
-    // Get the current Nifty and Sensex values
-    const currentNifty = niftyValues[currentIndex];
-    const currentSensex = sensexValues[currentIndex];
+    currentIndex = (currentIndex + 1) % 10; // Move to the next index in a round-robin fashion
 
-    // Prepare the response data
-    const responseData = {
-      nifty: currentNifty,
-      sensex: currentSensex,
-    };
+    const niftyStockValue = niftyValues[currentIndex];
+    const niftyChange = niftyStockValue - lastNifty;
+    const niftyChangePercentage = (niftyChange / lastNifty) * 100;
 
-    // Send the data as a JSON string
-    server.send(JSON.stringify(responseData));
+    const sensexStockValue = sensexValues[currentIndex];
+    const sensexChange = sensexStockValue - lastSensex;
+    const sensexChangePercentage = (sensexChange / lastSensex) * 100;
 
-    // Increment the index, reset if it reaches the end of the array
-    currentIndex = (currentIndex + 1) % niftyValues.length;
+    const response = [
+      {
+        id: 'spnNifty_n',
+        indexName: 'NIFTY',
+        stockValue: niftyStockValue,
+        change: niftyChange,
+        changePercentage: niftyChangePercentage.toFixed(2),
+      },
+      {
+        id: 'spnSensex_s',
+        indexName: 'SENSEX',
+        stockValue: sensexStockValue,
+        change: sensexChange,
+        changePercentage: sensexChangePercentage.toFixed(2),
+      },
+    ];
+
+    lastNifty = niftyStockValue;
+    lastSensex = sensexStockValue;
+
+    server.send(JSON.stringify(response));
   });
 
   return new Response(null, {
