@@ -154,7 +154,7 @@
 .footer.block .footer-disclaimer a {
   color: var(--link-color-orange);
   text-decoration: none;
-  background-color: transparent;
+  background-color: var(--background-color-transparent);
   font-size: 0.6875rem;
   transition: 0.3s;
 }
@@ -228,7 +228,7 @@
   position: absolute;
   height: 0.0625rem;
   width: 95%;
-  border-bottom: 0.0625rem dashed var(--horizontal-footer-dash-gray);
+  border-bottom: 0.0625rem dashed var(--color-light-gray-dark);
   top: 50%;
   left: auto;
   transform: translateY(-50%);
