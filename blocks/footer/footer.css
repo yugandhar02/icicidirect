@@ -1,4 +1,4 @@
-.footer.block .footer-wrapper {
+.footer-wrapper {
   background: var(--background-color-light-grey);
 }
 
@@ -14,10 +14,17 @@
 }
 
 .footer.block .footer-links .section-container {
-  padding-left: 3.438rem;
-  padding-right: 3.438rem;
+  padding-left: 1.75rem;
+  padding-right: 2rem;
   padding-bottom: 3.438rem;
   border-bottom: 0.0625rem solid var(--horizontal-footer-dash-gray);
+}
+
+@media (width > 48rem){
+  .footer.block .footer-links .section-container {
+    padding-left: 3.438rem;
+    padding-right: 3.438rem;
+  }
 }
 
 .footer.block .section.footer-top-note .section-container {
@@ -120,25 +127,40 @@
 } 
 
 .footer.block .footer-links .links-title {
-  font-size: var(--body-font-size-m);
+  font-size: var(--body-font-size-xs);
   line-height: 130%;
   color: var(--color-off-white);
   font-weight: 500;
   display: block;
   margin-bottom: 0.75rem;
-  padding-top: 1.25rem;
+  padding-top: 1rem;
+}
+
+@media (width > 48rem) {
+  .footer.block .footer-links .links-title {
+    font-size: var(--body-font-size-m);
+    line-height: 130%;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
 }
 
 .footer.block .footer-links a {
   color: var(--color-footer-gray);
-  font-size: 0.8125rem;
-  line-height: 138%;
-  display: inline-block;
-  padding: 0.3125rem 0;
   transition: 0.3s;
+  line-height: 138%;
   width: 100%; /* Ensuring anchor tags take full width of container */
   max-width: 100%;
   text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  padding: 0.3125rem 0;
+}
+
+@media (width > 48rem) {
+  .footer.block .footer-links a {
+    font-size: 0.8125rem;
+  }
 }
 
 .footer.block .footer-links a > u {
@@ -155,6 +177,11 @@
 
 .footer.block .footer-links a:hover {
   color: var(--color-off-white);
+}
+
+.footer.block .footer-links .links-column{
+  flex: 0 0 auto;
+  width: 50%;
 }
 
 @media (width > 48rem) {
@@ -186,12 +213,18 @@
 .footer.block .footer-links .row {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
-  
+
   display: flex;
   flex-wrap: wrap;
   margin-top: calc(-1* var(--bs-gutter-y));
   margin-right: calc(-.5* var(--bs-gutter-x));
   margin-left: calc(-.5* var(--bs-gutter-x));
+}
+
+.footer.block .footer-links .row>* {
+  padding-right: calc(var(--bs-gutter-x)* .5);
+  padding-left: calc(var(--bs-gutter-x)* .5);
+  margin-top: var(--bs-gutter-y);
 }
 
 @media (width >= 56.25rem) {
