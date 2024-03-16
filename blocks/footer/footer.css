@@ -38,7 +38,7 @@
 .footer.block .section .footer-top-wrapper {
   position: relative;
   z-index: 1;
-  background: var(--color-off-white);
+  background: var(--color-white);
   border-radius: 3.56rem;
   box-shadow: 0 1.25rem 2.5rem 0 var(--box-shadow-footer-top-gray);
   padding: 1.25rem 3.125rem;
@@ -128,7 +128,7 @@
 .footer.block .footer-links .links-title {
   font-size: var(--body-font-size-xs);
   line-height: 130%;
-  color: var(--color-off-white);
+  color: var(--color-white);
   font-weight: 500;
   display: block;
   margin-bottom: 0.75rem;
@@ -160,7 +160,7 @@
 }
 
 .footer.block .footer-links a:hover {
-  color: var(--color-off-white);
+  color: var(--color-white);
 }
 
 .footer.block .footer-links .links-column {
@@ -220,7 +220,7 @@
   background-color: var(--link-color-dark-gray);
   z-index: 2;
   position: relative;
-  color: var(--color-off-white);
+  color: var(--color-white);
 }
 
 .footer.block .footer-disclaimer .panel-header::before {
@@ -245,8 +245,8 @@
   width: 1.75rem;
   height: 1.75rem;
   text-align: center;
-  color: var(--color-off-white);
-  border: 0.0625rem solid var(--color-off-white);
+  color: var(--color-white);
+  border: 0.0625rem solid var(--color-white);
   border-radius: 50%;
   z-index: 10;
 }
