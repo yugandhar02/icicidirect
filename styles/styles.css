@@ -61,6 +61,7 @@
   --background-color-light-blue: #EFF6FF;
   --border-color-light-gray: #E1E8EE;
   --border-color-gray: #D1D1D1;
+  --border-color-dark-grey: #0E1F3533;
   --color-diable-element: #D1D1D1;
   --color-disable-dot: #D1D1D1;
   
@@ -117,6 +118,10 @@
   --line-width-hairline: 1px;
   --line-width-thin: 2px;
   --line-width-extra-light: 3px;
+
+  /* Line Height */
+  --line-height-normal: 20px;
+  --line-height-wide: 45px;
 
   /* margin and fine spaces */
   --space-1px: 0.006rem;
