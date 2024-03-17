@@ -19,41 +19,17 @@ function onClick() {
 
 function decorateFooterTop(block) {
   const footerTop = block.querySelector('.footer-top');
-  const defaultWrapper = footerTop.querySelector('.default-content-wrapper');
-  const children = [...footerTop.querySelector('.default-content-wrapper').children];
-  defaultWrapper.innerHTML = '';
-  const rowElement = document.createElement('div');
-  defaultWrapper.appendChild(rowElement);
-
-  const col1 = document.createElement('div');
-  col1.classList.add('col-1');
-  col1.appendChild(children[0]);
-  const imageElement = document.createElement('img');
-  const anchorDiv = children[1].childNodes[0];
-  imageElement.src = anchorDiv.href;
-  imageElement.alt = 'ICICI Logo Footer';
-  col1.appendChild(imageElement);
-
-  const col2 = document.createElement('div');
-  col2.classList.add('col-2');
-  col2.appendChild(children[2]);
-  children[3].childNodes[0].classList.add('toll-free-number');
-  col2.appendChild(children[3].childNodes[0]);
-
-  const col3 = document.createElement('div');
-  col3.classList.add('col-3');
-  col3.appendChild(children[4]);
-  children[5].childNodes[0].classList.add('toll-free-number');
-  col3.appendChild(children[5].childNodes[0]);
-
-  rowElement.appendChild(col1);
-  rowElement.appendChild(col2);
-  rowElement.appendChild(col3);
-
-  footerTop.classList.add('footer-top-container');
-  defaultWrapper.className = '';
-  defaultWrapper.classList.add('footer-top-wrapper');
-  rowElement.classList.add('footer-top', 'row');
+  const sectionContainer = footerTop.querySelector('.section-container');
+  const footertopWrapper = sectionContainer.children[0];
+  footertopWrapper.className = 'footer-top-wrapper';
+  const footerTopRow = footertopWrapper.children[0];
+  footerTopRow.classList.add('footer-top', 'row');
+  const children = [...footerTopRow.children];
+  let index = 0;
+  while (index < children.length) {
+    children[index].className = `col-${index + 1}`;
+    index += 1;
+  }
 }
 
 function customTrim(str) {

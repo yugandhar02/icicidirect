@@ -76,6 +76,7 @@
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* body sizes */
+  --body-font-size-xxxl: 26px;
   --body-font-size-xxl: 22px;
   --body-font-size-xl: 20px;
   --body-font-size-l: 18px;
@@ -125,7 +126,7 @@
   --line-width-extra-light: 3px;
 
   /* margin and fine spaces */
-  --space-1px: 0.006rem;
+  --space-1px: 0.06rem;
   --space-2px: 0.13rem;
   --space-3px: 0.19rem;
   --space-4px: 0.25rem;
