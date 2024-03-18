@@ -11,7 +11,7 @@
   padding-left: 1.75rem;
   padding-right: 2rem;
   padding-bottom: 3.438rem;
-  border-bottom: var(--space-10px) solid var(--horizontal-footer-dash-gray);
+  border-bottom: var(--space-1px) solid var(--color-light-gray-dark);
 }
 
 .footer.block .footer-disclaimer .section-container {
