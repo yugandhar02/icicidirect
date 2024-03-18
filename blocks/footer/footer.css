@@ -267,7 +267,8 @@
 }
 
 .footer.block .footer-disclaimer .panel-body {
-  padding: var(--space-1px);
+  padding-left: 1rem;
+  padding-right: 1rem; 
   max-height: 200rem;
   opacity: 1;
   transition: max-height 0.4s ease, opacity 0.4s ease;
