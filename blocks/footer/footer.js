@@ -112,8 +112,6 @@ function decorateDisclaimer(block) {
 export default async function decorate(block) {
   block.textContent = '';
   const footerMeta = getMetadata('footer');
-  // fetch footer content
-  // const footerPath = '/footer';
   const footerPath = footerMeta.footer || '/footer';
   const fragment = await loadFragment(footerPath);
   decorateFooterTop(fragment);
