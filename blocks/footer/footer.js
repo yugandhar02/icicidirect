@@ -1,7 +1,5 @@
-import {
-  decorateSections,
-  updateSectionsStatus,
-} from '../../scripts/aem.js';
+import { getMetadata } from '../../scripts/aem.js';
+import { loadFragment } from '../fragment/fragment.js';
 
 function onClick() {
   const disclaimerDiv = document.querySelector('.panel-body');
@@ -113,19 +111,18 @@ function decorateDisclaimer(block) {
  */
 export default async function decorate(block) {
   block.textContent = '';
+  const footerMeta = getMetadata('footer');
   // fetch footer content
-  const footerPath = '/footer';
-  const resp = await fetch(`${footerPath}.plain.html`, window.location.pathname.endsWith('/footer') ? { cache: 'reload' } : {});
-  if (resp.ok) {
-    const html = await resp.text();
-    // decorate footer DOM
-    const footer = document.createElement('div');
-    footer.innerHTML = html;
-    decorateSections(footer);
-    updateSectionsStatus(footer);
-    block.append(footer);
-    decorateFooterTop(block);
-    decorateFooterLinks(block);
-    decorateDisclaimer(block);
+  // const footerPath = '/footer';
+  const footerPath = footerMeta.footer || '/footer';
+  const fragment = await loadFragment(footerPath);
+  decorateFooterTop(fragment);
+  decorateFooterLinks(fragment);
+  decorateDisclaimer(fragment);
+  // decorate footer DOM
+  const footer = document.createElement('div');
+  while (fragment.firstElementChild) {
+    footer.append(fragment.firstElementChild);
   }
+  block.append(footer);
 }
