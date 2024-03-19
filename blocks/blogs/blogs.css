@@ -1,5 +1,4 @@
 .block.blogs .border-wrapper {
-    min-height: 800px;
     margin-right: -0.9rem;
     margin-left: -0.9rem;
     border: var(--line-width-hairline) solid var(--border-color-dark-grey);
@@ -23,6 +22,175 @@
     text-transform: uppercase;
     font-weight: 700;
 }
+
+.block.blogs .carousel-container {
+    background-color: var(--background-color-light-grey);
+    border: 0.06rem solid rgb(14 31 53 / 20%);
+    border-bottom-left-radius: 0.9rem;
+    border-bottom-right-radius: 0.9rem;
+}
+
+.block.blogs .carousel-body {
+    /*padding: 0.9rem 1.9rem;*/
+}
+
+.block.blogs .carousel-slider {
+    /*margin-bottom: 1.9rem;*/
+}
+
+.block.blogs .carousel-slider .carousel-track,
+.block.blogs .carousel-slider .carousel-list {
+    transform: translate3d(0, 0, 0);
+}
+
+.block.blogs .carousel-slider .carousel-list {
+    overflow: hidden;
+    /*margin-left: 2rem;*/
+}
+
+.block.blogs .carousel-slider .carousel-track {
+    position: relative;
+    left: 0;
+    top: 0;
+    display: flex;
+    transition: transform 0.5s ease;
+    min-height: 17.5rem;
+}
+
+.block.blogs .carousel-slider .carousel-card {
+    transition: opacity 0.5s ease;
+    padding: 8px 12px;
+    flex-grow: 1;
+
+}
+.block.blogs .carousel-slider .carousel-card .article {
+    width: 86%;
+    padding: 8px 0;
+
+}
+
+.block.blogs .carousel-card .picture-wrapper {
+    background: #314467;
+    display: block;
+    border-radius: 10px;
+}
+
+.block.blogs .carousel-card .picture-wrapper  picture {
+    min-height: 160px;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+.block.blogs .carousel-card .picture-wrapper  picture img {
+    object-fit: initial;
+    opacity: 0.8;
+    width: 100%;
+    height: 100%;
+    transition: 0.3s;
+    position: absolute;
+
+}
+
+
+/*.block.blogs .carousel-card .article-content h3 {*/
+/*    font-size: 24px;*/
+/*}*/
+
+.block.blogs .carousel-card .article-content a {
+    font-size: 15px;
+    line-height: 22px;
+    color: #212121;
+    height: 42px;
+    font-weight: 600;
+    display: -webkit-box;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 8px;
+}
+
+.block.blogs .carousel-card .article-content .article-text {
+    font-size: 14px;
+    line-height: 18px;
+    color: #212121;
+    height: 54px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.block.blogs .carousel-card .article-content .article-info {
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.block.blogs .carousel-card .article-content .article-info img {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+
+.block.blogs .carousel-card .article-content .article-info span {
+    font-size: 9px;
+    color: #6B6B6B;
+    padding-right: 5px;
+    border-right: 1px solid #d7d7d7;
+    line-height: 10px;
+    margin: 0 4px 8px 0;
+}
+.block.blogs .carousel-card .article-content .article-info span:last-child {
+    border: 0;
+}
+
+.block.blogs .discover-more {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.block.blogs .discover-more .link-color {
+    font-size: 21px;
+    line-height: 24px;
+    font-weight: var(--font-weight-bold);
+    color: var(--link-color-orange);
+}
+
+.block.blogs .discover-more .icon {
+    font-family: icomoon, sans-serif;
+    speak: none;
+    font-style: normal;
+    font-weight: var(--font-weight-medium);
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.block.blogs .discover-more .link-color .icon-up-arrow {
+    transform: rotate(90deg);
+    margin-left: 0.3rem;
+}
+
+.block.blogs .discover-more .link-color .icon-up-arrow::before {
+    content: "\e900";
+}
+
+/*.block.blogs .carousel-slider .carousel-card img {*/
+/*    display: block;*/
+/*}*/
+
 
 @media (width >= 64rem) {
     .block.blogs .border-wrapper {
