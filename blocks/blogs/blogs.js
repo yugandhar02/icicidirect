@@ -1,11 +1,12 @@
-function createBlogCard() {
-  const ImageId = 'Blog-202306051107590806957.jpg';
-  const ImageSrc = `https://www.icicidirect.com/images/${ImageId}`;
-  const articleId = 'healthy-volume-prints-in-may-2023';
-  const articleUrl = `https://www.icicidirect.com/research/equity/one-minutes-read/${articleId}`;
-  const articleTitle = 'Healthy volume prints in May 2023; 2-W space outshines!';
-  const articleDesc = 'Overall wholesale volume prints for May 2023 came in steady with a sequential recovery witnessed almost across all segments.';
-  const articleDate = '07-JUN-2023 09:00';
+import { callMockBlogAPI } from '../../scripts/mockapi.js';
+import { readBlockConfig } from '../../scripts/aem.js';
+
+function createBlogCard(blogData) {
+  const ImageSrc = blogData.imageUrl;
+  const articleUrl = blogData.link;
+  const articleTitle = blogData.title;
+  const articleDesc = blogData.description;
+  const articleDate = blogData.postDate;
 
   const arcticleDiv = document.createElement('div');
   arcticleDiv.className = 'article';
@@ -38,12 +39,11 @@ function createBlogCard() {
   articleTextP.textContent = articleDesc;
   articleText.appendChild(articleTextP);
   articleContent.appendChild(articleText);
-  //
   const articleInfo = document.createElement('div');
   articleInfo.className = 'article-info';
 
   const iconImg = document.createElement('img');
-  iconImg.src = 'https://www.icicidirect.com/Content/images/time.svg';
+  iconImg.src = '../../icons/time.svg';
   iconImg.alt = 'time';
   iconImg.loading = 'lazy';
   articleInfo.appendChild(iconImg);
@@ -60,19 +60,17 @@ function createBlogCard() {
   return arcticleDiv;
 }
 
-function createCaroselCard() {
-  const cardDiv = document.createElement('div');
-  cardDiv.className = 'carousel-card';
-  cardDiv.appendChild(createBlogCard());
-  cardDiv.appendChild(createBlogCard());
-  return cardDiv;
-}
 async function generateCardsView(carouselTrack) {
-  carouselTrack.appendChild(createCaroselCard());
-  carouselTrack.appendChild(createCaroselCard());
-  carouselTrack.appendChild(createCaroselCard());
-  carouselTrack.appendChild(createCaroselCard());
-  carouselTrack.appendChild(createCaroselCard());
+  const blogsDataArray = await callMockBlogAPI();
+  const entriesToProcess = blogsDataArray.length;
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i + 1 < entriesToProcess; i += 2) {
+    const carouselCard = document.createElement('div');
+    carouselCard.className = 'carousel-card';
+    carouselCard.appendChild(createBlogCard(blogsDataArray[i]));
+    carouselCard.appendChild(createBlogCard(blogsDataArray[i + 1]));
+    carouselTrack.appendChild(carouselCard);
+  }
 }
 
 function addDiscoverLink(carouselBody, discoverLink) {
@@ -92,19 +90,20 @@ function addDiscoverLink(carouselBody, discoverLink) {
   }
 }
 export default async function decorate(block) {
+  const blockConfig = readBlockConfig(block);
+  block.textContent = '';
   const rowDiv = document.createElement('div');
   rowDiv.className = 'row border-wrapper';
   const titleDiv = document.createElement('div');
   titleDiv.className = 'title text-center';
 
   const titleText = document.createElement('h2');
-  titleText.textContent = 'BLOGS';
+  titleText.textContent = blockConfig.title;
   titleDiv.appendChild(titleText);
   rowDiv.appendChild(titleDiv);
 
   const carouselBody = document.createElement('div');
   carouselBody.className = 'carousel-body';
-  // carouselContainer.appendChild(carouselBody);
 
   const carouselSlider = document.createElement('div');
   carouselSlider.className = 'carousel-slider';
@@ -118,7 +117,7 @@ export default async function decorate(block) {
   carouselList.appendChild(carouselTrack);
   carouselBody.appendChild(carouselSlider);
   rowDiv.appendChild(carouselBody);
-  const discoverLink = 'https://www.icicidirect.com/research/equity/blog';
+  const discoverLink = blockConfig.discoverlink;
   addDiscoverLink(rowDiv, discoverLink);
   block.appendChild(rowDiv);
 }

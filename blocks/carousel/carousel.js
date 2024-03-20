@@ -13,6 +13,7 @@ function allowedCardsCount() {
       return 1;
   }
 }
+
 function updateCarouselView(activeDot) {
   const dotIndex = parseInt(activeDot.dataset.index, 10);
   const carouselSlider = activeDot.closest('.carousel-slider');
