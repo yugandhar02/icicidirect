@@ -57,20 +57,20 @@ function createBlogCard(blogData) {
   return arcticleDiv;
 }
 
-async function generateCardsView(carouselTrack) {
+async function generateCardsView(blogsContainer) {
   const blogsDataArray = await callMockBlogAPI();
   const entriesToProcess = blogsDataArray.length;
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i + 1 < entriesToProcess; i += 2) {
-    const carouselCard = document.createElement('div');
-    carouselCard.className = 'carousel-card';
-    carouselCard.appendChild(createBlogCard(blogsDataArray[i]));
-    carouselCard.appendChild(createBlogCard(blogsDataArray[i + 1]));
-    carouselTrack.appendChild(carouselCard);
+    const blogsColumn = document.createElement('div');
+    blogsColumn.className = 'blogs-container-column';
+    blogsColumn.appendChild(createBlogCard(blogsDataArray[i]));
+    blogsColumn.appendChild(createBlogCard(blogsDataArray[i + 1]));
+    blogsContainer.appendChild(blogsColumn);
   }
 }
 
-function addDiscoverLink(carouselBody, discoverLink) {
+function addDiscoverLink(blogsContainer, discoverLink) {
   if (discoverLink) {
     const div = document.createElement('div');
     div.className = 'text-center discover-more';
@@ -83,7 +83,7 @@ function addDiscoverLink(carouselBody, discoverLink) {
     icon.className = 'icon-up-arrow icon ';
     anchor.appendChild(icon);
     div.appendChild(anchor);
-    carouselBody.appendChild(div);
+    blogsContainer.appendChild(div);
   }
 }
 export default async function decorate(block) {
@@ -99,21 +99,11 @@ export default async function decorate(block) {
   titleDiv.appendChild(titleText);
   rowDiv.appendChild(titleDiv);
 
-  const carouselBody = document.createElement('div');
-  carouselBody.className = 'carousel-body';
+  const blogsContainer = document.createElement('div');
+  blogsContainer.classList.add('blogs-cards-container');
+  generateCardsView(blogsContainer);
 
-  const carouselSlider = document.createElement('div');
-  carouselSlider.className = 'carousel-slider';
-
-  const carouselList = document.createElement('div');
-  carouselList.classList.add('carousel-list');
-  carouselSlider.appendChild(carouselList);
-  const carouselTrack = document.createElement('div');
-  carouselTrack.classList.add('carousel-track');
-  generateCardsView(carouselTrack);
-  carouselList.appendChild(carouselTrack);
-  carouselBody.appendChild(carouselSlider);
-  rowDiv.appendChild(carouselBody);
+  rowDiv.appendChild(blogsContainer);
   const discoverLink = blockConfig.discoverlink;
   addDiscoverLink(rowDiv, discoverLink);
   block.appendChild(rowDiv);
