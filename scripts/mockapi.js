@@ -72,10 +72,8 @@ async function callMockBlogAPI() {
       throw new Error('Network response was not ok');
     }
     const data = await response.json(); // Parse the JSON from the response
-    console.log(data); // Here, `data` is the JSON content of your file.
     return data; // Return the data so it can be used by whoever calls this function
   } catch (error) {
-    console.error('Failed to fetch blog data:', error);
     return null; // Return null or appropriate error handling
   }
 }

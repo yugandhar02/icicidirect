@@ -1,5 +1,6 @@
 import { callMockBlogAPI } from '../../scripts/mockapi.js';
 import { readBlockConfig } from '../../scripts/aem.js';
+import { addIcon } from '../../scripts/blocks-utils.js';
 
 function createBlogCard(blogData) {
   const ImageSrc = blogData.imageUrl;
@@ -42,11 +43,7 @@ function createBlogCard(blogData) {
   const articleInfo = document.createElement('div');
   articleInfo.className = 'article-info';
 
-  const iconImg = document.createElement('img');
-  iconImg.src = '../../icons/time.svg';
-  iconImg.alt = 'time';
-  iconImg.loading = 'lazy';
-  articleInfo.appendChild(iconImg);
+  addIcon(articleInfo, 'time', '', 'time');
   const articleInfoTime = document.createElement('span');
   articleInfoTime.textContent = articleDate;
   articleInfo.appendChild(articleInfoTime);

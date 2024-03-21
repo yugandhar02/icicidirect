@@ -60,8 +60,18 @@ const formatDateTime = (date) => date && date.toLocaleString('en-US', {
   hour12: true,
 });
 
+function addIcon(parentElement, iconName, prefix = '', alt = '') {
+  const img = document.createElement('img');
+  img.dataset.iconName = iconName;
+  img.src = `${window.hlx.codeBasePath}${prefix}/icons/${iconName}.svg`;
+  img.alt = alt;
+  img.loading = 'lazy';
+  parentElement.append(img);
+}
+
 export {
   isInViewport,
   Viewport,
   formatDateTime,
+  addIcon,
 };
