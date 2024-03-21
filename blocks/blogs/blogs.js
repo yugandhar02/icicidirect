@@ -86,6 +86,21 @@ function addDiscoverLink(blogsContainer, discoverLink) {
     blogsContainer.appendChild(div);
   }
 }
+function listenToScroll(block, blogsContainer) {
+  const observer = new IntersectionObserver((entries, observerInstance) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        generateCardsView(blogsContainer);
+        observerInstance.disconnect();
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.1,
+  });
+
+  observer.observe(block);
+}
 export default async function decorate(block) {
   const blockConfig = readBlockConfig(block);
   block.textContent = '';
@@ -101,10 +116,10 @@ export default async function decorate(block) {
 
   const blogsContainer = document.createElement('div');
   blogsContainer.classList.add('blogs-cards-container');
-  generateCardsView(blogsContainer);
 
   rowDiv.appendChild(blogsContainer);
   const discoverLink = blockConfig.discoverlink;
   addDiscoverLink(rowDiv, discoverLink);
   block.appendChild(rowDiv);
+  listenToScroll(block, blogsContainer);
 }
