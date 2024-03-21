@@ -103,7 +103,7 @@ function getTrendingNews() {
   const newsData = [
     {
       imgUrl: 'https://www.icicidirect.com/images/HG Infra-202403190956262997726.png',
-      title: 'HG infra. bags four solar projects worth ₹ 1026 crore',
+      title: 'HG infra. bags four solar projects worth ₹1026 crore',
       link: 'https://www.icicidirect.com/research/equity/trending-news/hg-infra-bags-four-solar-projects-worth-1026-crore',
       date: '19-Mar-2024 09:06',
       source: 'ICICI Securities',

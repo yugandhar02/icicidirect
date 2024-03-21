@@ -74,7 +74,7 @@
   --color-footer-gray: #a3a3a3;
   --box-shadow-footer-top-gray: #0e1f354d;
   --veritcal-line-footer-top-gray: #9797974d;
-  --box-shadow-trending-news: #97979733;
+  --box-shadow: #97979733;
   --boarder-trendign-news-card: #EAEAEA;
   --card-post-color: #6B6B6B;
   --card-post-boarder: #d7d7d7;
@@ -440,6 +440,13 @@ main .section.padded > .section-container {
 }
 
 @media (width >= 48rem) {
+main .section.shadow  {
+  background: var(--background-color-light-orange);
+  box-shadow: 0 1.25rem 2.5rem var(--box-shadow);
+  padding: 1.8rem 0;
+}
+
+@media (width >= 768px) {
   header {
     min-height: 8.4rem;
   }
