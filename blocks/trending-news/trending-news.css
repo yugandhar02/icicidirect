@@ -19,19 +19,6 @@
     font-weight: var(--font-weight-bold);
 }
 
-.block.trending-news .news-slider .news-list {
-    position: relative;
-    overflow: hidden;
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-
-.block.trending-news .news-slider .news-list,
-.block.trending-news .news-slider .news-track  {
-    transform: translate3d(0, 0, 0);
-}
-
 .block.trending-news .news-slider .news-track {
     padding-left: 1rem;
     position: relative;
@@ -40,6 +27,7 @@
     display: flex;
     transition: transform 0.5s ease;
     min-height: 17.5rem;
+    transform: translate3d(0, 0, 0);
 }
 
 .block.trending-news .news-slider .news-card {
