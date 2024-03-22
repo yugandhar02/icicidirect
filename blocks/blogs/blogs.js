@@ -1,9 +1,9 @@
 import { callMockBlogAPI } from '../../scripts/mockapi.js';
 import { decorateIcons, fetchPlaceholders, readBlockConfig } from '../../scripts/aem.js';
-import { createPictureElement, listenToScroll } from '../../scripts/blocks-utils.js';
+import { createPictureElement, observe } from '../../scripts/blocks-utils.js';
 
 async function createBlogCard(blogData) {
-  const ImageSrc = blogData.imageUrl;
+  const { imageUrl } = blogData;
   const articleUrl = blogData.link;
   const articleTitle = blogData.title;
   const articleDesc = blogData.description;
@@ -13,7 +13,7 @@ async function createBlogCard(blogData) {
   arcticleDiv.className = 'article';
   const pictureWrapper = document.createElement('div');
   pictureWrapper.className = 'picture-wrapper';
-  const articlePicture = createPictureElement(ImageSrc, 'article-thumbnail', false);
+  const articlePicture = createPictureElement(imageUrl, 'article-thumbnail', false);
 
   pictureWrapper.appendChild(articlePicture);
   arcticleDiv.appendChild(pictureWrapper);
@@ -114,5 +114,5 @@ export default async function decorate(block) {
   rowDiv.appendChild(blogsContainer);
   addDiscoverLink(rowDiv, discoverMoreAnchor);
   block.appendChild(rowDiv);
-  listenToScroll(block, generateCardsView);
+  observe(block, generateCardsView);
 }

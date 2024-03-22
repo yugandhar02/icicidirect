@@ -80,7 +80,7 @@ function createPictureElement(
   return picture;
 }
 
-function listenToScroll(elementToObserve, callback, threshold = 0.1) {
+function observe(elementToObserve, callback, threshold = 0.1) {
   const observer = new IntersectionObserver((entries, observerInstance) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -101,5 +101,5 @@ export {
   Viewport,
   formatDateTime,
   createPictureElement,
-  listenToScroll,
+  observe,
 };
