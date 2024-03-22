@@ -1,3 +1,5 @@
+import { createOptimizedPicture } from './aem.js';
+
 function isInViewport(el) {
   const rect = el.getBoundingClientRect();
   return (
@@ -60,18 +62,44 @@ const formatDateTime = (date) => date && date.toLocaleString('en-US', {
   hour12: true,
 });
 
-function addIcon(parentElement, iconName, prefix = '', alt = '') {
-  const img = document.createElement('img');
-  img.dataset.iconName = iconName;
-  img.src = `${window.hlx.codeBasePath}${prefix}/icons/${iconName}.svg`;
-  img.alt = alt;
-  img.loading = 'lazy';
-  parentElement.append(img);
+function createPictureElement(
+  src,
+  alt = '',
+  eager = false,
+  breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
+) {
+  if (src.indexOf('http://') === -1 && src.indexOf('https://') === -1) {
+    return createOptimizedPicture(src, alt, eager, breakpoints);
+  }
+  const picture = document.createElement('picture');
+  const image = document.createElement('img');
+  image.setAttribute('src', src);
+  image.setAttribute('alt', alt);
+  image.setAttribute('loading', eager ? 'eager' : 'lazy');
+  picture.appendChild(image);
+  return picture;
+}
+
+function listenToScroll(elementToObserve, callback, threshold = 0.1) {
+  const observer = new IntersectionObserver((entries, observerInstance) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        callback(elementToObserve);
+        observerInstance.disconnect();
+      }
+    });
+  }, {
+    root: null,
+    threshold,
+  });
+
+  observer.observe(elementToObserve);
 }
 
 export {
   isInViewport,
   Viewport,
   formatDateTime,
-  addIcon,
+  createPictureElement,
+  listenToScroll,
 };

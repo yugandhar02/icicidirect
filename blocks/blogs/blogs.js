@@ -1,8 +1,8 @@
 import { callMockBlogAPI } from '../../scripts/mockapi.js';
-import { readBlockConfig } from '../../scripts/aem.js';
-import { addIcon } from '../../scripts/blocks-utils.js';
+import { decorateIcons, fetchPlaceholders, readBlockConfig } from '../../scripts/aem.js';
+import { createPictureElement, listenToScroll } from '../../scripts/blocks-utils.js';
 
-function createBlogCard(blogData) {
+async function createBlogCard(blogData) {
   const ImageSrc = blogData.imageUrl;
   const articleUrl = blogData.link;
   const articleTitle = blogData.title;
@@ -13,13 +13,8 @@ function createBlogCard(blogData) {
   arcticleDiv.className = 'article';
   const pictureWrapper = document.createElement('div');
   pictureWrapper.className = 'picture-wrapper';
+  const articlePicture = createPictureElement(ImageSrc, 'article-thumbnail', false);
 
-  const articlePicture = document.createElement('picture');
-  const articleImg = document.createElement('img');
-  articleImg.src = ImageSrc;
-  articleImg.alt = '';
-  articleImg.loading = 'lazy';
-  articlePicture.appendChild(articleImg);
   pictureWrapper.appendChild(articlePicture);
   arcticleDiv.appendChild(pictureWrapper);
   const articleContent = document.createElement('div');
@@ -43,13 +38,16 @@ function createBlogCard(blogData) {
   const articleInfo = document.createElement('div');
   articleInfo.className = 'article-info';
 
-  addIcon(articleInfo, 'time', '', 'time');
-  const articleInfoTime = document.createElement('span');
+  const spanIcon = document.createElement('span');
+  spanIcon.className = 'icon icon-time';
+  articleInfo.appendChild(spanIcon);
+  decorateIcons(articleInfo, '');
+  const articleInfoTime = document.createElement('abbr');
   articleInfoTime.textContent = articleDate;
   articleInfo.appendChild(articleInfoTime);
 
-  const articleInfoPoweredBy = document.createElement('span');
-  articleInfoPoweredBy.textContent = 'ICICI Securities';
+  const articleInfoPoweredBy = document.createElement('abbr');
+  articleInfoPoweredBy.textContent = (await fetchPlaceholders()).icicisecurities;
   articleInfo.appendChild(articleInfoPoweredBy);
   articleContent.appendChild(articleInfo);
 
@@ -57,28 +55,37 @@ function createBlogCard(blogData) {
   return arcticleDiv;
 }
 
-async function generateCardsView(blogsContainer) {
+async function generateCardsView(block) {
+  const blogsContainer = block.querySelector('.blogs-cards-container');
   const blogsDataArray = await callMockBlogAPI();
   const entriesToProcess = blogsDataArray.length;
+  /**
+   * Loop through the blogsDataArray and create a blog card for each blog entry.
+   * Append the blog card to the blogsContainers column. Each column will have 2 blog cards.
+   */
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i + 1 < entriesToProcess; i += 2) {
     const blogsColumn = document.createElement('div');
     blogsColumn.className = 'blogs-container-column';
-    blogsColumn.appendChild(createBlogCard(blogsDataArray[i]));
-    blogsColumn.appendChild(createBlogCard(blogsDataArray[i + 1]));
+    // eslint-disable-next-line no-await-in-loop
+    const blogCard1 = await createBlogCard(blogsDataArray[i]);
+    // eslint-disable-next-line no-await-in-loop
+    const blogCard2 = await createBlogCard(blogsDataArray[i + 1]);
+    blogsColumn.appendChild(blogCard1);
+    blogsColumn.appendChild(blogCard2);
     blogsContainer.appendChild(blogsColumn);
   }
 }
 
-function addDiscoverLink(blogsContainer, discoverLink) {
-  if (discoverLink) {
+function addDiscoverLink(blogsContainer, discoverMoreAnchor) {
+  if (discoverMoreAnchor) {
     const div = document.createElement('div');
     div.className = 'text-center discover-more';
     const anchor = document.createElement('a');
-    anchor.href = discoverLink; // Set the href to your discoverLink variable
+    anchor.href = discoverMoreAnchor.href; // Set the href to your discoverLink variable
     anchor.className = 'link-color';
     anchor.target = '_blank'; // Ensures the link opens in a new tab
-    anchor.textContent = 'Discover More '; // Add the text content
+    anchor.textContent = discoverMoreAnchor.title; // Add the text content
     const icon = document.createElement('i');
     icon.className = 'icon-up-arrow icon ';
     anchor.appendChild(icon);
@@ -86,23 +93,12 @@ function addDiscoverLink(blogsContainer, discoverLink) {
     blogsContainer.appendChild(div);
   }
 }
-function listenToScroll(block, blogsContainer) {
-  const observer = new IntersectionObserver((entries, observerInstance) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        generateCardsView(blogsContainer);
-        observerInstance.disconnect();
-      }
-    });
-  }, {
-    root: null,
-    threshold: 0.1,
-  });
 
-  observer.observe(block);
-}
 export default async function decorate(block) {
+  const placeholderText = await fetchPlaceholders();
+  console.log(placeholderText.icicisecurities);
   const blockConfig = readBlockConfig(block);
+  const discoverMoreAnchor = block.querySelector('a');
   block.textContent = '';
   const rowDiv = document.createElement('div');
   rowDiv.className = 'row border-wrapper';
@@ -118,8 +114,7 @@ export default async function decorate(block) {
   blogsContainer.classList.add('blogs-cards-container');
 
   rowDiv.appendChild(blogsContainer);
-  const discoverLink = blockConfig.discoverlink;
-  addDiscoverLink(rowDiv, discoverLink);
+  addDiscoverLink(rowDiv, discoverMoreAnchor);
   block.appendChild(rowDiv);
-  listenToScroll(block, blogsContainer);
+  listenToScroll(block, generateCardsView);
 }

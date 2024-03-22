@@ -35,27 +35,21 @@
 }
 
 .block.blogs  .blogs-cards-container > :nth-child(-n+1){
-    flex:1;
+    flex: 1;
     display: block;
 }
 
 .block.blogs  .blogs-cards-container > :nth-child(n+2){
-    display:none;
+    display: none;
 }
-
-
-
-
 
 .block.blogs  .blogs-container-column .article {
     padding: var(--space-8px) 0;
     width: 100%;
 }
 
-
-
 .block.blogs .blogs-container-column .picture-wrapper {
-    background: #314467;
+    background: var(--background-color-blue);
     display: block;
     border-radius: var(--space-10px);
 }
@@ -92,8 +86,6 @@
     margin-bottom: var(--space-12px);
 }
 
-
-
 .block.blogs .blogs-container-column .article-content .article-text {
     font-size: var(--body-font-size-s);
     line-height: var(--line-height-small);
@@ -113,24 +105,25 @@
     margin-top: var(--space-5px);
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .block.blogs .blogs-container-column .article-content .article-info img {
-    width: 0.75rem;
-    height: 0.75rem;
+    width: var(--space-12px);
+    height: var(--space-12px);
     margin-right: var(--space-5px);
 }
 
-.block.blogs .blogs-container-column .article-content .article-info span {
+.block.blogs .blogs-container-column .article-content .article-info abbr {
     font-size: var(--heading-font-size-mmicro);
     color: var(--color-strong-gray-light);
     padding-right: var(--space-5px);
     border-right: var(--space-1px) solid var(--border-color-dark-gray);
     line-height: var(--line-height-narrow);
-    margin: 0 var(--space-4px) var(--space-8px) 0;
+    margin: 0 var(--space-4px) var(--space-5px) 0;
 }
 
-.block.blogs .blogs-container-column .article-content .article-info span:last-child {
+.block.blogs .blogs-container-column .article-content .article-info abbr:last-child {
     border: 0;
 }
 
@@ -154,8 +147,6 @@
     font-variant: normal;
     text-transform: none;
     line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     display: inline-block;
     vertical-align: middle;
 }
@@ -163,7 +154,7 @@
 
 .block.blogs .discover-more .link-color .icon-up-arrow {
     transform: rotate(90deg);
-    margin-left: 0.3rem;
+    margin-left: var(--space-5px);
 }
 
 .block.blogs .discover-more .link-color .icon-up-arrow::before {
