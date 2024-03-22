@@ -1,6 +1,8 @@
 import { getTrendingNews } from '../../scripts/mockapi.js';
 import { Viewport } from '../../scripts/blocks-utils.js';
-import { decorateIcons } from '../../scripts/aem.js';
+import { decorateIcons, fetchPlaceholders } from '../../scripts/aem.js';
+
+const placeholders = await fetchPlaceholders();
 
 function createDiscoverMore() {
   const discoverMore = document.createElement('div');
@@ -10,7 +12,7 @@ function createDiscoverMore() {
   link.href = 'https://www.icicidirect.com/research/equity/trending-news';
   link.className = 'link-color';
   link.target = '_blank';
-  link.textContent = 'Discover More ';
+  link.textContent = placeholders.discovermore;
   const icon = document.createElement('i');
   icon.className = 'icon-up-arrow icon';
   link.appendChild(icon);
@@ -81,7 +83,7 @@ export default function decorate(block) {
   const titleWrap = document.createElement('div');
   titleWrap.className = 'title text-center';
   const h2 = document.createElement('h2');
-  h2.textContent = 'TRENDING NEWS';
+  h2.textContent = placeholders.trendingnews;
   titleWrap.appendChild(h2);
   container.appendChild(titleWrap);
 
