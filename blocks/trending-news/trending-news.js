@@ -93,22 +93,18 @@ export default function decorate(block) {
   const slider = document.createElement('div');
   slider.className = 'news-slider';
 
-  const slickListDragable = document.createElement('div');
-  slickListDragable.className = 'news-list';
-
-  const slickTrack = document.createElement('div');
-  slickTrack.className = 'news-track';
+  const newsTrack = document.createElement('div');
+  newsTrack.className = 'news-track';
 
   newsData.forEach((news) => {
     const slide = document.createElement('div');
     slide.className = 'news-card';
     const article = createNewsCards(news);
     slide.appendChild(article);
-    slickTrack.appendChild(slide);
+    newsTrack.appendChild(slide);
   });
 
-  slickListDragable.appendChild(slickTrack);
-  slider.appendChild(slickListDragable);
+  slider.appendChild(newsTrack);
   newsSection.appendChild(slider);
   newsSection.appendChild(createDiscoverMore());
   container.appendChild(newsSection);
