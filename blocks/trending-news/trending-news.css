@@ -28,6 +28,7 @@
     transition: transform 0.5s ease;
     min-height: 17.5rem;
     transform: translate3d(0, 0, 0);
+    overflow: hidden;
 }
 
 .block.trending-news .news-slider .news-card {
