@@ -95,8 +95,6 @@ function addDiscoverLink(blogsContainer, discoverMoreAnchor) {
 }
 
 export default async function decorate(block) {
-  const placeholderText = await fetchPlaceholders();
-  console.log(placeholderText.icicisecurities);
   const blockConfig = readBlockConfig(block);
   const discoverMoreAnchor = block.querySelector('a');
   block.textContent = '';
