@@ -138,7 +138,6 @@ export {
   getMarginActionUrl,
   mockPredicationConstant,
   fetchDynamicStockIndexData,
-  getTrendingNews,
   callMockBlogAPI,
   getTrendingNews,
 };

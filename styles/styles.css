@@ -474,4 +474,5 @@ main .section.shadow  {
   h3 { font-size: var(--h3-font-size-desktop); }
   h4 { font-size: var(--h4-font-size-desktop); }
   h5 { font-size: var(--h5-font-size-desktop); }
+  }
 }
