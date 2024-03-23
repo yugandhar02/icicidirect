@@ -30,6 +30,14 @@
     transform: translate3d(0, 0, 0);
 }
 
+.block.trending-news .news-slider .news-track > * {
+    opacity: 0;
+ }
+
+ .block.trending-news .news-slider .news-track > *:first-child {
+    opacity: 1;
+ }
+
 .block.trending-news .news-slider .news-card {
     width: 25rem;
     height: 20rem;

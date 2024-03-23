@@ -1,5 +1,5 @@
 import { getTrendingNews } from '../../scripts/mockapi.js';
-import { Viewport } from '../../scripts/blocks-utils.js';
+import { Viewport,createPictureElement,observe } from '../../scripts/blocks-utils.js';
 import { decorateIcons, fetchPlaceholders } from '../../scripts/aem.js';
 
 const placeholders = await fetchPlaceholders();
@@ -27,13 +27,8 @@ function createNewsCards(news) {
   const mediaWrapper = document.createElement('div');
   mediaWrapper.className = 'picture-wrapper';
 
-  const picture = document.createElement('picture');
+  const picture = createPictureElement(news.imgUrl, 'article-thumbnail', false);
 
-  const img = document.createElement('img');
-  img.src = news.imgUrl;
-  img.alt = '';
-  img.loading = 'lazy';
-  picture.appendChild(img);
   mediaWrapper.appendChild(picture);
 
   const textContent = document.createElement('div');
@@ -110,6 +105,7 @@ export default function decorate(block) {
   container.appendChild(newsSection);
 
   block.appendChild(container);
+  observe(block, createNewsCards);
 }
 
 function allowedCardsCount() {
@@ -149,4 +145,33 @@ const intervalId = setInterval(() => {
   currentIndex += shift;
   const moveDistance = currentIndex * (cardSize);
   document.getElementsByClassName('news-track')[0].style.transform = `translateX(-${moveDistance}px)`;
+  console.log(currentIndex);
+  let index = 0;
+  if(allowedCardsCount() < 4) {
+    if( allowedCardsCount() == 2) {
+      while (index < cards.length){
+        if(index == currentIndex){
+          cards[index].style.opacity = 1;
+          cards[index+1].style.opacity = 1;
+        }
+        else{
+          cards[index].style.opacity = 0;
+          cards[index+1].style.opacity = 0;
+        }
+        index += 2;
+      }
+    }
+    else {
+      while (index < cards.length){
+        if(index == currentIndex){
+          cards[index].style.opacity = 1;
+        }
+        else{
+          cards[index].style.opacity = 0;
+        }
+        index += 1;
+      }
+    }
+}
+
 }, 3000);
