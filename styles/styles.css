@@ -439,6 +439,12 @@ main .section.padded > .section-container {
   margin-left: auto;
 }
 
+main .section.shadow  {
+  background: var(--background-color-light-orange);
+  box-shadow: 0 1.25rem 2.5rem var(--box-shadow);
+  padding: 1.8rem 0;
+}
+
 @media (width >= 48rem) {
 main .section.shadow  {
   background: var(--background-color-light-orange);
