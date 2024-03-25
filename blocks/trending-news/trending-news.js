@@ -1,5 +1,5 @@
 import { getTrendingNews } from '../../scripts/mockapi.js';
-import { Viewport, createPictureElement, observe } from '../../scripts/blocks-utils.js';
+import { Viewport, createPictureElement } from '../../scripts/blocks-utils.js';
 import { decorateIcons, fetchPlaceholders } from '../../scripts/aem.js';
 
 const placeholders = await fetchPlaceholders();
@@ -127,7 +127,7 @@ const intervalId = setInterval(() => {
   const offset = allowedCardsCount();
   const cardsarry = Array.from(document.getElementsByClassName('news-track')[0].children);
   if (offset >= 4) {
-    cardsarry.forEach((card => {
+    cardsarry.forEach(((card) => {
       card.style.opacity = 1;
     }));
     document.getElementsByClassName('news-track')[0].style.transform = 'translateX(0px)';
