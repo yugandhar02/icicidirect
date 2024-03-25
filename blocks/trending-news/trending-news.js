@@ -1,15 +1,15 @@
 import { getTrendingNews } from '../../scripts/mockapi.js';
 import { Viewport, createPictureElement } from '../../scripts/blocks-utils.js';
-import { decorateIcons, fetchPlaceholders } from '../../scripts/aem.js';
+import { decorateIcons, fetchPlaceholders, readBlockConfig } from '../../scripts/aem.js';
 
 const placeholders = await fetchPlaceholders();
 
-function createDiscoverMore() {
+function createDiscoverMore(discovermorelink) {
   const discoverMore = document.createElement('div');
   discoverMore.className = 'discover-more text-right';
 
   const link = document.createElement('a');
-  link.href = 'https://www.icicidirect.com/research/equity/trending-news';
+  link.href = discovermorelink;
   link.className = 'link-color';
   link.target = '_blank';
   link.textContent = placeholders.discovermore;
@@ -69,6 +69,7 @@ function createNewsCards(news) {
 }
 
 export default function decorate(block) {
+  const blockConfig = readBlockConfig(block);
   const newsData = getTrendingNews();
   block.textContent = '';
 
@@ -101,7 +102,7 @@ export default function decorate(block) {
 
   slider.appendChild(newsTrack);
   newsSection.appendChild(slider);
-  newsSection.appendChild(createDiscoverMore());
+  newsSection.appendChild(createDiscoverMore(blockConfig.discovermorelink));
   container.appendChild(newsSection);
 
   block.appendChild(container);
