@@ -76,6 +76,10 @@
   --color-footer-gray: #a3a3a3;
   --box-shadow-footer-top-gray: #0e1f354d;
   --veritcal-line-footer-top-gray: #9797974d;
+  --box-shadow: #97979733;
+  --boarder-trendign-news-card: #EAEAEA;
+  --card-post-color: #6B6B6B;
+  --card-post-boarder: #d7d7d7;
   --modal-background-color: #000000BF;
   
   /* fonts */
@@ -453,6 +457,12 @@ main .section.padded > .section-container {
   margin-left: auto;
 }
 
+main .section.shadow  {
+  background: var(--background-color-light-orange);
+  box-shadow: 0 1.25rem 2.5rem var(--box-shadow);
+  padding: 1.8rem 0;
+}
+
 main .section.top-bottom-padded > .section-container {
   padding-top: 1.5625rem;
   padding-bottom: 1.5625rem ;
@@ -470,6 +480,13 @@ main .section.background-gray {
 }
 
 @media (width >= 48rem) {
+main .section.shadow  {
+  background: var(--background-color-light-orange);
+  box-shadow: 0 1.25rem 2.5rem var(--box-shadow);
+  padding: 1.8rem 0;
+}
+
+@media (width >= 768px) {
   header {
     min-height: 8.4rem;
   }
@@ -487,4 +504,5 @@ main .section.background-gray {
   h3 { font-size: var(--h3-font-size-desktop); }
   h4 { font-size: var(--h4-font-size-desktop); }
   h5 { font-size: var(--h5-font-size-desktop); }
+  }
 }
