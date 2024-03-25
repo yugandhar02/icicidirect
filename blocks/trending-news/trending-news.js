@@ -105,7 +105,6 @@ export default function decorate(block) {
   container.appendChild(newsSection);
 
   block.appendChild(container);
-  observe(block, createNewsCards);
 }
 
 function allowedCardsCount() {
@@ -126,8 +125,11 @@ const intervalId = setInterval(() => {
   const cards = document.getElementsByClassName('news-track')[0].children;
   const cardSize = document.getElementsByClassName('news-card')[0].offsetWidth;
   const offset = allowedCardsCount();
-
+  const cardsarry = Array.from(document.getElementsByClassName('news-track')[0].children);
   if (offset >= 4) {
+    cardsarry.forEach((card => {
+      card.style.opacity = 1;
+    }));
     document.getElementsByClassName('news-track')[0].style.transform = 'translateX(0px)';
     clearInterval(intervalId);
   }
