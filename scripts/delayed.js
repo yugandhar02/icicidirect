@@ -11,7 +11,7 @@ function turnstileCb() {
   document.querySelectorAll('.turnstile-container').forEach((el) => {
     // eslint-disable-next-line no-undef
     turnstile.render(el, {
-      sitekey: '0x4AAAAAAAVrq_k7QabpK5gM',
+      sitekey: '0x4AAAAAAAVrq_k7QabpK5gM', // TODO: Replace with actual sitekey
       theme: 'light',
     });
   });
