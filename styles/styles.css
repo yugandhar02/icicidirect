@@ -460,12 +460,15 @@ main .section.padded > .section-container {
 main .section.shadow  {
   background: var(--background-color-light-orange);
   box-shadow: 0 1.25rem 2.5rem var(--box-shadow);
-  padding: 1.8rem 0;
 }
 
-main .section.top-bottom-padded > .section-container {
+main .section.top-bottom-padded {
   padding-top: 1.5625rem;
-  padding-bottom: 1.5625rem ;
+  padding-bottom: 1.5625rem;
+}
+
+main .section.bottom-padded {
+  padding-bottom: 1.5625rem;
 }
 
 main .section.background-gray {
@@ -473,8 +476,12 @@ main .section.background-gray {
 }
 
 @media (width >= 36rem) {
-  main .section.top-bottom-padded > .section-container {
+  main .section.top-bottom-padded {
     padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  main .section.bottom-padded {
     padding-bottom: 2.5rem;
   }
 }
@@ -483,8 +490,6 @@ main .section.background-gray {
 main .section.shadow  {
   background: var(--background-color-light-orange);
   box-shadow: 0 1.25rem 2.5rem var(--box-shadow);
-  padding: 1.8rem 0;
-  margin: 2.5rem 0;
 }
 
 @media (width >= 768px) {
