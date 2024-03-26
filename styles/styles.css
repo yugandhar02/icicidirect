@@ -463,8 +463,7 @@ main .section.shadow  {
 }
 
 main .section.top-bottom-padded {
-  padding-top: 1.5625rem;
-  padding-bottom: 1.5625rem;
+  padding: 1.5625rem 0;
 }
 
 main .section.bottom-padded {
@@ -477,8 +476,7 @@ main .section.background-gray {
 
 @media (width >= 36rem) {
   main .section.top-bottom-padded {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
+    padding: 2.5rem 0;
   }
 
   main .section.bottom-padded {
