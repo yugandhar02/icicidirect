@@ -394,7 +394,7 @@ function addCarouselHeader(carouselContainer, title, dropdowns) {
   carouselContainer.appendChild(carouselHeader);
 }
 
-function addCarouselCards(carouselBody, type) {
+function addCarouselCards(carouselBody) {
   const carouselSlider = document.createElement('div');
   carouselSlider.className = 'carousel-slider border-box';
 
@@ -456,7 +456,7 @@ export default async function decorate(block) {
   carouselBody.className = 'carousel-body border-box';
   carouselContainer.appendChild(carouselBody);
 
-  addCarouselCards(carouselBody, type);
+  addCarouselCards(carouselBody);
   addDiscoverLink(carouselBody, discoverLink);
   observe(block, generateCardsView, type);
 }
