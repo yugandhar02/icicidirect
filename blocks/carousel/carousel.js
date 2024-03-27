@@ -1,6 +1,6 @@
 import { readBlockConfig } from '../../scripts/aem.js';
 import { fetchRecommendations, getMarginActionUrl, mockPredicationConstant } from '../../scripts/mockapi.js';
-import { Viewport } from '../../scripts/blocks-utils.js';
+import { observe, Viewport } from '../../scripts/blocks-utils.js';
 
 function allowedCardsCount() {
   const deviceType = Viewport.getDeviceType();
@@ -331,7 +331,9 @@ function getRecommendationsCard(companies, type) {
   });
 }
 
-async function generateCardsView(type, carouselTrack, carouselSlider) {
+async function generateCardsView(block, type) {
+  const carouselSlider = block.querySelector('.carousel-slider');
+  const carouselTrack = carouselSlider.querySelector('.carousel-track');
   fetchRecommendations(type).then((companies) => {
     if (companies) {
       const recommendationsCard = getRecommendationsCard(companies, type);
@@ -403,7 +405,6 @@ function addCarouselCards(carouselBody, type) {
   carouselTrack.classList.add('carousel-track');
   carouselList.appendChild(carouselTrack);
   carouselBody.appendChild(carouselSlider);
-  generateCardsView(type, carouselTrack, carouselSlider);
 }
 
 function addDiscoverLink(carouselBody, discoverLink) {
@@ -457,4 +458,5 @@ export default async function decorate(block) {
 
   addCarouselCards(carouselBody, type);
   addDiscoverLink(carouselBody, discoverLink);
+  observe(block, generateCardsView, type);
 }
