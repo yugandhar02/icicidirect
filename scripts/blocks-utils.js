@@ -4,9 +4,9 @@ function isInViewport(el) {
   const rect = el.getBoundingClientRect();
   return (
     rect.top >= 0
-        && rect.left >= 0
-        && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-        && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    && rect.left >= 0
+    && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+    && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
 }
 
@@ -113,6 +113,7 @@ function getEnvType(hostname = window.location.hostname) {
     'icicidirect.com': 'live',
     'main--icicidirect--aemsites.hlx.page': 'preview',
     'main--icicidirect--aemsites.hlx.live': 'live',
+    'captcha--icicidirect--aemsites.hlx.live': 'live', // TODO: Remove this before captcha branch merge
   };
   return fqdnToEnvType[hostname] || 'dev';
 }
