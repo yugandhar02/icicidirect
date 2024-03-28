@@ -53,7 +53,18 @@ async function loadGTM() {
 }
 
 loadScript('/scripts/cookie-script.js');
-// TODO: Remove delayed loading of GTM once it stops impact page performance
+
+// TODO: Remove delayed loading of GTM once it stops impacting page performance
 setTimeout(() => {
   loadGTM();
 }, 2000);
+
+(function loadAdobeLaunch() {
+  const adobeLaunchSrc = {
+    dev: 'https://assets.adobedtm.com/64c36731dbac/390f7bab5b74/launch-285ee83071cc-development.min.js',
+    preview: 'https://assets.adobedtm.com/64c36731dbac/390f7bab5b74/launch-285ee83071cc-development.min.js',
+    live: 'https://assets.adobedtm.com/64c36731dbac/390f7bab5b74/launch-285ee83071cc-development.min.js',
+    prod: 'https://assets.adobedtm.com/64c36731dbac/390f7bab5b74/launch-285ee83071cc-development.min.js',
+  };
+  loadScript(adobeLaunchSrc[getEnvType()], { async: true });
+}());
