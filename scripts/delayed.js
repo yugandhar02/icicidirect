@@ -56,4 +56,4 @@ loadScript('/scripts/cookie-script.js');
 // TODO: Remove delayed loading of GTM once it stops impact page performance
 setTimeout(() => {
   loadGTM();
-}, 1000);
+}, 2000);
