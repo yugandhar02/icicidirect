@@ -52,5 +52,7 @@ async function loadGTM() {
   document.head.prepend(scriptTag);
 }
 
-await loadGTM();
 loadScript('/scripts/cookie-script.js');
+setTimeout(() => {
+  loadGTM();
+}, 3000);
