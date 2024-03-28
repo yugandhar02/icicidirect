@@ -109,11 +109,10 @@ function observe(elementToObserve, callback, ...args) {
 */
 function getEnvType(hostname = window.location.hostname) {
   const fqdnToEnvType = {
-    'www.icicidirect.com': 'live',
-    'icicidirect.com': 'live',
+    'www.icicidirect.com': 'prod',
+    'icicidirect.com': 'prod',
     'main--icicidirect--aemsites.hlx.page': 'preview',
     'main--icicidirect--aemsites.hlx.live': 'live',
-    'captcha--icicidirect--aemsites.hlx.live': 'live', // TODO: Remove this before captcha branch merge
   };
   return fqdnToEnvType[hostname] || 'dev';
 }
