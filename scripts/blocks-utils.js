@@ -104,6 +104,19 @@ function observe(elementToObserve, callback, ...args) {
   observer.observe(elementToObserve);
 }
 
+/*
+  * Returns the environment type based on the hostname.
+*/
+function getEnvType(hostname = window.location.hostname) {
+  const fqdnToEnvType = {
+    'www.icicidirect.com': 'live',
+    'icicidirect.com': 'live',
+    'main--icicidirect--aemsites.hlx.page': 'preview',
+    'main--icicidirect--aemsites.hlx.live': 'live',
+  };
+  return fqdnToEnvType[hostname] || 'dev';
+}
+
 export {
   isInViewport,
   Viewport,
@@ -111,4 +124,5 @@ export {
   formatDateTime,
   createPictureElement,
   observe,
+  getEnvType,
 };

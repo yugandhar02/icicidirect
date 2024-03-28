@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './aem.js';
+import { getEnvType } from './blocks-utils.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
@@ -13,11 +14,17 @@ function turnstileCb() {
     turnstile.render(el, {
       sitekey: '0x4AAAAAAAVrq_k7QabpK5gM', // TODO: Replace with actual sitekey
       theme: 'light',
+      callback(token) {
+        window.validateuserToken = token;
+      },
     });
   });
 }
 
 window.turnstileCb = turnstileCb;
-await loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?onload=turnstileCb');
+
+if (getEnvType() !== 'dev') {
+  await loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?onload=turnstileCb');
+}
 
 loadScript('https://icici-securities.allincall.in/files/deploy/embed_chatbot_11.js?version=1.1');
