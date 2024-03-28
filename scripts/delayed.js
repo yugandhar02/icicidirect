@@ -29,7 +29,7 @@ if (getEnvType() !== 'dev') {
 
 loadScript('https://icici-securities.allincall.in/files/deploy/embed_chatbot_11.js?version=1.1');
 
-(function gtm(w, d, s, l, i) {
+setTimeout((function gtm(w, d, s, l, i) {
   w[l] = w[l] || [];
   w[l].push({
     'gtm.start': new Date().getTime(),
@@ -41,6 +41,6 @@ loadScript('https://icici-securities.allincall.in/files/deploy/embed_chatbot_11.
   j.async = true;
   j.src = `https://www.googletagmanager.com/gtm.js?id=${i}${dl}`;
   f.parentNode.insertBefore(j, f);
-}(window, document, 'script', 'dataLayer', 'GTM-WF9LTLZ'));
+}(window, document, 'script', 'dataLayer', 'GTM-WF9LTLZ')), 3000);
 
 loadScript('/scripts/cookie-script.js');
