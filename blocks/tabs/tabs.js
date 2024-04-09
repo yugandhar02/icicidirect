@@ -270,6 +270,10 @@ export default async function decorate(block) {
 
     // build tab button
     const button = document.createElement('button');
+    // copy all existing attributes of div into button
+    Array.from(tab.attributes).forEach((singleAttribute) => {
+      button.setAttribute(singleAttribute.name, singleAttribute.value);
+    });
     button.className = 'tabs-tab';
     button.innerHTML = tab.innerHTML;
     button.setAttribute('aria-controls', `tabpanel-${id}`);
